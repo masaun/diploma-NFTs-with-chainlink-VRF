@@ -15,10 +15,10 @@ contract Counter is KeeperCompatibleInterface {
     uint public lastTimeStamp;
 
     constructor(uint updateInterval) {
-      interval = updateInterval;
-      lastTimeStamp = block.timestamp;
+        interval = updateInterval;
+        lastTimeStamp = block.timestamp;
 
-      counter = 0;
+        counter = 0;
     }
 
     function checkUpkeep(bytes calldata /* checkData */) external override returns (bool upkeepNeeded, bytes memory /* performData */) {
