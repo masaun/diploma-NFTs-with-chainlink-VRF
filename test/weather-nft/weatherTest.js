@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { oracle } = require('@chainlink/test-helpers')
 const { expectRevert, time } = require('@openzeppelin/test-helpers')
-const { networkConfig } = require('../scripts/helper-scripts.js')
+const { networkConfig } = require('../../scripts/helper-scripts.js')
 
 contract('MyContract', accounts => {
   const { LinkToken } = require('@chainlink/contracts/truffle/v0.4/LinkToken')
+
+  // [TODO]: Replace how to read contract with Hardhat-Truffle version
   const WeatherNFT = artifacts.require('WeatherNFT')
   const MockOracle = artifacts.require('MockOracle')
-
 
   const defaultAccount = accounts[0]
   const oracleNode = accounts[1]
