@@ -4,11 +4,7 @@ const { expectRevert, time } = require('@openzeppelin/test-helpers')
 const { networkConfig } = require('../../scripts/helper-scripts.js')
 
 contract('WeatherNFT', accounts => {
-  //const { LinkToken } = require('@chainlink/token/contracts/v0.6/LinkToken')
-  //const { LinkToken } = require('@chainlink/token/contracts/v0.4/LinkToken')
-  const LinkToken  = artifacts.require('LinkToken')  
-
-  // [TODO]: Replace how to read contract with Hardhat-Truffle version
+  const LinkToken  = artifacts.require('LinkToken')
   const WeatherNFT = artifacts.require('Consensus2021ChainlinkWeatherNFT')
   const MockOracle = artifacts.require('MockOracleForWeatherNFT')
 
@@ -33,7 +29,7 @@ contract('WeatherNFT', accounts => {
     mockOracle = await MockOracle.new(linkToken.address, { from: defaultAccount })
     const jobId = web3.utils.toHex('4c7b7ffb66b344fbaa64995af81e355a')
     weatherNFT = await WeatherNFT.new(linkToken.address, linkToken.address, mockOracle.address, jobId, '1000000000000000000', { from: defaultAccount })
-    await weatherNFT.mintWeatherNFT({ from: defaultAccount })
+    await weatherNFT.mintWeatherNFT({ from: defaultAccount })  /// tokenId=0 of WeatherNFT is "defaultAccount"
   })
 
   describe('#canTransferFromOracle', () => {
@@ -50,10 +46,13 @@ contract('WeatherNFT', accounts => {
         let ownerOfZero = await weatherNFT.ownerOf(0)
         console.log('=== ownerOfZero ===', ownerOfZero)
 
+        ///@dev - Log of accounts
+        console.log('=== defaultAccount ===', defaultAccount)
         console.log('=== stranger ===', stranger)
 
         ///@dev - Assertion
-        assert.equal(ownerOfZero == stranger, "Owner of WeatherNFT should be stranger (accounts[2])")
+        assert.equal(String(ownerOfZero), String(defaultAccount), "Owner of WeatherNFT should be defaultAccount (accounts[0])")
+        //assert.equal(ownerOfZero, stranger, "Owner of WeatherNFT should be stranger (accounts[2])")
       })
     })
   })
