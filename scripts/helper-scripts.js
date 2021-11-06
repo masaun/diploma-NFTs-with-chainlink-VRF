@@ -1,6 +1,5 @@
 // const MyContract = artifacts.require('MyContract')
-//const LinkTokenInterface = artifacts.require('@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol:LinkTokenInterface')  // [NOTE]: Specify exact path of artifact 
-const LinkTokenInterface = artifacts.require('@chainlink/contracts/src/v0.4/interfaces/LinkTokenInterface.sol:LinkTokenInterface')  // [NOTE]: Specify exact path of artifact 
+const LinkTokenInterface = artifacts.require('@chainlink/contracts/src/v0.6/interfaces/LinkTokenInterface.sol:LinkTokenInterface')  // [NOTE]: Specify exact path of artifact 
 //const LinkTokenInterface = artifacts.require('LinkTokenInterface')
 
 // const linkIpfsImageURIs = {
