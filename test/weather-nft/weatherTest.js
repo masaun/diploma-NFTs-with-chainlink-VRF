@@ -51,8 +51,8 @@ contract('WeatherNFT', accounts => {
         console.log('=== stranger ===', stranger)
 
         ///@dev - Assertion
-        assert.equal(String(ownerOfZero), String(defaultAccount), "Owner of WeatherNFT should be defaultAccount (accounts[0])")
-        //assert.equal(ownerOfZero, stranger, "Owner of WeatherNFT should be stranger (accounts[2])")
+        //assert.equal(ownerOfZero, defaultAccount, "Owner of WeatherNFT should be defaultAccount (accounts[0])")
+        assert.equal(ownerOfZero, stranger, "Owner of WeatherNFT should be stranger (accounts[2])")
       })
     })
   })
