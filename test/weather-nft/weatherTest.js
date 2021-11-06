@@ -43,6 +43,12 @@ contract('WeatherNFT', accounts => {
         const expected = "0"
         const returnData = web3.utils.padLeft(web3.utils.padLeft(web3.utils.toHex(expected)), 64)
         const tx = await mockOracle.fulfillOracleRequest(requestId, returnData)
+      })
+
+      it('Runs the full suite of sending the NFT to a new user', async () => {
+        ///@dev - [TODO]: Finalize code below
+        console.log('[In progress]: Not finished to write code in order to run the full suite of sending the NFT to a new user yet')
+
         let ownerOfZero = await weatherNFT.ownerOf(0)
         console.log('=== ownerOfZero ===', ownerOfZero)
 
