@@ -10,7 +10,7 @@ contract('WeatherNFT', accounts => {
 
   // [TODO]: Replace how to read contract with Hardhat-Truffle version
   const WeatherNFT = artifacts.require('Consensus2021ChainlinkWeatherNFT')
-  const MockOracle = artifacts.require('MockOracle')
+  const MockOracle = artifacts.require('MockOracleForWeatherNFT')
 
   const defaultAccount = accounts[0]
   const oracleNode = accounts[1]
