@@ -48,7 +48,12 @@ contract('WeatherNFT', accounts => {
         const returnData = web3.utils.padLeft(web3.utils.padLeft(web3.utils.toHex(expected)), 64)
         const tx = await mockOracle.fulfillOracleRequest(requestId, returnData)
         let ownerOfZero = await weatherNFT.ownerOf(0)
-        assert.equal(ownerOfZero == stranger)
+        console.log('=== ownerOfZero ===', ownerOfZero)
+
+        console.log('=== stranger ===', stranger)
+
+        ///@dev - Assertion
+        assert.equal(ownerOfZero == stranger, "Owner of WeatherNFT should be stranger (accounts[2])")
       })
     })
   })
