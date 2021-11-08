@@ -4,8 +4,8 @@
   "description": "",
   "scripts": {
     "test:DynamicWeatherNFT": "hardhat test test/unit/DynamicWeatherNFT/DynamicWeatherNFT_unit_test.js --network hardhat",
-    "test:WeatherNFT": "hardhat test test/weather-nft/weatherTest.js --network hardhat",
-
+    "test:WeatherNFT": "hardhat test test/VRF-examples/weather-nft/weatherTest.js --network hardhat",
+    "test:DungeonsAndDragonsCharactors": "hardhat test test/VRF-examples/dungeons-and-dragons-nft/DungeonsAndDragonsCharactors.test.js --network hardhat",
     "test": "hardhat test test/unit/PriceConsumerV3_unit_test.js --network hardhat && hardhat test test/unit/APIConsumer_unit_test.js --network hardhat && hardhat test test/unit/RandomNumberConsumer_unit_test.js --network hardhat && hardhat test test/unit/KeepersCounter_unit_test.js --network hardhat",
     "test-integration": "hardhat test test/integration/APIConsumer_int_test.js --network kovan && hardhat test test/integration/RandomNumberConsumer_int_test.js --network kovan",
     "lint": "eslint .",

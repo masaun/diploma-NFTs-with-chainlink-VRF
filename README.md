@@ -2,6 +2,16 @@
 - [Ref]: 
   - How to Build Dynamic NFTs on Polygon: https://blog.chain.link/how-to-build-dynamic-nfts-on-polygon/
 
+<br>
+
+## Test
+```
+yarn test:WeatherNFT
+```
+```
+yarn test:DungeonsAndDragonsCharactors
+```
+
 <br/>
 
 <hr>

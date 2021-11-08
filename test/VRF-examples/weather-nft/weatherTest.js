@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { oracle } = require('@chainlink/test-helpers')
 const { expectRevert, time } = require('@openzeppelin/test-helpers')
-const { networkConfig } = require('../../scripts/helper-scripts.js')
+const { networkConfig } = require('../../../scripts/helper-scripts.js')
 
 contract('WeatherNFT', accounts => {
   const LinkToken  = artifacts.require('LinkToken')
+  //const LinkToken  = artifacts.require('@chainlink/contracts/src/v0.4/LinkToken.sol:LinkToken')
+
   const WeatherNFT = artifacts.require('Consensus2021ChainlinkWeatherNFT')
   const MockOracle = artifacts.require('MockOracleForWeatherNFT')
 
