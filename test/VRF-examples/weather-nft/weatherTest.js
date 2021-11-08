@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { oracle } = require('@chainlink/test-helpers')
 const { expectRevert, time } = require('@openzeppelin/test-helpers')
-const { networkConfig } = require('../../scripts/helper-scripts.js')
+const { networkConfig } = require('../../../scripts/helper-scripts.js')
 
 contract('WeatherNFT', accounts => {
   const LinkToken  = artifacts.require('LinkToken')
