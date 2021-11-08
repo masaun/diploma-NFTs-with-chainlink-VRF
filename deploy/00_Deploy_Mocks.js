@@ -12,7 +12,6 @@ module.exports = async ({
     if (chainId == 31337) {
         log("Local network detected! Deploying mocks...")
 
-        //const linkToken = await deploy('@chainlink/contracts/src/v0.4/LinkToken.sol:LinkToken', { from: deployer, log: true })
         const linkToken = await deploy('LinkToken', { from: deployer, log: true })
 
         await deploy('EthUsdAggregator', {

@@ -4,7 +4,10 @@ const { expectRevert } = require('@openzeppelin/test-helpers')
 const CHARACTER_NAME = "Shrek"
 
 contract('DungeonsAndDragonsCharacter', accounts => {
-    const { LinkToken } = require('@chainlink/contracts/truffle/v0.4/LinkToken')
+    const LinkToken  = artifacts.require('LinkToken')  /// [Result]: Success to read artifact of LinkToken!!
+    //const { LinkToken } = require('LinkToken')
+    //const { LinkToken } = require('@chainlink/contracts/truffle/v0.4/LinkToken')
+
     const DungeonsAndDragonsCharacter = artifacts.require('DungeonsAndDragonsCharacter.sol')
     const defaultAccount = accounts[0]
 
