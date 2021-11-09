@@ -35,7 +35,7 @@ contract('DungeonsAndDragonsCharacter', accounts => {
     const LINK_TOKEN = "0x01BE23585060835E02B77ef475b0Cc51aA1e0709"
 
 
-    beforeEach(async () => {
+    before(async () => {
         linkToken = await ethers.getContractAt('@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol:LinkTokenInterface', LINK_TOKEN)
         //linkToken = await LinkToken.new({ from: defaultAccount })
         dadc = await DungeonsAndDragonsCharacter.new(VRF_COORDINATOR, LINK_TOKEN, KEY_HASH, { from: defaultAccount })
