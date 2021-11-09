@@ -49,11 +49,19 @@ contract('DungeonsAndDragonsCharacter', accounts => {
     // TODO
 
     describe('Generate your random character (by sending a request to VRF)', () => {
-        it('Some action 1', async () => {
-        })
 
-        it('Some action 2', async () => {
-        })
+        it('requestNewRandomCharacter()', async () => {})
+
+        it('getTokenURI()', async () => {})
+
+        it('setTokenURI()', async () => {})
+
+        it('getLevel()', async () => {})
+
+        it('getNumberOfCharacters()', async () => {})
+
+        it('getCharacterOverView()', async () => {})
+
+        it('getCharacterStats()', async () => {})
     })
-
 })
