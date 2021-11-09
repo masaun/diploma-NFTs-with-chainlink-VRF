@@ -12,7 +12,7 @@ const CHARACTER_NAME = "Shrek"
 
 contract('DungeonsAndDragonsCharacter', accounts => {
     //@dev - Accounts
-    let defaultAccount
+    let defaultAccount, user1
 
     //@dev - Artifacts
     const LinkToken  = artifacts.require('LinkToken')  /// [Result]: Success to read artifact of "LinkToken"!!
@@ -41,10 +41,14 @@ contract('DungeonsAndDragonsCharacter', accounts => {
         //@dev - Setup accounts
         accounts = await ethers.getSigners()
         defaultAccount = accounts[0].address
+        user1 = accounts[1].address
         console.log('=== defaultAccount ===', defaultAccount)
 
+        //@dev - Create a contract instance of the LinkTokenInterface
         linkToken = await ethers.getContractAt('@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol:LinkTokenInterface', LINK_TOKEN)
         //linkToken = await LinkToken.new({ from: defaultAccount })
+
+        //@dev - Deploy the DungeonsAndDragonsCharacter contract
         dadc = await DungeonsAndDragonsCharacter.new(VRF_COORDINATOR, LINK_TOKEN, KEY_HASH, { from: defaultAccount })
 
         //LINK_TOKEN = linkToken.address
@@ -57,7 +61,9 @@ contract('DungeonsAndDragonsCharacter', accounts => {
 
     describe('Generate your random character (by sending a request to VRF)', () => {
         it('A character is minted as a NFT', async () => {
-            //let txReceipt = await dadc.mint()
+            const to = user1
+            const tokenURI = "https://example.nft.com/image/1"
+            let txReceipt = await dadc.mint(to, tokenURI)
         })
 
         it('setTokenURI()', async () => {})
