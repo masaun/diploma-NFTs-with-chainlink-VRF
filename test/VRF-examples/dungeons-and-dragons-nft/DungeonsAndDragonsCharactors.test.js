@@ -64,11 +64,14 @@ contract('DungeonsAndDragonsCharacter', accounts => {
             const to = user1
             const tokenURI = "https://example.nft.com/image/1"
             let txReceipt = await dadc.mint(to, tokenURI)
+            console.log('=== txReceipt of mint() ===')
         })
 
         it('setTokenURI()', async () => {})
 
-        it('getTokenURI()', async () => {})
+        it('getTokenURI()', async () => {
+
+        })
 
         it('getLevel()', async () => {})
 
@@ -78,7 +81,11 @@ contract('DungeonsAndDragonsCharacter', accounts => {
 
         it('getCharacterStats()', async () => {})
 
-        it('requestNewRandomCharacter()', async () => {})  /// Main method
+        it('requestNewRandomCharacter()', async () => {  /// Main method
+            const name = "DungeonsAndDragonsCharacter"
+            let txReceipt = await dadc.requestNewRandomCharacter(name)
+            console.log('=== txReceipt of requestNewRandomCharacter() ===')
+        })
 
     })
 })
