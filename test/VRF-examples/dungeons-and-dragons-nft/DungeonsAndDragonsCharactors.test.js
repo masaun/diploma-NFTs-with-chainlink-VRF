@@ -11,15 +11,17 @@ const CHARACTER_NAME = "Shrek"
 
 
 contract('DungeonsAndDragonsCharacter', accounts => {
+    //@dev - Accounts
+    let defaultAccount, user1
+
+    //@dev - Artifacts
     const LinkToken  = artifacts.require('LinkToken')  /// [Result]: Success to read artifact of "LinkToken"!!
-    //const { LinkToken } = require('@chainlink/contracts/truffle/v0.4/LinkToken')
-
-    //const LinkTokenInterface = artifacts.require('@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol:LinkTokenInterface')  /// [Result]: Success to read artifact of "LinkToken"!!
-
     const DungeonsAndDragonsCharacter = artifacts.require('DungeonsAndDragonsCharacter.sol')
-    const defaultAccount = accounts[0]
 
+    //@dev - Contract instances
     let linkToken, dadc
+
+    //@dev - Contract addresses
     let DADC
 
     /**
@@ -36,8 +38,17 @@ contract('DungeonsAndDragonsCharacter', accounts => {
 
 
     before(async () => {
+        //@dev - Setup accounts
+        accounts = await ethers.getSigners()
+        defaultAccount = accounts[0].address
+        user1 = accounts[1].address
+        console.log('=== defaultAccount ===', defaultAccount)
+
+        //@dev - Create a contract instance of the LinkTokenInterface
         linkToken = await ethers.getContractAt('@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol:LinkTokenInterface', LINK_TOKEN)
         //linkToken = await LinkToken.new({ from: defaultAccount })
+
+        //@dev - Deploy the DungeonsAndDragonsCharacter contract
         dadc = await DungeonsAndDragonsCharacter.new(VRF_COORDINATOR, LINK_TOKEN, KEY_HASH, { from: defaultAccount })
 
         //LINK_TOKEN = linkToken.address
@@ -49,11 +60,25 @@ contract('DungeonsAndDragonsCharacter', accounts => {
     // TODO
 
     describe('Generate your random character (by sending a request to VRF)', () => {
-        it('Some action 1', async () => {
+        it('A character is minted as a NFT', async () => {
+            const to = user1
+            const tokenURI = "https://example.nft.com/image/1"
+            let txReceipt = await dadc.mint(to, tokenURI)
         })
 
-        it('Some action 2', async () => {
-        })
+        it('setTokenURI()', async () => {})
+
+        it('getTokenURI()', async () => {})
+
+        it('getLevel()', async () => {})
+
+        it('getNumberOfCharacters()', async () => {})
+
+        it('getCharacterOverView()', async () => {})
+
+        it('getCharacterStats()', async () => {})
+
+        it('requestNewRandomCharacter()', async () => {})  /// Main method
+
     })
-
 })

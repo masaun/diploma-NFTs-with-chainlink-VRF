@@ -55,6 +55,13 @@ contract DungeonsAndDragonsCharacter is ERC721, VRFConsumerBase, Ownable {
         fee = 0.1 * 10**18; // 0.1 LINK
     }
 
+
+    function mint(address to, string memory tokenURI) public returns (bool) {
+         uint256 tokenId = 1; // [Todo]: TokenID will be replaced with variable
+        _mint(to, tokenId);
+        _setTokenURI(tokenId, tokenURI);
+    }
+
     function requestNewRandomCharacter(
         string memory name
     ) public returns (bytes32) {
