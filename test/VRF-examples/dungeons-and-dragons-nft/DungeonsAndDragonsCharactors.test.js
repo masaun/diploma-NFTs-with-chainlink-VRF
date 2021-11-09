@@ -11,15 +11,17 @@ const CHARACTER_NAME = "Shrek"
 
 
 contract('DungeonsAndDragonsCharacter', accounts => {
+    //@dev - Accounts
+    let defaultAccount
+
+    //@dev - Artifacts
     const LinkToken  = artifacts.require('LinkToken')  /// [Result]: Success to read artifact of "LinkToken"!!
-    //const { LinkToken } = require('@chainlink/contracts/truffle/v0.4/LinkToken')
-
-    //const LinkTokenInterface = artifacts.require('@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol:LinkTokenInterface')  /// [Result]: Success to read artifact of "LinkToken"!!
-
     const DungeonsAndDragonsCharacter = artifacts.require('DungeonsAndDragonsCharacter.sol')
-    const defaultAccount = accounts[0]
 
+    //@dev - Contract instances
     let linkToken, dadc
+
+    //@dev - Contract addresses
     let DADC
 
     /**
@@ -36,6 +38,11 @@ contract('DungeonsAndDragonsCharacter', accounts => {
 
 
     before(async () => {
+        //@dev - Setup accounts
+        accounts = await ethers.getSigners()
+        defaultAccount = accounts[0].address
+        console.log('=== defaultAccount ===', defaultAccount)
+
         linkToken = await ethers.getContractAt('@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol:LinkTokenInterface', LINK_TOKEN)
         //linkToken = await LinkToken.new({ from: defaultAccount })
         dadc = await DungeonsAndDragonsCharacter.new(VRF_COORDINATOR, LINK_TOKEN, KEY_HASH, { from: defaultAccount })
@@ -49,12 +56,13 @@ contract('DungeonsAndDragonsCharacter', accounts => {
     // TODO
 
     describe('Generate your random character (by sending a request to VRF)', () => {
-
-        it('requestNewRandomCharacter()', async () => {})
-
-        it('getTokenURI()', async () => {})
+        it('A character is minted as a NFT', async () => {
+            //let txReceipt = await dadc.mint()
+        })
 
         it('setTokenURI()', async () => {})
+
+        it('getTokenURI()', async () => {})
 
         it('getLevel()', async () => {})
 
@@ -63,5 +71,8 @@ contract('DungeonsAndDragonsCharacter', accounts => {
         it('getCharacterOverView()', async () => {})
 
         it('getCharacterStats()', async () => {})
+
+        it('requestNewRandomCharacter()', async () => {})  /// Main method
+
     })
 })
