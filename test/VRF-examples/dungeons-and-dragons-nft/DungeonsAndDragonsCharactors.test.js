@@ -64,13 +64,15 @@ contract('DungeonsAndDragonsCharacter', accounts => {
             const to = user1
             const tokenURI = "https://example.nft.com/image/1"
             let txReceipt = await dadc.mint(to, tokenURI)
-            console.log('=== txReceipt of mint() ===')
+            console.log('=== txReceipt of mint() ===', txReceipt)
         })
 
         it('setTokenURI()', async () => {})
 
         it('getTokenURI()', async () => {
-
+            const tokenId = 1
+            const tokenURI = await dadc.getTokenURI(tokenId)
+            console.log('=== tokenURI (of tokenId=1) ===', tokenURI)
         })
 
         it('getLevel()', async () => {})
