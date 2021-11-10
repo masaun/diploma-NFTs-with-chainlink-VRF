@@ -44,7 +44,7 @@ contract('DungeonsAndDragonsCharacter', accounts => {
         user1 = accounts[1].address
         console.log('=== defaultAccount ===', defaultAccount)
 
-        //@dev - Deploy the LinkToken contract (solidity-v0.4)
+        //@dev - Deploy the LinkToken contract (solidity-v0.4) by using Truffle
         linkToken = await LinkToken.new({ from: defaultAccount })  /// [NOTE]: Using Truffle
 
         //@dev - Create a contract instance of the LinkTokenInterface
