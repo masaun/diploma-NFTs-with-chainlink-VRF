@@ -3,13 +3,18 @@
 pragma solidity ^0.6.6;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@chainlink/contracts/src/v0.6/VRFConsumerBase.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
+
+import { VRFConsumerBase } from "@chainlink/contracts/src/v0.6/VRFConsumerBase.sol";
+import { LinkTokenInterface } from "@chainlink/contracts/src/v0.6/interfaces/LinkTokenInterface.sol";
+
 
 contract DungeonsAndDragonsCharacter is ERC721, VRFConsumerBase, Ownable {
     using SafeMath for uint256;
     using Strings for string;
+
+    LinkTokenInterface public linkTokenContract;
 
     bytes32 internal keyHash;
     uint256 internal fee;
@@ -53,14 +58,16 @@ contract DungeonsAndDragonsCharacter is ERC721, VRFConsumerBase, Ownable {
         linkToken = _linkToken;
         keyHash = _keyhash;
         fee = 0.1 * 10**18; // 0.1 LINK
+
+        linkTokenContract = LinkTokenInterface(_linkToken);
     }
 
     /**
      * @notice - Deposit 5 LINK into this contract (for payment for request)
      */ 
     function depositLinkForPaymentForRequest(uint256 depositAmount) public returns (bool) {
-         // [Todo]
-         //linkToken
+         // NOTE: Need to approve (transfering LINK) before LINK is deposited
+         linkTokenContract.transferFrom(msg.sender, address(this), depositAmount);
     }
 
     /**
