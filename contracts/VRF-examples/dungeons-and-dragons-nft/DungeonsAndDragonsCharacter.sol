@@ -16,7 +16,7 @@ contract DungeonsAndDragonsCharacter is ERC721, VRFConsumerBase, Ownable {
     uint256 public randomResult;
     address public VRFCoordinator;
     // rinkeby: 0xb3dCcb4Cf7a26f6cf6B120Cf5A73875B7BBc655B
-    address public LinkToken;
+    address public linkToken;
     // rinkeby: 0x01BE23585060835E02B77ef475b0Cc51aA1e0709a
 
     struct Character {
@@ -44,15 +44,23 @@ contract DungeonsAndDragonsCharacter is ERC721, VRFConsumerBase, Ownable {
      * LINK token address:                0x01BE23585060835E02B77ef475b0Cc51aA1e0709
      * Key Hash: 0x2ed0feb3e7fd2022120aa84fab1945545a9f2ffc9076fd6156fa96eaff4c1311
      */
-    constructor(address _VRFCoordinator, address _LinkToken, bytes32 _keyhash)
+    constructor(address _VRFCoordinator, address _linkToken, bytes32 _keyhash)
         public
-        VRFConsumerBase(_VRFCoordinator, _LinkToken)
+        VRFConsumerBase(_VRFCoordinator, _linkToken)
         ERC721("DungeonsAndDragonsCharacter", "D&D")
     {   
         VRFCoordinator = _VRFCoordinator;
-        LinkToken = _LinkToken;
+        linkToken = _linkToken;
         keyHash = _keyhash;
         fee = 0.1 * 10**18; // 0.1 LINK
+    }
+
+    /**
+     * @notice - Deposit 5 LINK into this contract (for payment for request)
+     */ 
+    function depositLinkForPaymentForRequest(uint256 depositAmount) public returns (bool) {
+         // [Todo]
+         //linkToken
     }
 
     /**
@@ -69,7 +77,7 @@ contract DungeonsAndDragonsCharacter is ERC721, VRFConsumerBase, Ownable {
      */ 
     function requestNewRandomCharacter(
         string memory name
-    ) public returns (bytes32) {
+    ) public returns (bytes32 _requestId) {
         require(
             LINK.balanceOf(address(this)) >= fee,
             "Not enough LINK - fill contract with faucet"

@@ -84,8 +84,19 @@ contract('DungeonsAndDragonsCharacter', accounts => {
         it('getCharacterStats()', async () => {})
 
         it('requestNewRandomCharacter()', async () => {  /// Main method
-            const name = "DungeonsAndDragonsCharacter"
-            let txReceipt = await dadc.requestNewRandomCharacter(name)
+            ///@dev - Deposit 5 LINK into the DungeonsAndDragonsCharacter contract (for payment for request)
+            const to = DADC
+            const depositAmount = ethers.utils.parseEther('5')  // 5 LINK 
+            let txReceipt1 = await linkToken.transfer(to, depositAmount) 
+
+            ///@dev - Check LINK balance of the DungeonsAndDragonsCharacter contract
+            let linkBalance = await linkToken.balanceOf(DADC)
+            console.log('=== LINK balance of the DungeonsAndDragonsCharacter contract ===', linkBalance)
+
+            ///@dev - Send a request to Chainlink-VRF
+            const name = "A Test Character"  /// [TODO]: This "name" is the value which is assigned based on the name property in the Character struct
+            //const name = "DungeonsAndDragonsCharacter"
+            let txReceipt2 = await dadc.requestNewRandomCharacter(name)
             console.log('=== txReceipt of requestNewRandomCharacter() ===')
         })
 
