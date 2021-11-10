@@ -88,7 +88,7 @@ contract('DungeonsAndDragonsCharacter', accounts => {
             const to = DADC
             const depositAmount = ethers.utils.parseEther('5')  // 5 LINK 
             let txReceipt1 = await linkToken.approve(to, depositAmount)
-            let txReceipt2 = await linkToken.depositLinkForPaymentForRequest(depositAmount) 
+            let txReceipt2 = await dadc.depositLinkForPaymentForRequest(depositAmount) 
 
             ///@dev - Check LINK balance of the DungeonsAndDragonsCharacter contract
             let linkBalance = await linkToken.balanceOf(DADC)
