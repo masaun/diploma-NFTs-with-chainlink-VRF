@@ -3,20 +3,25 @@
 pragma solidity ^0.6.6;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@chainlink/contracts/src/v0.6/VRFConsumerBase.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
+
+import { VRFConsumerBase } from "@chainlink/contracts/src/v0.6/VRFConsumerBase.sol";
+import { LinkTokenInterface } from "@chainlink/contracts/src/v0.6/interfaces/LinkTokenInterface.sol";
+
 
 contract DungeonsAndDragonsCharacter is ERC721, VRFConsumerBase, Ownable {
     using SafeMath for uint256;
     using Strings for string;
+
+    LinkTokenInterface public linkTokenContract;
 
     bytes32 internal keyHash;
     uint256 internal fee;
     uint256 public randomResult;
     address public VRFCoordinator;
     // rinkeby: 0xb3dCcb4Cf7a26f6cf6B120Cf5A73875B7BBc655B
-    address public LinkToken;
+    address public linkToken;
     // rinkeby: 0x01BE23585060835E02B77ef475b0Cc51aA1e0709a
 
     struct Character {
@@ -44,27 +49,40 @@ contract DungeonsAndDragonsCharacter is ERC721, VRFConsumerBase, Ownable {
      * LINK token address:                0x01BE23585060835E02B77ef475b0Cc51aA1e0709
      * Key Hash: 0x2ed0feb3e7fd2022120aa84fab1945545a9f2ffc9076fd6156fa96eaff4c1311
      */
-    constructor(address _VRFCoordinator, address _LinkToken, bytes32 _keyhash)
+    constructor(address _VRFCoordinator, address _linkToken, bytes32 _keyhash)
         public
-        VRFConsumerBase(_VRFCoordinator, _LinkToken)
+        VRFConsumerBase(_VRFCoordinator, _linkToken)
         ERC721("DungeonsAndDragonsCharacter", "D&D")
     {   
         VRFCoordinator = _VRFCoordinator;
-        LinkToken = _LinkToken;
+        linkToken = _linkToken;
         keyHash = _keyhash;
         fee = 0.1 * 10**18; // 0.1 LINK
+
+        linkTokenContract = LinkTokenInterface(_linkToken);
     }
 
+    /**
+     * @notice - Deposit 5 LINK into this contract (for payment for request)
+     */ 
+    function depositLinkForPaymentForRequest(uint256 depositAmount) public returns (bool) {
+         // NOTE: Need to approve (transfering LINK) before LINK is deposited
+         linkTokenContract.transferFrom(msg.sender, address(this), depositAmount);
+    }
 
+    /**
+     * @notice - Mint a charactor as a NFT
+     */ 
     function mint(address to, string memory tokenURI) public returns (bool) {
          uint256 tokenId = 1; // [Todo]: TokenID will be replaced with variable
         _mint(to, tokenId);
         _setTokenURI(tokenId, tokenURI);
     }
 
-    function requestNewRandomCharacter(
-        string memory name
-    ) public returns (bytes32) {
+    /**
+     * @notice - Request a new random number via Chainlink-VRF
+     */ 
+    function requestNewRandomCharacter(string memory name) public returns (bytes32 _requestId) {
         require(
             LINK.balanceOf(address(this)) >= fee,
             "Not enough LINK - fill contract with faucet"
