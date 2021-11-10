@@ -82,9 +82,7 @@ contract DungeonsAndDragonsCharacter is ERC721, VRFConsumerBase, Ownable {
     /**
      * @notice - Request a new random number via Chainlink-VRF
      */ 
-    function requestNewRandomCharacter(
-        string memory name
-    ) public returns (bytes32 _requestId) {
+    function requestNewRandomCharacter(string memory name) public returns (bytes32 _requestId) {
         require(
             LINK.balanceOf(address(this)) >= fee,
             "Not enough LINK - fill contract with faucet"

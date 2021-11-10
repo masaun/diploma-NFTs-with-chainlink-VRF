@@ -44,14 +44,16 @@ contract('DungeonsAndDragonsCharacter', accounts => {
         user1 = accounts[1].address
         console.log('=== defaultAccount ===', defaultAccount)
 
+        //@dev - Deploy the LinkToken contract (solidity-v0.4)
+        linkToken = await LinkToken.new({ from: defaultAccount })  /// [NOTE]: Using Truffle
+
         //@dev - Create a contract instance of the LinkTokenInterface
-        linkToken = await ethers.getContractAt('@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol:LinkTokenInterface', LINK_TOKEN)
-        //linkToken = await LinkToken.new({ from: defaultAccount })
+        //linkToken = await ethers.getContractAt('@chainlink/contracts/src/v0.6/interfaces/LinkTokenInterface.sol:LinkTokenInterface', LINK_TOKEN)
 
         //@dev - Deploy the DungeonsAndDragonsCharacter contract
         dadc = await DungeonsAndDragonsCharacter.new(VRF_COORDINATOR, LINK_TOKEN, KEY_HASH, { from: defaultAccount })
 
-        //LINK_TOKEN = linkToken.address
+        LINK_TOKEN = linkToken.address
         DADC = dadc.address
         console.log('=== LINK_TOKEN ===', LINK_TOKEN)
         console.log('=== DADC ===', DADC)
@@ -84,11 +86,16 @@ contract('DungeonsAndDragonsCharacter', accounts => {
         it('getCharacterStats()', async () => {})
 
         it('requestNewRandomCharacter()', async () => {  /// Main method
+            /// [Todo]: Re-create LinkToken contract instance by using "Truffle"
+
+
+
             ///@dev - Deposit 5 LINK into the DungeonsAndDragonsCharacter contract (for payment for request)
             const to = DADC
             const depositAmount = ethers.utils.parseEther('5')  // 5 LINK 
             let txReceipt1 = await linkToken.approve(to, depositAmount)
-            let txReceipt2 = await dadc.depositLinkForPaymentForRequest(depositAmount) 
+            let txReceipt2 = await dadc.depositLinkForPaymentForRequest(depositAmount)
+            console.log('=== depositLinkForPaymentForRequest() of the DungeonsAndDragonsCharacter contract ===', txReceipt2)
 
             ///@dev - Check LINK balance of the DungeonsAndDragonsCharacter contract
             let linkBalance = await linkToken.balanceOf(DADC)
@@ -98,7 +105,7 @@ contract('DungeonsAndDragonsCharacter', accounts => {
             const name = "A Test Character"  /// [TODO]: This "name" is the value which is assigned based on the name property in the Character struct
             //const name = "DungeonsAndDragonsCharacter"
             let txReceipt3 = await dadc.requestNewRandomCharacter(name)
-            console.log('=== txReceipt of requestNewRandomCharacter() ===')
+            // console.log('=== txReceipt of requestNewRandomCharacter() ===', txReceipt3)
         })
 
     })
