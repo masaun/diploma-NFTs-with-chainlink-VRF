@@ -9,7 +9,10 @@ const { formatEther, parseUnits, randomBytes } = require('ethers/lib/utils')
 
 const CHARACTER_NAME = "Shrek"
 
-
+/**
+ * @notice - The test of the DungeonsAndDragonsCharacter contract
+ * @notice - This test file is written by web3.js almostly (ethers.js is just used for formatEther, etc...)
+ */
 contract('DungeonsAndDragonsCharacter', accounts => {
     //@dev - Accounts
     let defaultAccount, user1
@@ -83,10 +86,6 @@ contract('DungeonsAndDragonsCharacter', accounts => {
         it('getCharacterStats()', async () => {})
 
         it('requestNewRandomCharacter()', async () => {  /// Main method
-            /// [Todo]: Re-create LinkToken contract instance by using "Truffle"
-
-
-
             ///@dev - Deposit 5 LINK into the DungeonsAndDragonsCharacter contract (for payment for request)
             const to = DADC
             const depositAmount = ethers.utils.parseEther('5')  // 5 LINK 
@@ -96,7 +95,7 @@ contract('DungeonsAndDragonsCharacter', accounts => {
 
             ///@dev - Check LINK balance of the DungeonsAndDragonsCharacter contract
             let linkBalance = await linkToken.balanceOf(DADC)
-            console.log('=== LINK balance of the DungeonsAndDragonsCharacter contract ===', linkBalance)
+            console.log(`LINK balance of the DungeonsAndDragonsCharacter contract: ${ ethers.utils.formatEther(String(linkBalance)) } LINK`)
 
             ///@dev - Send a request to Chainlink-VRF
             const name = "A Test Character"  /// [TODO]: This "name" is the value which is assigned based on the name property in the Character struct
