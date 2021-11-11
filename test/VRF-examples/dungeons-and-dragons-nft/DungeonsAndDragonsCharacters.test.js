@@ -74,10 +74,8 @@ contract('DungeonsAndDragonsCharacter', accounts => {
         it('getTokenURI()', async () => {
             const tokenId = 1
             const tokenURI = await dadc.getTokenURI(tokenId)
-            console.log('=== tokenURI (of tokenId=1) ===', tokenURI)
+            console.log('=== tokenURI (of tokenId=1) ===', tokenURI)  /// [Result]: Error
         })
-
-        it('getLevel()', async () => {})
 
         it('getNumberOfCharacters()', async () => {})
 
@@ -103,6 +101,13 @@ contract('DungeonsAndDragonsCharacter', accounts => {
             let txReceipt3 = await dadc.requestNewRandomCharacter(name)
             // console.log('=== txReceipt of requestNewRandomCharacter() ===', txReceipt3)
         })
+
+        it('getLevel()', async () => {
+            const tokenId = 1
+            let level = await dadc.getLevel(tokenId)
+            console.log('=== level (of tokenId=1) ===', level)            
+        })
+
 
     })
 })
