@@ -86,6 +86,9 @@ contract('DungeonsAndDragonsCharacter', accounts => {
             //const name = "DungeonsAndDragonsCharacter"
             let txReceipt3 = await dadc.requestNewRandomCharacter(name)
             // console.log('=== txReceipt of requestNewRandomCharacter() ===', txReceipt3)
+
+            let _randomResult = await dadc.randomResult()
+            console.log('=== randomResult of requestNewRandomCharacter() via fulfillRandomness() of the VRFConsumerBase.sol ===', String(_randomResult))
         })
 
         it('getLevel()', async () => {
