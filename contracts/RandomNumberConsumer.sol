@@ -11,8 +11,8 @@ contract RandomNumberConsumer is VRFConsumerBase {
     bytes32 internal keyHash;
     uint256 internal fee;
 
-    uint256 public randomResult;  // [Note]: Assign "randomness (randomNumber)" retrieved
-    bytes32 public requestIdUsed;            // [Note]: Assign "requestId"
+    uint256 public randomResult;   // [Note]: Assign "randomness (randomNumber)" retrieved
+    bytes32 public requestIdUsed;  // [Note]: Assign "requestId"
 
     /**
      * Constructor inherits VRFConsumerBase
