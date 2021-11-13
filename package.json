@@ -7,10 +7,13 @@
     "test:WeatherNFT": "hardhat test test/VRF-examples/weather-nft/weatherTest.js --network hardhat",
     "test:DungeonsAndDragonsCharacters": "hardhat test test/VRF-examples/dungeons-and-dragons-nft/DungeonsAndDragonsCharacters.test.js --network hardhat",
     "test": "hardhat test test/unit/PriceConsumerV3_unit_test.js --network hardhat && hardhat test test/unit/APIConsumer_unit_test.js --network hardhat && hardhat test test/unit/RandomNumberConsumer_unit_test.js --network hardhat && hardhat test test/unit/KeepersCounter_unit_test.js --network hardhat",
-
     "test-rinkeby": "hardhat test test/unit/RandomNumberConsumer_unit_test.js --network rinkeby",
-
     "test-integration": "hardhat test test/integration/APIConsumer_int_test.js --network kovan && hardhat test test/integration/RandomNumberConsumer_int_test.js --network kovan",
+
+    "script-rinkeby:RandomNumberConsumer": "node scripts/VRF-example/request-RandomNumberConsumer.js --network rinkeby",
+
+    "script-rinkeby:Deploy": "npx hardhat run scripts/deployment/deploy.js --network rinkeby",
+
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
