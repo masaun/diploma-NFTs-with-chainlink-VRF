@@ -36,5 +36,12 @@ skip.if(!developmentChains.includes(network.name)).
 
       console.log("requestId: ", requestId)
       expect(requestId).to.not.be.null
+
+      ///@dev - Check log of callback ("requestId" that is used and "randomNumber" that is retrieved via VRF)
+      let _requestIdUsed = await randomNumberConsumer.requestIdUsed()
+      console.log('=== requestIdUsed ===', String(_requestIdUsed))
+
+      let _randomResult = await randomNumberConsumer.randomResult()
+      console.log('=== randomResult of getRandomNumber() via fulfillRandomness() of the VRFConsumerBase.sol ===', String(_randomResult))
     })
   })

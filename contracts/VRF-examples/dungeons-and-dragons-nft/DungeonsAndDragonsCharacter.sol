@@ -37,9 +37,9 @@ contract DungeonsAndDragonsCharacter is ERC721, VRFConsumerBase, Ownable {
     Character[] public characters;
 
     ///@notice - mapping for saving retrieved-Random Number via Chainlink-VRF and associating it with struct
-    mapping(bytes32 => string) requestToCharacterName;
-    mapping(bytes32 => address) requestToSender;
-    mapping(bytes32 => uint256) requestToTokenId;
+    mapping(bytes32 => string) public requestToCharacterName;
+    mapping(bytes32 => address) public requestToSender;
+    mapping(bytes32 => uint256) public requestToTokenId;
 
     /**
      * Constructor inherits VRFConsumerBase
