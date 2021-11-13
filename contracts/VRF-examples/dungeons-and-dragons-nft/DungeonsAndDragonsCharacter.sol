@@ -66,8 +66,8 @@ contract DungeonsAndDragonsCharacter is ERC721, VRFConsumerBase, Ownable {
      * @notice - Deposit 5 LINK into this contract (for payment for request)
      */ 
     function depositLinkForPaymentForRequest(uint256 depositAmount) public returns (bool) {
-         // NOTE: Need to approve (transfering LINK) before LINK is deposited
-         linkTokenContract.transferFrom(msg.sender, address(this), depositAmount);
+        // NOTE: Need to approve (transfering LINK) before LINK is deposited
+        linkTokenContract.transferFrom(msg.sender, address(this), depositAmount);
     }
 
     /**
@@ -90,6 +90,7 @@ contract DungeonsAndDragonsCharacter is ERC721, VRFConsumerBase, Ownable {
         bytes32 requestId = requestRandomness(keyHash, fee);
         requestToCharacterName[requestId] = name;
         requestToSender[requestId] = msg.sender;
+        
         return requestId;
     }
 
@@ -105,6 +106,9 @@ contract DungeonsAndDragonsCharacter is ERC721, VRFConsumerBase, Ownable {
         _setTokenURI(tokenId, _tokenURI);
     }
 
+    /**
+     * Callback function used by VRF Coordinator
+     */
     function fulfillRandomness(bytes32 requestId, uint256 randomNumber)
         internal
         override

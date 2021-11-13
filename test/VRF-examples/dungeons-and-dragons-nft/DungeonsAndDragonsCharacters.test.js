@@ -69,22 +69,6 @@ contract('DungeonsAndDragonsCharacter', accounts => {
             console.log('=== txReceipt of mint() ===', txReceipt)
         })
 
-        it('setTokenURI()', async () => {})
-
-        it('getTokenURI()', async () => {
-            const tokenId = 1
-            const tokenURI = await dadc.getTokenURI(tokenId)
-            console.log('=== tokenURI (of tokenId=1) ===', tokenURI)
-        })
-
-        it('getLevel()', async () => {})
-
-        it('getNumberOfCharacters()', async () => {})
-
-        it('getCharacterOverView()', async () => {})
-
-        it('getCharacterStats()', async () => {})
-
         it('requestNewRandomCharacter()', async () => {  /// Main method
             ///@dev - Deposit 5 LINK into the DungeonsAndDragonsCharacter contract (for payment for request)
             const to = DADC
@@ -102,7 +86,37 @@ contract('DungeonsAndDragonsCharacter', accounts => {
             //const name = "DungeonsAndDragonsCharacter"
             let txReceipt3 = await dadc.requestNewRandomCharacter(name)
             // console.log('=== txReceipt of requestNewRandomCharacter() ===', txReceipt3)
+
+            let _randomResult = await dadc.randomResult()
+            console.log('=== randomResult of requestNewRandomCharacter() via fulfillRandomness() of the VRFConsumerBase.sol ===', String(_randomResult))
         })
+
+        it('getLevel()', async () => {
+            const tokenId = 1
+            let level = await dadc.getLevel(tokenId)
+            console.log('=== level (of tokenId=1) ===', level)            
+        })
+
+        it('setTokenURI()', async () => {})
+
+        it('getTokenURI()', async () => {
+            const tokenId = 1
+            const tokenURI = await dadc.getTokenURI(tokenId)
+            console.log('=== tokenURI (of tokenId=1) ===', tokenURI)  /// [Result]: Error
+        })
+
+        it('getNumberOfCharacters()', async () => {
+            let numberOfCharacters = await dadc.getNumberOfCharacters()
+            console.log('=== numberOfCharacters ===', String(numberOfCharacters))  /// [Result]: 0
+        })
+
+        it('getCharacterOverView()', async () => {
+            const tokenId = 1
+            const characterOverview = await dadc.getCharacterOverView(tokenId)
+            console.log('=== characterOverview (of tokenId=1) ===', characterOverview)  /// [Result]: Error
+        })
+
+        it('getCharacterStats()', async () => {})
 
     })
 })
