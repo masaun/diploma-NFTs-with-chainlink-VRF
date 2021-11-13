@@ -11,7 +11,8 @@ contract RandomNumberConsumer is VRFConsumerBase {
     bytes32 internal keyHash;
     uint256 internal fee;
 
-    uint256 public randomResult;
+    uint256 public randomResult;  // [Note]: Assign "randomness (randomNumber)" retrieved
+    bytes32 public requestIdUsed;            // [Note]: Assign "requestId"
 
     /**
      * Constructor inherits VRFConsumerBase
@@ -46,6 +47,7 @@ contract RandomNumberConsumer is VRFConsumerBase {
      * Callback function used by VRF Coordinator
      */
     function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
+        requestIdUsed = requestId;
         randomResult = randomness;
     }
 

@@ -85,7 +85,10 @@ contract('DungeonsAndDragonsCharacter', accounts => {
             const name = "A Test Character"  /// [TODO]: This "name" is the value which is assigned based on the name property in the Character struct
             //const name = "DungeonsAndDragonsCharacter"
             let txReceipt3 = await dadc.requestNewRandomCharacter(name)
-            // console.log('=== txReceipt of requestNewRandomCharacter() ===', txReceipt3)
+            console.log('=== txReceipt of requestNewRandomCharacter() ===', txReceipt3)
+
+            let _requestToCharacterName = await dadc.requestToCharacterName()
+            console.log('=== requestToCharacterName ===', _requestToCharacterName)
 
             let _randomResult = await dadc.randomResult()
             console.log('=== randomResult of requestNewRandomCharacter() via fulfillRandomness() of the VRFConsumerBase.sol ===', String(_randomResult))
