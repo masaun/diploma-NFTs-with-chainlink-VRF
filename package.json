@@ -10,7 +10,7 @@
     "test-rinkeby": "hardhat test test/unit/RandomNumberConsumer_unit_test.js --network rinkeby",
     "test-integration": "hardhat test test/integration/APIConsumer_int_test.js --network kovan && hardhat test test/integration/RandomNumberConsumer_int_test.js --network kovan",
 
-    "script-rinkeby:RandomNumberConsumer": "node scripts/VRF-example/request-RandomNumberConsumer.js --network rinkeby",
+    "script-rinkeby:RandomNumberConsumer": "npx hardhat run scripts/VRF-example/request-RandomNumberConsumer.js --network rinkeby",
 
     "script-rinkeby:Deploy": "npx hardhat run scripts/deployment/deploy.js --network rinkeby",
 
