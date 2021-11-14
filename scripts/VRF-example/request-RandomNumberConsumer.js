@@ -14,12 +14,15 @@ async function main() {
     //const RandomNumberConsumer = await ethers.getContractFactory("RandomNumberConsumer")
     //const randomNumberConsumer = await RandomNumberConsumer.deploy()
     const randomNumberConsumer = await ethers.getContractAt("RandomNumberConsumer", RANDOM_NUMBER_CONSUMER)
+
+
     console.log("Deployed-address of the RandomNumberConsumer.sol on Rinkeby", randomNumberConsumer.address)  // [Result]: "0x461f9bD7A33B9532a19BC7B7834063c313058e32"
 
     //@dev - Test getRandomNumber()
     console.log('Should successfully make an external random number request')
     const linkAmount = ethers.utils.parseEther('1')  // 1 LINK
-    const txReceipt1 = await linkToken.approve(RANDOM_NUMBER_CONSUMER, linkAmount)
+    const txReceipt1 = await linkToken.approve(RANDOM_NUMBER_CONSUMER, linkAmount) // [Result]: Success
+    
     const transaction = await randomNumberConsumer.getRandomNumber()
     //console.log(`\n transaction: ${ JSON.stringify(transaction, null, 2) }`)  /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
