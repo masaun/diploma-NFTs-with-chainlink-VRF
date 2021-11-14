@@ -14,18 +14,21 @@ async function main() {
     //@dev - Test getRandomNumber()
     console.log('Should successfully make an external random number request')
     const transaction = await randomNumberConsumer.getRandomNumber()
+    console.log(`transaction: ${ JSON.stringify(transaction) }`)  /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
+
     const tx_receipt = await transaction.wait(1)
-    const requestId = tx_receipt.events[2].topics[1]
+    console.log(`tx_receipt: ${ JSON.stringify(tx_receipt) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
+    //const requestId = tx_receipt.events[2].topics[1]
 
-    console.log("requestId: ", requestId)
-    expect(requestId).to.not.be.null
+    // console.log("requestId: ", requestId)
+    // expect(requestId).to.not.be.null
 
-    ///@dev - Check log of callback ("requestId" that is used and "randomNumber" that is retrieved via VRF)
-    let _requestIdUsed = await randomNumberConsumer.requestIdUsed()
-    console.log('=== requestIdUsed ===', String(_requestIdUsed))
+    // ///@dev - Check log of callback ("requestId" that is used and "randomNumber" that is retrieved via VRF)
+    // let _requestIdUsed = await randomNumberConsumer.requestIdUsed()
+    // console.log('=== requestIdUsed ===', String(_requestIdUsed))
 
-    let _randomResult = await randomNumberConsumer.randomResult()
-    console.log('=== randomResult of getRandomNumber() via fulfillRandomness() of the VRFConsumerBase.sol ===', String(_randomResult))
+    // let _randomResult = await randomNumberConsumer.randomResult()
+    // console.log('=== randomResult of getRandomNumber() via fulfillRandomness() of the VRFConsumerBase.sol ===', String(_randomResult))
 }
 
 /**
