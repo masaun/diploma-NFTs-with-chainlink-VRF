@@ -14,14 +14,13 @@ async function main() {
     //@dev - Test getRandomNumber()
     console.log('Should successfully make an external random number request')
     const transaction = await randomNumberConsumer.getRandomNumber()
-    console.log(`transaction: ${ JSON.stringify(transaction) }`)  /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
+    console.log(`\n transaction: ${ JSON.stringify(transaction, null, 2) }`)  /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
     const tx_receipt = await transaction.wait(1)
-    console.log(`tx_receipt: ${ JSON.stringify(tx_receipt) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
-    //const requestId = tx_receipt.events[2].topics[1]
-
-    // console.log("requestId: ", requestId)
-    // expect(requestId).to.not.be.null
+    console.log(`\n tx_receipt: ${ JSON.stringify(tx_receipt, null, 2) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
+    const requestId = await JSON.stringify(tx_receipt).events
+    //const requestId = JSON.stringify(tx_receipt).events[2].topics[1]
+    console.log("requestId: ", requestId)
 
     // ///@dev - Check log of callback ("requestId" that is used and "randomNumber" that is retrieved via VRF)
     // let _requestIdUsed = await randomNumberConsumer.requestIdUsed()
