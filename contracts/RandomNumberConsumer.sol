@@ -40,7 +40,7 @@ contract RandomNumberConsumer is VRFConsumerBase {
      * Requests randomness
      */
     function getRandomNumber() public returns (bytes32 requestId) {
-        LINK.transferFrom(msg.sender, address(this), 1e18);  // 1 LINK
+        LINK.transferFrom(msg.sender, address(this), fee);  // 1 LINK
 
         require(LINK.balanceOf(address(this)) >= fee, "Not enough LINK - fill contract with faucet");
         return requestRandomness(keyHash, fee);

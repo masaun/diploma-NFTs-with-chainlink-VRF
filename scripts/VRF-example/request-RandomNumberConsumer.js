@@ -6,15 +6,15 @@ async function main() {
     const LINK_TOKEN = "0x01be23585060835e02b77ef475b0cc51aa1e0709"
     const linkToken = await ethers.getContractAt('@chainlink/contracts/src/v0.6/interfaces/LinkTokenInterface.sol:LinkTokenInterface', LINK_TOKEN)
 
-    // [NOTE]: Deployed-address of the RandomNumberConsumer.sol on Rinkeby is "0xDf33FdF3360fCF1923aBb8C7e3cE3c51160c7623"
+    // [NOTE]: Deployed-address of the RandomNumberConsumer.sol on Rinkeby is "0x96953377b441E7b1CE97613d406875Ce77223fc8"
 
     //@dev - Get the contract to deploy
-    const RANDOM_NUMBER_CONSUMER = "0xDf33FdF3360fCF1923aBb8C7e3cE3c51160c7623"
+    const RANDOM_NUMBER_CONSUMER = "0x96953377b441E7b1CE97613d406875Ce77223fc8"
     //const RandomNumberConsumer = await ethers.getContractFactory("RandomNumberConsumer")
     //const randomNumberConsumer = await RandomNumberConsumer.deploy()
     const randomNumberConsumer = await ethers.getContractAt("RandomNumberConsumer", RANDOM_NUMBER_CONSUMER)
 
-    console.log("Deployed-address of the RandomNumberConsumer.sol on Rinkeby", randomNumberConsumer.address)  // [Result]: "0xDf33FdF3360fCF1923aBb8C7e3cE3c51160c7623"
+    console.log("Deployed-address of the RandomNumberConsumer.sol on Rinkeby", randomNumberConsumer.address)  // [Result]: "0x96953377b441E7b1CE97613d406875Ce77223fc8"
 
     //@dev - Test getRandomNumber()
     console.log('Should successfully make an external random number request')
