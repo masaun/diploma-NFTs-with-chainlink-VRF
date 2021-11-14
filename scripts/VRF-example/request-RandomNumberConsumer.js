@@ -23,15 +23,15 @@ async function main() {
     const txReceipt1 = await linkToken.approve(RANDOM_NUMBER_CONSUMER, linkAmount) // [Result]: Success
     console.log(`\n txReceipt1 of linkToken.approve(): ${ JSON.stringify(txReceipt1, null, 2) }`)
 
-    // const transaction = await randomNumberConsumer.getRandomNumber()
-    // //console.log(`\n transaction: ${ JSON.stringify(transaction, null, 2) }`)  /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
+    const transaction = await randomNumberConsumer.getRandomNumber({ gasLimit: 250000, gasPrice: 1 })
+    console.log(`\n transaction: ${ JSON.stringify(transaction, null, 2) }`)  /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
-    // const tx_receipt = await transaction.wait(1)
-    // //console.log(`\n tx_receipt: ${ JSON.stringify(tx_receipt, null, 2) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
-    // const requestId = tx_receipt.events[2].topics[1]
-    // //const requestId = await JSON.stringify(tx_receipt).events
-    // //const requestId = JSON.stringify(tx_receipt).events[2].topics[1]
-    // console.log("requestId: ", requestId)
+    const tx_receipt = await transaction.wait(1)
+    console.log(`\n tx_receipt: ${ JSON.stringify(tx_receipt, null, 2) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
+    const requestId = tx_receipt.events[2].topics[1]
+    //const requestId = await JSON.stringify(tx_receipt).events
+    //const requestId = JSON.stringify(tx_receipt).events[2].topics[1]
+    console.log("requestId: ", requestId)
 
     ///@dev - Check log of callback ("requestId" that is used and "randomNumber" that is retrieved via VRF)
     let _requestIdUsed = await randomNumberConsumer.requestIdUsed()
