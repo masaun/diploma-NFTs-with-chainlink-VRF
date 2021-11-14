@@ -18,7 +18,7 @@ async function main() {
 
     //@dev - Test getRandomNumber()
     console.log('Should successfully make an external random number request')
-    
+
     const linkAmount = ethers.utils.parseEther('1')  // 1 LINK
     const txReceipt1 = await linkToken.approve(RANDOM_NUMBER_CONSUMER, linkAmount) // [Result]: Success
     console.log(`\n txReceipt1 of linkToken.approve(): ${ JSON.stringify(txReceipt1, null, 2) }`)
@@ -33,12 +33,12 @@ async function main() {
     // //const requestId = JSON.stringify(tx_receipt).events[2].topics[1]
     // console.log("requestId: ", requestId)
 
-    // // ///@dev - Check log of callback ("requestId" that is used and "randomNumber" that is retrieved via VRF)
-    // // let _requestIdUsed = await randomNumberConsumer.requestIdUsed()
-    // // console.log('=== requestIdUsed ===', String(_requestIdUsed))
+    ///@dev - Check log of callback ("requestId" that is used and "randomNumber" that is retrieved via VRF)
+    let _requestIdUsed = await randomNumberConsumer.requestIdUsed()
+    console.log('=== requestIdUsed ===', String(_requestIdUsed))
 
-    // // let _randomResult = await randomNumberConsumer.randomResult()
-    // // console.log('=== randomResult of getRandomNumber() via fulfillRandomness() of the VRFConsumerBase.sol ===', String(_randomResult))
+    let _randomResult = await randomNumberConsumer.randomResult()
+    console.log('=== randomResult of getRandomNumber() via fulfillRandomness() of the VRFConsumerBase.sol ===', String(_randomResult))
 }
 
 /**
