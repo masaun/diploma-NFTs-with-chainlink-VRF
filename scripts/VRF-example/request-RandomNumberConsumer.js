@@ -28,6 +28,7 @@ async function main() {
 
     const tx_receipt = await transaction.wait(1)
     console.log(`\n tx_receipt: ${ JSON.stringify(tx_receipt, null, 2) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
+    
     const requestId = tx_receipt.events[2].topics[1]
     //const requestId = await JSON.stringify(tx_receipt).events
     //const requestId = JSON.stringify(tx_receipt).events[2].topics[1]
