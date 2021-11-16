@@ -6,13 +6,13 @@ async function main() {
     console.log('Should successfully make an external random number request')
 
     //@dev - Create the LINK token contract interface on Rinkeby
-    const LINK_TOKEN = "0x01be23585060835e02b77ef475b0cc51aa1e0709"
+    const LINK_TOKEN = "0xa36085F69e2889c224210F603D836748e7dC0088"
     const linkToken = await ethers.getContractAt('@chainlink/contracts/src/v0.6/interfaces/LinkTokenInterface.sol:LinkTokenInterface', LINK_TOKEN)
 
-    // [NOTE]: Deployed-address of the RandomNumberConsumer.sol on Rinkeby is "0x3066CF2FeA06315BB8D89e407bd985E3643965Bc"
+    // [NOTE]: Deployed-address of the RandomNumberConsumer.sol on Kovan is "0x082A507620b33407151a3C3890069D6B8a6ad379"
 
     //@dev - Get the contract to deploy
-    const RANDOM_NUMBER_CONSUMER = "0x3066CF2FeA06315BB8D89e407bd985E3643965Bc"
+    const RANDOM_NUMBER_CONSUMER = "0x082A507620b33407151a3C3890069D6B8a6ad379"
     //const RandomNumberConsumer = await ethers.getContractFactory("RandomNumberConsumer")
     //const randomNumberConsumer = await RandomNumberConsumer.deploy()
     const randomNumberConsumer = await ethers.getContractAt("RandomNumberConsumer", RANDOM_NUMBER_CONSUMER)
@@ -32,7 +32,7 @@ async function main() {
     console.log(`\n txReceipt1 of linkToken.approve(): ${ JSON.stringify(txReceipt1, null, 2) }`)
 
     //@dev - Test of just transferreing LINK
-    const to = "0xb3dCcb4Cf7a26f6cf6B120Cf5A73875B7BBc655B"
+    const to = "0x082A507620b33407151a3C3890069D6B8a6ad379"   // [NOTE]: This destination address is the contract address of the RandomNumberConsumer.sol
     const amount = linkAmount
     let txReceipt2 = await linkToken.transfer(to, linkAmount)
     console.log(`\n txReceipt2 of linkToken.transfer(): ${ JSON.stringify(txReceipt2, null, 2) }`)

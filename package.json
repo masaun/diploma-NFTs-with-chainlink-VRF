@@ -11,8 +11,11 @@
     "test-integration": "hardhat test test/integration/APIConsumer_int_test.js --network kovan && hardhat test test/integration/RandomNumberConsumer_int_test.js --network kovan",
 
     "script-rinkeby:RandomNumberConsumer": "npx hardhat run scripts/VRF-example/request-RandomNumberConsumer.js --network rinkeby",
+    "script-kovan:RandomNumberConsumer": "npx hardhat run scripts/VRF-example/request-RandomNumberConsumer.js --network kovan",
+
 
     "script-rinkeby:Deploy": "npx hardhat run scripts/deployment/deploy.js --network rinkeby",
+    "script-kovan:Deploy": "npx hardhat run scripts/deployment/deploy.js --network kovan",
 
     "deploy:kovan": "npx hardhat deploy --network kovan",
 
