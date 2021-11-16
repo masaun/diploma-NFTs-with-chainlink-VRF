@@ -4,6 +4,20 @@
 
 <br>
 
+## Deploy
+```
+yarn script-rinkeby:Deploy
+```
+
+<br>
+
+## Script
+```
+yarn script-rinkeby:RandomNumberConsumer
+```
+
+<br>
+
 ## Test
 ```
 yarn test:WeatherNFT

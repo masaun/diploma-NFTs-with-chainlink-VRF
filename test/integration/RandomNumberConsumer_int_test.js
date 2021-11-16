@@ -10,9 +10,12 @@ skip.if(developmentChains.includes(network.name)).
 
     let randomNumberConsumer
 
+    //const RANDOM_NUMBER_CONSUMER = "0xdD3782915140c8f3b190B5D67eAc6dc5760C46E9"
+
     beforeEach(async () => {
       const RandomNumberConsumer = await deployments.get('RandomNumberConsumer')
       randomNumberConsumer = await ethers.getContractAt('RandomNumberConsumer', RandomNumberConsumer.address)
+      //randomNumberConsumer = await ethers.getContractAt('RandomNumberConsumer', RANDOM_NUMBER_CONSUMER)
     })
 
     it('Should successfully make a VRF request and get a result', async () => {
