@@ -14,6 +14,8 @@
 
     "script-rinkeby:Deploy": "npx hardhat run scripts/deployment/deploy.js --network rinkeby",
 
+    "deploy:kovan": "npx hardhat deploy --network kovan",
+
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },

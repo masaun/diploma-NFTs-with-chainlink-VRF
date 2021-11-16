@@ -1,23 +1,28 @@
-//const { ethers } = require("hardhat")
-
-const hre = require("hardhat");
-const ethers = hre.ethers;
+const { ethers } = require("hardhat")
 
 
 async function main() {
 
-    //@dev - Create the LINK token contract interface on Rinkeby    
+    console.log('Should successfully make an external random number request')
+
+    //@dev - Create the LINK token contract interface on Rinkeby
     const LINK_TOKEN = "0x01be23585060835e02b77ef475b0cc51aa1e0709"
     const linkToken = await ethers.getContractAt('@chainlink/contracts/src/v0.6/interfaces/LinkTokenInterface.sol:LinkTokenInterface', LINK_TOKEN)
 
-    // [NOTE]: Deployed-address of the RandomNumberConsumer.sol on Rinkeby is "0x1d17Db082016b5E3f6a609daA58F6ff7081b8A9D"
+    // [NOTE]: Deployed-address of the RandomNumberConsumer.sol on Rinkeby is "0x3066CF2FeA06315BB8D89e407bd985E3643965Bc"
 
     //@dev - Get the contract to deploy
-    const RANDOM_NUMBER_CONSUMER = "0x1d17Db082016b5E3f6a609daA58F6ff7081b8A9D"
+    const RANDOM_NUMBER_CONSUMER = "0x3066CF2FeA06315BB8D89e407bd985E3643965Bc"
     //const RandomNumberConsumer = await ethers.getContractFactory("RandomNumberConsumer")
     //const randomNumberConsumer = await RandomNumberConsumer.deploy()
     const randomNumberConsumer = await ethers.getContractAt("RandomNumberConsumer", RANDOM_NUMBER_CONSUMER)
     console.log("Deployed-address of the RandomNumberConsumer.sol on Rinkeby", randomNumberConsumer.address) 
+
+
+    // const provider = new ethers.providers.JsonRpcProvider()
+    // const signer = provider.getSigner()
+    // const randomNumberConsumerWithSigner = randomNumberConsumer.connect(signer)
+    // console.log('randomNumberConsumerWithSigner: ', randomNumberConsumerWithSigner)
 
     //@dev - Test getRandomNumber()
     console.log('Should successfully make an external random number request')
@@ -31,8 +36,6 @@ async function main() {
     const amount = linkAmount
     let txReceipt2 = await linkToken.transfer(to, linkAmount)
     console.log(`\n txReceipt2 of linkToken.transfer(): ${ JSON.stringify(txReceipt2, null, 2) }`)
-
-
 
     const transaction = await randomNumberConsumer.getRandomNumber({ gasLimit: 250000, gasPrice: 1 })
     console.log(`\n transaction: ${ JSON.stringify(transaction, null, 2) }`)  /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
