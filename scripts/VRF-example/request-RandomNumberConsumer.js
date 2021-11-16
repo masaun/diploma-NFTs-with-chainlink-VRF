@@ -37,11 +37,11 @@ async function main() {
     let txReceipt2 = await linkToken.transfer(to, linkAmount)
     console.log(`\n txReceipt2 of linkToken.transfer(): ${ JSON.stringify(txReceipt2, null, 2) }`)
 
-    const transaction = await randomNumberConsumer.getRandomNumber({ gasLimit: 250000, gasPrice: 1 })
+    const transaction = await randomNumberConsumer.getRandomNumber({ gasLimit: 2500000, gasPrice: 1 })
     console.log(`\n transaction: ${ JSON.stringify(transaction, null, 2) }`)  /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
-    //const tx_receipt = await transaction.wait(1)
-    //console.log(`\n tx_receipt: ${ JSON.stringify(tx_receipt, null, 2) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
+    const tx_receipt = await transaction.wait()
+    console.log(`\n tx_receipt: ${ JSON.stringify(tx_receipt, null, 2) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
     
     //const requestId = tx_receipt.events[2].topics[1]
     //const requestId = await JSON.stringify(tx_receipt).events
