@@ -31,7 +31,7 @@ async function main() {
     const txReceipt1 = await linkToken.approve(RANDOM_NUMBER_CONSUMER, linkAmount) // [Result]: Success
     console.log(`\n txReceipt1 of linkToken.approve(): ${ JSON.stringify(txReceipt1, null, 2) }`)
 
-    const transaction = await randomNumberConsumer.getRandomNumber({ gasLimit: 21064, gasPrice: 100000000000 })  /// [NOTE]: Gas units (limit) * Gas price per unit:  eg). 21,000 * 200 = 4,200,000 gwei or 0.0042 ETH
+    const transaction = await randomNumberConsumer.getRandomNumber({ gasLimit: 210640, gasPrice: 100000000000 })  /// [NOTE]: Gas units (limit) * Gas price per unit:  eg). 21,000 * 200 = 4,200,000 gwei or 0.0042 ETH
     //const transaction = await randomNumberConsumer.getRandomNumber({ gasLimit: 250000, gasPrice: 10000000000000 })  /// [NOTE]: This gasPrice is 10,000,000,000,000 wei (=10,000 Gwei) 
     console.log(`\n transaction: ${ JSON.stringify(transaction, null, 2) }`)  /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
@@ -39,8 +39,6 @@ async function main() {
     console.log(`\n tx_receipt: ${ JSON.stringify(tx_receipt, null, 2) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
     
     const requestId = tx_receipt.events[2].topics[1]
-    // const requestId = await JSON.stringify(tx_receipt).events
-    //const requestId = JSON.stringify(tx_receipt).events[2].topics[1]
     console.log("=== requestId ===", requestId)
 
     ///@dev - Check log of callback ("requestId" that is used and "randomNumber" that is retrieved via VRF)
