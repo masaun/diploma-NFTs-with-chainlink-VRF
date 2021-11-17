@@ -17,9 +17,9 @@ contract RandomNumberConsumer is VRFConsumerBase {
     /**
      * Constructor inherits VRFConsumerBase
      *
-     * Network: Rinkeby
+     * Network: Kovan
      * Chainlink VRF Coordinator address: 0xdD3782915140c8f3b190B5D67eAc6dc5760C46E9
-     * LINK token address:                0xb3dCcb4Cf7a26f6cf6B120Cf5A73875B7BBc655B
+     * LINK token address:                0xa36085F69e2889c224210F603D836748e7dC0088
      * Key Hash: 0x2ed0feb3e7fd2022120aa84fab1945545a9f2ffc9076fd6156fa96eaff4c1311
      * Fee: 0.1 LINK
      */

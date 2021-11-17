@@ -45,10 +45,10 @@ module.exports = {
         },
         kovan: {
             url: KOVAN_RPC_URL,
-             accounts: [PRIVATE_KEY],
-            //accounts: {
-           //     mnemonic: MNEMONIC,
-           // },
+            //accounts: [PRIVATE_KEY],
+            accounts: {
+                mnemonic: MNEMONIC,
+            },
             saveDeployments: true,
         },
         rinkeby: {
