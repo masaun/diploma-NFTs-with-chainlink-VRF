@@ -6,17 +6,20 @@ async function main() {
     console.log('Should successfully make an external random number request')
 
     //@dev - Create the LINK token contract interface on Kovan, Rinkeby
-    //const LINK_TOKEN = "0xa36085F69e2889c224210F603D836748e7dC0088"  // Kovan
-    const LINK_TOKEN = "0x01BE23585060835E02B77ef475b0Cc51aA1e0709"    // Rinkeby
+    const LINK_TOKEN = "0xa36085F69e2889c224210F603D836748e7dC0088"    // Kovan
+    //const LINK_TOKEN = "0x01BE23585060835E02B77ef475b0Cc51aA1e0709"  // Rinkeby
     const linkToken = await ethers.getContractAt('@chainlink/contracts/src/v0.6/interfaces/LinkTokenInterface.sol:LinkTokenInterface', LINK_TOKEN)
 
     // [NOTE]: Deployed-address of the RandomNumberConsumer.sol on Kovan is "0x5d41a0292A7381321A65d430Dda70a7b433a49B5"
 
-    //@dev - Get the contract to deploy
-    //const RANDOM_NUMBER_CONSUMER = "0x5d41a0292A7381321A65d430Dda70a7b433a49B5"  // Kovan
-    const RANDOM_NUMBER_CONSUMER = "0xbBe48Fb018BAF729Be2D51387CeB121FF35E24D3"    // Rinkeby
+    //@dev - Deployed-address of the RandomNumberConsumer.sol
+    const RANDOM_NUMBER_CONSUMER = "0x5d41a0292A7381321A65d430Dda70a7b433a49B5"    // Kovan
+    //const RANDOM_NUMBER_CONSUMER = "0xbBe48Fb018BAF729Be2D51387CeB121FF35E24D3"  // Rinkeby
+
+    //@dev - Get the contract to deploy    
     //const RandomNumberConsumer = await ethers.getContractFactory("RandomNumberConsumer")
     //const randomNumberConsumer = await RandomNumberConsumer.deploy()
+    
     const randomNumberConsumer = await ethers.getContractAt("RandomNumberConsumer", RANDOM_NUMBER_CONSUMER)
     console.log("Deployed-address of the RandomNumberConsumer.sol on Kovan", randomNumberConsumer.address) 
 
