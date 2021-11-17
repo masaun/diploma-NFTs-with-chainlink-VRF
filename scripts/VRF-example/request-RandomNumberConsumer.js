@@ -34,10 +34,10 @@ async function main() {
     //@dev - Test of just transferreing LINK
     const to = "0x082A507620b33407151a3C3890069D6B8a6ad379"   // [NOTE]: This destination address is the contract address of the RandomNumberConsumer.sol
     const amount = linkAmount
-    let txReceipt2 = await linkToken.transfer(to, linkAmount)
-    console.log(`\n txReceipt2 of linkToken.transfer(): ${ JSON.stringify(txReceipt2, null, 2) }`)
+    // let txReceipt2 = await linkToken.transfer(to, linkAmount, { gasLimit: 250000, gasPrice: 10000000000000 })
+    // console.log(`\n txReceipt2 of linkToken.transfer(): ${ JSON.stringify(txReceipt2, null, 2) }`)
 
-    const transaction = await randomNumberConsumer.getRandomNumber({ gasLimit: 250000, gasPrice: 10 })
+    const transaction = await randomNumberConsumer.getRandomNumber({ gasLimit: 250000, gasPrice: 10000000000000 })
     console.log(`\n transaction: ${ JSON.stringify(transaction, null, 2) }`)  /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
     const tx_receipt = await transaction.wait()
