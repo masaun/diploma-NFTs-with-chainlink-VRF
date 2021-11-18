@@ -15,11 +15,23 @@ import { Strings } from "@openzeppelin/contracts/utils/Strings.sol";
  */
 contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
 
+    //----------------------------
+    // RNG via Chainlink VRF
+    //----------------------------
     bytes32 internal keyHash;
     uint256 internal fee;
 
     uint256 public randomResult;   // [Note]: Assign "randomness (randomNumber)" retrieved
     bytes32 public requestIdUsed;  // [Note]: Assign "requestId"
+
+
+    //--------------------------------
+    // NFT (ERC721) related method
+    //--------------------------------
+    uint256 public tokenCounter;  
+
+    mapping(string => string) public diplomaToDiplomaURI;
+
 
     /**
      * Constructor inherits VRFConsumerBase
@@ -39,6 +51,11 @@ contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
         fee = _fee;
     }
 
+
+    //----------------------------
+    // RNG via Chainlink VRF
+    //----------------------------
+
     /**
      * Requests randomness
      */
@@ -55,6 +72,25 @@ contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
     function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
         requestIdUsed = requestId;
         randomResult = randomness;
+    }
+
+
+    //--------------------------------
+    // NFT (ERC721) related method
+    //--------------------------------
+
+    function mintDiplomaNFT() public onlyOwner {
+        _safeMint(msg.sender, tokenCounter);
+        tokenCounter = tokenCounter + 1;
+    }
+
+    function setDiplomaURI(string memory diploma, string memory tokenUri, uint256 tokenId) public onlyOwner {
+        diplomaToDiplomaURI[diploma] = tokenUri;   // [Todo]: Fix
+        // overRideTokenIdToWeatherURI[tokenId] = tokenUri;
+    }
+
+    function tokenURI(uint256 tokenId) public view override (ERC721) returns (string memory) {
+        require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token");
     }
 
 }
