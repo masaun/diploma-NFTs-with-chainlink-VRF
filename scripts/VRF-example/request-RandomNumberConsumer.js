@@ -35,7 +35,7 @@ async function main() {
      *         eg). 21,000 * 200 = 4,200,000 gwei or 0.0042 ETH
      */
     //@dev - Gas Fee the best to call getRandomNumber method = gasLimit (210640 wei) * gasPrice (100000000000 wei = 100 Gwei)
-    const transaction = await randomNumberConsumer.getRandomNumber({ gasLimit: 250000, gasPrice: 1000000000000 })  
+    const transaction = await randomNumberConsumer.getRandomNumber({ gasLimit: 2500000, gasPrice: 100000000000 })  
     console.log(`\n transaction: ${ JSON.stringify(transaction, null, 2) }`)  /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
     const tx_receipt = await transaction.wait()
