@@ -3,9 +3,9 @@ pragma solidity ^0.8.7;
 import { VRFConsumerBase } from "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
 
 /**
- * @notice - This is a smart contract that manage dynamic NFTs using RNG via VRF 
+ * @notice - This is a smart contract that manage the Diploma NFTs using RNG via VRF 
  */
-contract DynamicNFT is VRFConsumerBase {
+contract DiplomaNFT is VRFConsumerBase {
     // [Todo]:
     bytes32 internal keyHash;
     uint256 internal fee;
