@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "compile-kovan": "npx hardhat compile --network kovan",
+
     "test:DynamicWeatherNFT": "hardhat test test/unit/DynamicWeatherNFT/DynamicWeatherNFT_unit_test.js --network hardhat",
     "test:WeatherNFT": "hardhat test test/VRF-examples/weather-nft/weatherTest.js --network hardhat",
     "test:DungeonsAndDragonsCharacters": "hardhat test test/VRF-examples/dungeons-and-dragons-nft/DungeonsAndDragonsCharacters.test.js --network hardhat",

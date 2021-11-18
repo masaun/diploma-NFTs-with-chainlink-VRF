@@ -35,4 +35,22 @@ contract DiplomaNFT is VRFConsumerBase {
         fee = _fee;
     }
 
+    /**
+     * Requests randomness
+     */
+    function getRandomNumber() public returns (bytes32 requestId) {
+        LINK.transferFrom(msg.sender, address(this), fee);  // 1 LINK
+
+        require(LINK.balanceOf(address(this)) >= fee, "Not enough LINK - fill contract with faucet");
+        return requestRandomness(keyHash, fee);
+    }
+
+    /**
+     * Callback function used by VRF Coordinator
+     */
+    function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
+        requestIdUsed = requestId;
+        randomResult = randomness;
+    }
+
 }
