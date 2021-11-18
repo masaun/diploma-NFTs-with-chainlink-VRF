@@ -1,12 +1,20 @@
-pragma solidity ^0.8.7;
+pragma solidity 0.7.6;
 
-import { VRFConsumerBase } from "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
+//@dev - Chainlink VRF
+import { VRFConsumerBase } from "@chainlink/contracts/src/v0.7/VRFConsumerBase.sol";
+//import { VRFConsumerBase } from "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
+
+//@dev - NFT (ERC721)
+import { ERC721 } from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
+import { Strings } from "@openzeppelin/contracts/utils/Strings.sol";
+
 
 /**
  * @notice - This is a smart contract that manage the Diploma NFTs using RNG via VRF 
  */
-contract DiplomaNFT is VRFConsumerBase {
-    // [Todo]:
+contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
+
     bytes32 internal keyHash;
     uint256 internal fee;
 
@@ -22,14 +30,10 @@ contract DiplomaNFT is VRFConsumerBase {
      * Key Hash: 0x2ed0feb3e7fd2022120aa84fab1945545a9f2ffc9076fd6156fa96eaff4c1311
      * Fee: 0.1 LINK     * 
      */
-    constructor(address _vrfCoordinator,
-                address _link,
-                bytes32 _keyHash,
-                uint _fee)
-        VRFConsumerBase(
-            _vrfCoordinator, // VRF Coordinator
-            _link  // LINK Token
-        ) public
+    constructor(address _vrfCoordinator, address _link, bytes32 _keyHash, uint _fee)
+        VRFConsumerBase(_vrfCoordinator, _link) 
+        ERC721("Diploma NFT", "DIPLOMA")
+        public
     {
         keyHash = _keyHash;
         fee = _fee;
