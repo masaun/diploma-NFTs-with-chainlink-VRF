@@ -18,7 +18,7 @@ async function main() {
 
     // [NOTE]: Deployed-address of the DiplomaNFT.sol on Kovan is "0x5d41a0292A7381321A65d430Dda70a7b433a49B5"
     //@dev - Deployed-address of the DiplomaNFT.sol
-    const DIPLOMA_NFT = "0xa0Bc8B49Acf457ec0BB78C8691E3ef427ecc194C"    // Kovan
+    const DIPLOMA_NFT = "0x6e50a2Ae6d59c60f9b9672A49b2048360cBaf26C"    // Kovan
     
     const diplomaNFT = await ethers.getContractAt("DiplomaNFT", DIPLOMA_NFT)
     console.log("Deployed-address of the DiplomaNFT.sol on Kovan", diplomaNFT.address) 
