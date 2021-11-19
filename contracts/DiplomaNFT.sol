@@ -1,17 +1,37 @@
-pragma solidity ^0.8.7;
+pragma solidity 0.7.6;
 
-import { VRFConsumerBase } from "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
+//@dev - Chainlink VRF
+import { VRFConsumerBase } from "@chainlink/contracts/src/v0.7/VRFConsumerBase.sol";
+//import { VRFConsumerBase } from "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
+
+//@dev - NFT (ERC721)
+import { ERC721 } from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
+import { Strings } from "@openzeppelin/contracts/utils/Strings.sol";
+
 
 /**
  * @notice - This is a smart contract that manage the Diploma NFTs using RNG via VRF 
  */
-contract DiplomaNFT is VRFConsumerBase {
-    // [Todo]:
+contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
+
+    //----------------------------
+    // RNG via Chainlink VRF
+    //----------------------------
     bytes32 internal keyHash;
     uint256 internal fee;
 
     uint256 public randomResult;   // [Note]: Assign "randomness (randomNumber)" retrieved
     bytes32 public requestIdUsed;  // [Note]: Assign "requestId"
+
+
+    //--------------------------------
+    // NFT (ERC721) related method
+    //--------------------------------
+    uint256 public tokenCounter;  
+
+    mapping(string => string) public diplomaToDiplomaURI;
+
 
     /**
      * Constructor inherits VRFConsumerBase
@@ -22,17 +42,55 @@ contract DiplomaNFT is VRFConsumerBase {
      * Key Hash: 0x2ed0feb3e7fd2022120aa84fab1945545a9f2ffc9076fd6156fa96eaff4c1311
      * Fee: 0.1 LINK     * 
      */
-    constructor(address _vrfCoordinator,
-                address _link,
-                bytes32 _keyHash,
-                uint _fee)
-        VRFConsumerBase(
-            _vrfCoordinator, // VRF Coordinator
-            _link  // LINK Token
-        ) public
+    constructor(address _vrfCoordinator, address _link, bytes32 _keyHash, uint _fee)
+        VRFConsumerBase(_vrfCoordinator, _link) 
+        ERC721("Diploma NFT", "DIPLOMA")
+        public
     {
         keyHash = _keyHash;
         fee = _fee;
+    }
+
+
+    //----------------------------
+    // RNG via Chainlink VRF
+    //----------------------------
+
+    /**
+     * Requests randomness
+     */
+    function getRandomNumber() public returns (bytes32 requestId) {
+        LINK.transferFrom(msg.sender, address(this), fee);  // 1 LINK
+
+        require(LINK.balanceOf(address(this)) >= fee, "Not enough LINK - fill contract with faucet");
+        return requestRandomness(keyHash, fee);
+    }
+
+    /**
+     * Callback function used by VRF Coordinator
+     */
+    function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
+        requestIdUsed = requestId;
+        randomResult = randomness;
+    }
+
+
+    //--------------------------------
+    // NFT (ERC721) related method
+    //--------------------------------
+
+    function mintDiplomaNFT() public onlyOwner {
+        _safeMint(msg.sender, tokenCounter);
+        tokenCounter = tokenCounter + 1;
+    }
+
+    function setDiplomaURI(string memory diploma, string memory tokenUri, uint256 tokenId) public onlyOwner {
+        diplomaToDiplomaURI[diploma] = tokenUri;   // [Todo]: Fix
+        // overRideTokenIdToWeatherURI[tokenId] = tokenUri;
+    }
+
+    function tokenURI(uint256 tokenId) public view override (ERC721) returns (string memory) {
+        require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token");
     }
 
 }
