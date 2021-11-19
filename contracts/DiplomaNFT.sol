@@ -34,6 +34,8 @@ contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
 
     mapping(string => string) public diplomaToDiplomaURI;
 
+    event DiplomaNFTMinted (address to, uint tokenId);
+
 
     /**
      * Constructor inherits VRFConsumerBase
@@ -86,6 +88,8 @@ contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
     function mintDiplomaNFT() public onlyOwner {
         _safeMint(msg.sender, tokenCounter);
         tokenCounter = tokenCounter + 1;
+
+        emit DiplomaNFTMinted(msg.sender, tokenCounter);
     }
 
     function setDiplomaURI(string memory diploma, string memory tokenUri, uint256 tokenId) public onlyOwner {
