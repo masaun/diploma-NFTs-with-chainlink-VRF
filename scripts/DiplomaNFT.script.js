@@ -13,32 +13,32 @@ async function main() {
     //const LINK_TOKEN = "0x01BE23585060835E02B77ef475b0Cc51aA1e0709"  // Rinkeby
     const linkToken = await ethers.getContractAt('@chainlink/contracts/src/v0.6/interfaces/LinkTokenInterface.sol:LinkTokenInterface', LINK_TOKEN)
 
-    // [NOTE]: Deployed-address of the RandomNumberConsumer.sol on Kovan is "0x5d41a0292A7381321A65d430Dda70a7b433a49B5"
+    // [NOTE]: Deployed-address of the DiplomaNFT.sol on Kovan is "0x5d41a0292A7381321A65d430Dda70a7b433a49B5"
 
-    //@dev - Deployed-address of the RandomNumberConsumer.sol
-    const RANDOM_NUMBER_CONSUMER = "0x5d41a0292A7381321A65d430Dda70a7b433a49B5"    // Kovan
-    //const RANDOM_NUMBER_CONSUMER = "0xbBe48Fb018BAF729Be2D51387CeB121FF35E24D3"  // Rinkeby
+    //@dev - Deployed-address of the DiplomaNFT.sol
+    const DIPLOMA_NFT = "0x5d41a0292A7381321A65d430Dda70a7b433a49B5"    // Kovan
+    //const DIPLOMA_NFT = "0xbBe48Fb018BAF729Be2D51387CeB121FF35E24D3"  // Rinkeby
 
     //@dev - Get the contract to deploy    
-    //const RandomNumberConsumer = await ethers.getContractFactory("RandomNumberConsumer")
-    //const randomNumberConsumer = await RandomNumberConsumer.deploy()
+    //const DiplomaNFT = await ethers.getContractFactory("DiplomaNFT")
+    //const DiplomaNFT = await DiplomaNFT.deploy()
     
-    const randomNumberConsumer = await ethers.getContractAt("RandomNumberConsumer", RANDOM_NUMBER_CONSUMER)
-    console.log("Deployed-address of the RandomNumberConsumer.sol on Kovan", randomNumberConsumer.address) 
+    const diplomaNFT = await ethers.getContractAt("DiplomaNFT", DIPLOMA_NFT)
+    console.log("Deployed-address of the DiplomaNFT.sol on Kovan", diplomaNFT.address) 
 
     //@dev - Test getRandomNumber()
     console.log('Should successfully make an external random number request')
 
     const linkAmount = ethers.utils.parseEther('0.1')  // 0.1 LINK
-    const txReceipt1 = await linkToken.approve(RANDOM_NUMBER_CONSUMER, linkAmount) // [Result]: Success
+    const txReceipt1 = await linkToken.approve(DIPLOMA_NFT, linkAmount) // [Result]: Success
     console.log(`\n txReceipt1 of linkToken.approve(): ${ JSON.stringify(txReceipt1, null, 2) }`)
 
     /**
      * [NOTE]: GasFee = GasLimit (Gas Unit) * GasPrice
      *         eg). 21,000 * 200 = 4,200,000 gwei or 0.0042 ETH
      */
-    //@dev - Gas Fee the best to call getRandomNumber method = gasLimit (210640 wei) * gasPrice (100000000000 wei = 100 Gwei)
-    const transaction = await randomNumberConsumer.getRandomNumber({ gasLimit: 2500000, gasPrice: 100000000000 })  
+    //@dev - Gas Fee the best to call getRandomNumber method = gasLimit (12500000 wei) * gasPrice (10000000000 wei = 10 Gwei)
+    const transaction = await diplomaNFT.getRandomNumber({ gasLimit: 12500000, gasPrice: 10000000000 })  
     console.log(`\n transaction: ${ JSON.stringify(transaction, null, 2) }`)  /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
     const tx_receipt = await transaction.wait()
@@ -48,10 +48,10 @@ async function main() {
     console.log("=== requestId ===", requestId)
 
     ///@dev - Check log of callback ("requestId" that is used and "randomNumber" that is retrieved via VRF)
-    let _requestIdUsed = await randomNumberConsumer.requestIdUsed()
+    let _requestIdUsed = await diplomaNFT.requestIdUsed()
     console.log('=== requestIdUsed ===', String(_requestIdUsed))
 
-    let _randomResult = await randomNumberConsumer.randomResult()
+    let _randomResult = await diplomaNFT.randomResult()
     console.log('=== randomResult of getRandomNumber() via fulfillRandomness() of the VRFConsumerBase.sol ===', String(_randomResult))
 }
 
