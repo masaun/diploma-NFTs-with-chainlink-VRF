@@ -10,18 +10,15 @@ async function main() {
 
     //@dev - Create the LINK token contract interface on Kovan, Rinkeby
     const LINK_TOKEN = "0xa36085F69e2889c224210F603D836748e7dC0088"    // Kovan
-    //const LINK_TOKEN = "0x01BE23585060835E02B77ef475b0Cc51aA1e0709"  // Rinkeby
     const linkToken = await ethers.getContractAt('@chainlink/contracts/src/v0.6/interfaces/LinkTokenInterface.sol:LinkTokenInterface', LINK_TOKEN)
-
-    // [NOTE]: Deployed-address of the DiplomaNFT.sol on Kovan is "0x5d41a0292A7381321A65d430Dda70a7b433a49B5"
-
-    //@dev - Deployed-address of the DiplomaNFT.sol
-    const DIPLOMA_NFT = "0x5d41a0292A7381321A65d430Dda70a7b433a49B5"    // Kovan
-    //const DIPLOMA_NFT = "0xbBe48Fb018BAF729Be2D51387CeB121FF35E24D3"  // Rinkeby
 
     //@dev - Get the contract to deploy    
     //const DiplomaNFT = await ethers.getContractFactory("DiplomaNFT")
     //const DiplomaNFT = await DiplomaNFT.deploy()
+
+    // [NOTE]: Deployed-address of the DiplomaNFT.sol on Kovan is "0x5d41a0292A7381321A65d430Dda70a7b433a49B5"
+    //@dev - Deployed-address of the DiplomaNFT.sol
+    const DIPLOMA_NFT = "0x5d41a0292A7381321A65d430Dda70a7b433a49B5"    // Kovan
     
     const diplomaNFT = await ethers.getContractAt("DiplomaNFT", DIPLOMA_NFT)
     console.log("Deployed-address of the DiplomaNFT.sol on Kovan", diplomaNFT.address) 

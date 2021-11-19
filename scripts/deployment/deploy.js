@@ -28,10 +28,16 @@ async function main() {
     //const _keyHash = "0x2ed0feb3e7fd2022120aa84fab1945545a9f2ffc9076fd6156fa96eaff4c1311"
     //const _fee = ethers.utils.parseEther('0.1')  // 0.1 LINK
 
+
+    ///@dev - RandomNumberConsumer.sol
     const RandomNumberConsumer = await ethers.getContractFactory("RandomNumberConsumer")
     const randomNumberConsumer = await RandomNumberConsumer.deploy(_vrfCoordinator, _link, _keyHash, _fee)
-
     console.log("RandomNumberConsumer deployed to:", randomNumberConsumer.address)
+
+    ///@dev - DiplomaNFT.sol
+    const DiplomaNFT = await ethers.getContractFactory("DiplomaNFT")
+    const diplomaNFT = await DiplomaNFT.deploy(_vrfCoordinator, _link, _keyHash, _fee)
+    console.log("DiplomaNFT deployed to:", diplomaNFT.address)
 }
 
 main()
