@@ -30,9 +30,9 @@ async function main() {
 
 
     ///@dev - RandomNumberConsumer.sol
-    const RandomNumberConsumer = await ethers.getContractFactory("RandomNumberConsumer")
-    const randomNumberConsumer = await RandomNumberConsumer.deploy(_vrfCoordinator, _link, _keyHash, _fee)
-    console.log("RandomNumberConsumer deployed to:", randomNumberConsumer.address)
+    // const RandomNumberConsumer = await ethers.getContractFactory("RandomNumberConsumer")
+    // const randomNumberConsumer = await RandomNumberConsumer.deploy(_vrfCoordinator, _link, _keyHash, _fee)
+    // console.log("RandomNumberConsumer deployed to:", randomNumberConsumer.address)
 
     ///@dev - DiplomaNFT.sol
     const DiplomaNFT = await ethers.getContractFactory("DiplomaNFT")
