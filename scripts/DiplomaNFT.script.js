@@ -48,8 +48,11 @@ async function main() {
     let _requestIdUsed = await diplomaNFT.requestIdUsed()
     console.log('=== requestIdUsed ===', String(_requestIdUsed))
 
-    let _randomResult = await diplomaNFT.randomResult()
-    console.log('=== randomResult of getRandomNumber() via fulfillRandomness() of the VRFConsumerBase.sol ===', String(_randomResult))
+    // let _randomResult = await diplomaNFT.randomResult()
+    // console.log('=== randomResult of getRandomNumber() via fulfillRandomness() of the VRFConsumerBase.sol ===', String(_randomResult))
+
+    let _randomNumber = await diplomaNFT.randomNumber()
+    console.log('=== Random number that is retrieved via getRandomNumber() ===', String(_randomNumber))
 }
 
 /**

@@ -21,7 +21,9 @@ contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
     bytes32 internal keyHash;
     uint256 internal fee;
 
-    uint256 public randomResult;   // [Note]: Assign "randomness (randomNumber)" retrieved
+    mapping (bytes32 => uint256) public randomNumber;   // [Param]: requestId -> randomness (random number) that is retrieved
+
+    //uint256 public randomResult;   // [Note]: Assign "randomness (randomNumber)" retrieved
     bytes32 public requestIdUsed;  // [Note]: Assign "requestId"
 
 
@@ -71,7 +73,9 @@ contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
      */
     function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
         requestIdUsed = requestId;
-        randomResult = randomness;
+
+        //randomResult = randomness;
+        randomNumber[requestId] = randomness;
     }
 
 
