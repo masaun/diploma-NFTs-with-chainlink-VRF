@@ -97,4 +97,8 @@ contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
         require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token");
     }
 
+    function getRandomNumber(bytes32 requestId) public view returns (uint256 _randomNumber) {
+        return randomNumber[requestId];
+    }
+
 }

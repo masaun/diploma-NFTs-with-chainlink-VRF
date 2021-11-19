@@ -18,7 +18,7 @@ async function main() {
 
     // [NOTE]: Deployed-address of the DiplomaNFT.sol on Kovan is "0x5d41a0292A7381321A65d430Dda70a7b433a49B5"
     //@dev - Deployed-address of the DiplomaNFT.sol
-    const DIPLOMA_NFT = "0x755be67d4aEc849EC2Bd24F3bfceF677A55445B8"    // Kovan
+    const DIPLOMA_NFT = "0xa0Bc8B49Acf457ec0BB78C8691E3ef427ecc194C"    // Kovan
     
     const diplomaNFT = await ethers.getContractAt("DiplomaNFT", DIPLOMA_NFT)
     console.log("Deployed-address of the DiplomaNFT.sol on Kovan", diplomaNFT.address) 
@@ -35,7 +35,7 @@ async function main() {
      *         eg). 21,000 * 200 = 4,200,000 gwei or 0.0042 ETH
      */
     //@dev - Gas Fee the best to call getRandomNumber method = gasLimit (12500000 wei) * gasPrice (10000000000 wei = 10 Gwei)
-    const transaction = await diplomaNFT.getRandomNumber({ gasLimit: 12500000, gasPrice: 10000000000 })  
+    const transaction = await diplomaNFT.getRandomNumber({ gasLimit: 12500000, gasPrice: 3000000000 })  
     console.log(`\n transaction: ${ JSON.stringify(transaction, null, 2) }`)  /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
     const tx_receipt = await transaction.wait()
@@ -51,7 +51,8 @@ async function main() {
     // let _randomResult = await diplomaNFT.randomResult()
     // console.log('=== randomResult of getRandomNumber() via fulfillRandomness() of the VRFConsumerBase.sol ===', String(_randomResult))
 
-    let _randomNumber = await diplomaNFT.randomNumber()
+    let _randomNumber = await diplomaNFT.getRandomNumber(_requestIdUsed)
+    //let _randomNumber = await diplomaNFT.randomNumber(String(_requestIdUsed))
     console.log('=== Random number that is retrieved via getRandomNumber() ===', String(_randomNumber))
 }
 
