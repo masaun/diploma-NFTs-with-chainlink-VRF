@@ -34,8 +34,8 @@ async function main() {
      * [NOTE]: GasFee = GasLimit (Gas Unit) * GasPrice
      *         eg). 21,000 * 200 = 4,200,000 gwei or 0.0042 ETH
      */
-    //@dev - Gas Fee the best to call getRandomNumber method = gasLimit (12500000 wei) * gasPrice (10000000000 wei = 10 Gwei)
-    const transaction = await diplomaNFT.getRandomNumber({ gasLimit: 12500000, gasPrice: 10000000000 })  
+    //@dev - Gas Fee the best to call getRandomNumber method: gasLimit (12500000 wei) * gasPrice (10000000000 wei = 10 Gwei) = 0.001 ETH 
+    const transaction = await diplomaNFT.getRandomNumber({ gasLimit: 12500000, gasPrice: 20000000000 })  
     console.log(`\n transaction: ${ JSON.stringify(transaction, null, 2) }`)  /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
     const tx_receipt = await transaction.wait()
@@ -62,9 +62,25 @@ async function main() {
     ///-------------------------------
 
     let txReceipt2 = await diplomaNFT.mintDiplomaNFT()
+    const txHash = txReceipt2.hash
+    console.log('=== txReceipt of diplomaNFT.mintDiplomaNFT() ===', txReceipt2)
 
-    //@dev - Retrieve an event log of "DiplomaNFTMinted"
+    ///@dev - Using how to get "Default Provider" method
+    ///       ( https://docs.ethers.io/v5/api/providers/#providers-getDefaultProvider ) 
+    const currentProvider = ethers.getDefaultProvider(42)  // ChainID=42 is Kovan
+    console.log('=== current provider ===', currentProvider)
+
+    ///@dev - Using "Event Emitter Methods"
+    ///       ( https://docs.ethers.io/v5/api/providers/provider/#Provider--event-methods )    
+    currentProvider.once(txHash, (transaction) => {
+        console.log('=== eventLog (transaction) ===', transaction)
+    })
+
+    ///@dev - Retrieve an event log of "DiplomaNFTMinted"
+    ///@dev - Using "Listening to Events"
+    ///       ( https://docs.ethers.io/v5/single-page/#/v5/getting-started/-%23-getting-started--events ) 
     diplomaNFT.on("DiplomaNFTMinted", (to, tokenId) => {
+        console.log(`An event of "DiplomaNFTMinted" is executed`)
         console.log(`${ to } receieve a DiplomaNFT that is tokenId: ${ tokenId }`)
     })
 }

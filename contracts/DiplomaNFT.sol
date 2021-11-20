@@ -34,7 +34,7 @@ contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
 
     mapping(string => string) public diplomaToDiplomaURI;
 
-    event DiplomaNFTMinted (address to, uint tokenId);
+    event DiplomaNFTMinted (address indexed to, uint indexed tokenId);
 
 
     /**
