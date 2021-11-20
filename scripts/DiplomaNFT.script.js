@@ -37,7 +37,6 @@ async function main() {
     //@dev - Gas Fee the best to call getRandomNumber method: gasLimit (12500000 wei) * gasPrice (10000000000 wei = 10 Gwei) = 0.001 ETH 
     const transaction = await diplomaNFT.getRandomNumber({ gasLimit: 12500000, gasPrice: 30000000000 })  
     console.log(`\n transaction: ${ JSON.stringify(transaction, null, 2) }`)  /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
-
     const tx_receipt = await transaction.wait()
     console.log(`\n tx_receipt: ${ JSON.stringify(tx_receipt, null, 2) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
     
