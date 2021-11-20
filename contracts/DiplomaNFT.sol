@@ -24,7 +24,7 @@ contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
     mapping (bytes32 => uint256) public randomNumberStored;   // [Param]: requestId -> randomness (random number) that is retrieved
 
     //uint256 public randomResult;   // [Note]: Assign "randomness (randomNumber)" retrieved
-    bytes32 public requestIdUsed;  // [Note]: Assign "requestId"
+    bytes32 public requestIdUsed;    // [Note]: Assign "requestId"
 
 
     //--------------------------------

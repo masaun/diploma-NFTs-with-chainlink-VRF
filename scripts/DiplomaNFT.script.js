@@ -35,7 +35,7 @@ async function main() {
      *         eg). 21,000 * 200 = 4,200,000 gwei or 0.0042 ETH
      */
     //@dev - Gas Fee the best to call getRandomNumber method = gasLimit (12500000 wei) * gasPrice (10000000000 wei = 10 Gwei)
-    const transaction = await diplomaNFT.getRandomNumber({ gasLimit: 12500000, gasPrice: 8000000000 })  
+    const transaction = await diplomaNFT.getRandomNumber({ gasLimit: 12500000, gasPrice: 10000000000 })  
     console.log(`\n transaction: ${ JSON.stringify(transaction, null, 2) }`)  /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
     const tx_receipt = await transaction.wait()
@@ -63,7 +63,12 @@ async function main() {
 
     let txReceipt2 = await diplomaNFT.mintDiplomaNFT()
 
+    //@dev - Retrieve an event log of "DiplomaNFTMinted"
+    diplomaNFT.on("DiplomaNFTMinted", (to, tokenId) => {
+        console.log(`${ to } receieve a DiplomaNFT that is tokenId: ${ tokenId }`)
+    })
 }
+
 
 /**
  * @dev - Execute scripts
