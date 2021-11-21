@@ -4,6 +4,7 @@
   "description": "",
   "scripts": {
     "compile-kovan": "npx hardhat compile --network kovan",
+    "compile-mumbai": "npx hardhat compile --network mumbai",
 
     "test:DynamicWeatherNFT": "hardhat test test/unit/DynamicWeatherNFT/DynamicWeatherNFT_unit_test.js --network hardhat",
     "test:WeatherNFT": "hardhat test test/VRF-examples/weather-nft/weatherTest.js --network hardhat",
