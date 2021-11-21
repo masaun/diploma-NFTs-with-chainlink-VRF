@@ -85,11 +85,15 @@ contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
     // NFT (ERC721) related method
     //--------------------------------
 
-    function mintDiplomaNFT() public onlyOwner {
+    function mintDiplomaNFT() public onlyOwner returns (bytes32 _requestId) {
         _safeMint(msg.sender, tokenCounter);
         tokenCounter = tokenCounter + 1;
 
+        bytes32 requestId = getRandomNumber();
+
         emit DiplomaNFTMinted(msg.sender, tokenCounter);
+
+        return requestId;
     }
 
     function setDiplomaURI(string memory diploma, string memory tokenUri, uint256 tokenId) public onlyOwner {
