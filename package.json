@@ -15,8 +15,10 @@
     
     "script-rinkeby:RandomNumberConsumer": "npx hardhat run scripts/VRF-example/request-RandomNumberConsumer.js --network rinkeby",
     "script-kovan:RandomNumberConsumer": "npx hardhat run scripts/chainlink-default-examples/request-RandomNumberConsumer.js --network kovan",
+    "script-mumbai:RandomNumberConsumer": "npx hardhat run scripts/chainlink-default-examples/request-RandomNumberConsumer.js --network mumbai",
 
     "script-kovan:DiplomaNFT": "npx hardhat run scripts/DiplomaNFT.script.js --network kovan",    
+    "script-mumbai:DiplomaNFT": "npx hardhat run scripts/DiplomaNFT.script.js --network mumbai",    
 
     "script-rinkeby:Deploy": "npx hardhat run scripts/deployment/deploy.js --network rinkeby",
     "script-kovan:Deploy": "npx hardhat run scripts/deployment/deploy.js --network kovan",
