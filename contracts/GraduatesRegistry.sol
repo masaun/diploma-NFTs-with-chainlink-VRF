@@ -25,6 +25,7 @@ contract GraduatesRegistry {
     /**
      * @dev - Constructor 
      */
+
     constructor(DiplomaNFT _diplomaNFT) public {
         diplomaNFT = _diplomaNFT;
     }
@@ -59,6 +60,5 @@ contract GraduatesRegistry {
     function getGraduate(bytes32 graduateId) public view returns (Graduate memory _graduate) {
         return graduates[graduateId];
     }
-
 
 }
