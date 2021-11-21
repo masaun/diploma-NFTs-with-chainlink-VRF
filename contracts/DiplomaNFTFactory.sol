@@ -12,6 +12,7 @@ contract DiplomaNFTFactory {
 
     constructor() public {}
 
+    // [Todo]: Makes name and symble of the DiplomaNFT dynamic.
     function createNewDiplomaNFT(address _vrfCoordinator, address _link, bytes32 _keyHash, uint _fee) public returns (DiplomaNFT _newDiplomaNFT) {
         DiplomaNFT newDiplomaNFT = new DiplomaNFT(_vrfCoordinator, _link, _keyHash, _fee);
         address NEW_DIPLOMA_NFT = address(newDiplomaNFT);

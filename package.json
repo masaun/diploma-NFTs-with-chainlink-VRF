@@ -20,6 +20,7 @@
 
     "script-rinkeby:Deploy": "npx hardhat run scripts/deployment/deploy.js --network rinkeby",
     "script-kovan:Deploy": "npx hardhat run scripts/deployment/deploy.js --network kovan",
+    "script-mumbai:Deploy": "npx hardhat run scripts/deployment/deploy.js --network mumbai",
     
     "deploy:kovan": "npx hardhat deploy --network kovan",
     
