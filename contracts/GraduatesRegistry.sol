@@ -37,7 +37,7 @@ contract GraduatesRegistry {
         graduatesCounter++;
 
         // [Todo]: Create a new graduates ID that is a requestId which was used for retrieving RN (Random Number) via Chainlink-VRF 
-        bytes32 newGraduateId;
+        bytes32 newGraduateId = diplomaNFT.getRandomNumber();  // [NOTE]: Returned-value is "requestId" 
 
         // [Todo]: Assign values into each properties of the Graduate struct
         bytes32 newDiplomaNFTTokenId; // [NOTE]: Token ID of the DiplomaNFT 
