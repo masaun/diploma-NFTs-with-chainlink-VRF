@@ -11,9 +11,6 @@ contract GraduatesRegistry {
     //@dev - Variable to count total number of graduates
     uint256 graduatesCounter;
 
-    //@dev - Contract instance
-    DiplomaNFT public immutable diplomaNFT;
-
     struct Graduate {
         bytes32 graduateId;        // [NOTE]: This graduate ID is random number that is retrieved via Chainlink VRF
         bytes32 diplomaNFTTokenId; // [NOTE]: Token ID of the DiplomaNFT 
@@ -25,15 +22,15 @@ contract GraduatesRegistry {
     /**
      * @dev - Constructor 
      */
-
-    constructor(DiplomaNFT _diplomaNFT) public {
-        diplomaNFT = _diplomaNFT;
-    }
+    constructor() public {}
 
     /**
-     * @dev - Register a new graduate
+     * @dev - A new graduate is registered by owner of each college or university.
      */
-    function registerNewGraduate() public returns (bool) {
+    function registerNewGraduate(DiplomaNFT _diplomaNFT) public returns (bool) {
+        //@dev - Contract instance
+        DiplomaNFT diplomaNFT = _diplomaNFT;
+
         //@dev - Count up total number of graduates
         graduatesCounter++;
 
