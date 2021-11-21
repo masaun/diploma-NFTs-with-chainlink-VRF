@@ -46,9 +46,16 @@ contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
      * Key Hash: 0x2ed0feb3e7fd2022120aa84fab1945545a9f2ffc9076fd6156fa96eaff4c1311
      * Fee: 0.1 LINK     * 
      */
-    constructor(address _vrfCoordinator, address _link, bytes32 _keyHash, uint _fee)
+    constructor(
+        string memory _diplomaNFTName,
+        string memory _diplomaNFTSymbol,
+        address _vrfCoordinator, 
+        address _link, 
+        bytes32 _keyHash, 
+        uint _fee
+    )
         VRFConsumerBase(_vrfCoordinator, _link) 
-        ERC721("Diploma NFT", "DIPLOMA")
+        ERC721(_diplomaNFTName, _diplomaNFTSymbol)
         public
     {
         keyHash = _keyHash;
