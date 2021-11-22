@@ -9,6 +9,7 @@ module.exports = async ({
   const chainId = await getChainId()
   let linkTokenAddress
   let additionalMessage = ""
+  
   //set log level to ignore non errors
   ethers.utils.Logger.setLogLevel(ethers.utils.Logger.levels.ERROR)
   const networkName = networkConfig[chainId]['name']
