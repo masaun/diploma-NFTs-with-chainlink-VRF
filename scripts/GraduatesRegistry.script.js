@@ -9,8 +9,8 @@ async function main() {
     console.log('---- This is a script file for the GraduatesRegistry.sol ---')
 
     //@dev - Deployed-addresses
-    const DIPLOMA_NFT_FACTORY = "0x588e6addEa18751e7d114aC405F317Bfa4EE91c7"  // Kovan    
-    const GRADUATES_REGISTRY = "0xE42BD27BF6Ee139179Ab0e806C15b1c67BceB952"   // Kovan
+    const DIPLOMA_NFT_FACTORY = "0x7c449C34F1179E9EfAf7A8D99515D470BaF70651"  // Kovan    
+    const GRADUATES_REGISTRY = "0x14C722A813C359332d1d9D9E5F897a89b6d11B45"   // Kovan
     //const GRADUATES_REGISTRY = "0xc4d5A87471185eB469bd86c8758061393E22a31d" // Polygon-Mumbai
     
     const diplomaNFTFactory = await ethers.getContractAt("DiplomaNFTFactory", DIPLOMA_NFT_FACTORY)
@@ -23,7 +23,18 @@ async function main() {
     const _diplomaNFTName = "Diploma of the East University"
     const _diplomaNFTSymbol = "DIPLOMA_OF_EAST_UNIVERSITY" 
     let txReceipt = await diplomaNFTFactory.createNewDiplomaNFT(_diplomaNFTName, _diplomaNFTSymbol)
-    let DIPLOMA_NFT = "<Should be assigned from eventLog>"
+
+    // const currentProvider = ethers.getDefaultProvider(42)  // ChainID=42 is Kovan   
+    // currentProvider.once(txReceipt.value.hash, (transaction) => {
+    //     console.log('=== eventLog (transaction) ===', transaction)
+    // })
+ 
+    // let eventLog
+    // diplomaNFTFactory.on("DiplomaNFTCreated", (newDiplomaNFT, eventLog) => {
+    //     console.log(`An event of "DiplomaNFTCreated" is executed: `, newDiplomaNFT, eventLog)
+    // })
+
+    let DIPLOMA_NFT = await diplomaNFTFactory.getDiplomaNFTAddressCreatedTheLatest()
     console.log(`=== DIPLOMA_NFT ===`, DIPLOMA_NFT)
 
 

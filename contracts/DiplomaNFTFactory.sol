@@ -69,6 +69,7 @@ contract DiplomaNFTFactory {
      * @dev - Get a DiplomaNFT address that is created the latest
      */
     function getDiplomaNFTAddressCreatedTheLatest() public view returns (address _diplomaNFTAddressCreatedTheLatest) {
-        return diplomaNFTsList[diplomaNFTsCounter];
+        uint256 index = diplomaNFTsCounter - 1;
+        return diplomaNFTsList[index];
     }
 }
