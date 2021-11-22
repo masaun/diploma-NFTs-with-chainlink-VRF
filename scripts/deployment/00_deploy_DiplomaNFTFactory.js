@@ -1,6 +1,10 @@
 const { ethers } = require("hardhat")
 
 
+/**
+ * @dev - This is a deployment file for the DiplomaNFTFactory.sol
+ * Network: Kovan or Polygon-Mumbai
+ */
 async function main() {
     /**
      * Network: Kovan
@@ -46,10 +50,10 @@ async function main() {
     // const randomNumberConsumer = await RandomNumberConsumer.deploy(_vrfCoordinator, _link, _keyHash, _fee)
     // console.log("RandomNumberConsumer deployed to:", randomNumberConsumer.address)
 
-    ///@dev - DiplomaNFT.sol
-    const DiplomaNFT = await ethers.getContractFactory("DiplomaNFT")
-    const diplomaNFT = await DiplomaNFT.deploy(_vrfCoordinator, _link, _keyHash, _fee)
-    console.log("DiplomaNFT deployed to:", diplomaNFT.address)
+    ///@dev - DiplomaNFTFactory.sol
+    const DiplomaNFTFactory = await ethers.getContractFactory("DiplomaNFTFactory")
+    const diplomaNFTFactory = await DiplomaNFTFactory.deploy(_vrfCoordinator, _link, _keyHash, _fee)
+    console.log("DiplomaNFTFactory deployed to:", diplomaNFTFactory.address)
 }
 
 main()

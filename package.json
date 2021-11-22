@@ -24,9 +24,9 @@
     "script-kovan:GraduatesRegistry": "npx hardhat run scripts/GraduatesRegistry.script.js --network kovan",
     "script-mumbai:GraduatesRegistry": "npx hardhat run scripts/GraduatesRegistry.script.js --network mumbai",
 
-    "script-rinkeby:Deploy": "npx hardhat run scripts/deployment/00_deploy_DiplomaNFT.js --network rinkeby && npx hardhat run scripts/deployment/01_deploy_GraduatesRegistry.js --network rinkeby",
-    "script-kovan:Deploy": "npx hardhat run scripts/deployment/00_deploy_DiplomaNFT.js --network kovan && npx hardhat run scripts/deployment/01_deploy_GraduatesRegistry.js --network kovan",
-    "script-mumbai:Deploy": "npx hardhat run scripts/deployment/00_deploy_DiplomaNFT.js --network mumbai && npx hardhat run scripts/deployment/01_deploy_GraduatesRegistry.js --network mumbai",
+    "script-rinkeby:Deploy": "npx hardhat run scripts/deployment/00_deploy_DiplomaNFTFactory.js --network rinkeby && npx hardhat run scripts/deployment/01_deploy_GraduatesRegistry.js --network rinkeby",
+    "script-kovan:Deploy": "npx hardhat run scripts/deployment/00_deploy_DiplomaNFTFactory.js --network kovan && npx hardhat run scripts/deployment/01_deploy_GraduatesRegistry.js --network kovan",
+    "script-mumbai:Deploy": "npx hardhat run scripts/deployment/00_deploy_DiplomaNFTFactory.js --network mumbai && npx hardhat run scripts/deployment/01_deploy_GraduatesRegistry.js --network mumbai",
     
     "deploy:kovan": "npx hardhat deploy --network kovan",
     

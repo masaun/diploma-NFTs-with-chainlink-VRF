@@ -13,10 +13,6 @@ async function main() {
     //const LINK_TOKEN = "0xa36085F69e2889c224210F603D836748e7dC0088"    // Kovan
     const linkToken = await ethers.getContractAt('@chainlink/contracts/src/v0.6/interfaces/LinkTokenInterface.sol:LinkTokenInterface', LINK_TOKEN)
 
-    //@dev - Get the contract to deploy
-    //const DiplomaNFT = await ethers.getContractFactory("DiplomaNFT")
-    //const DiplomaNFT = await DiplomaNFT.deploy()
-
     // [NOTE]: Deployed-address of the DiplomaNFT.sol on Kovan is "0x5d41a0292A7381321A65d430Dda70a7b433a49B5"
     //@dev - Deployed-address of the DiplomaNFT.sol
     const DIPLOMA_NFT = "0x328D4Fb130c06c9901b564945d772cA4bd6f7CBb"    // Polygon-Mumbai
