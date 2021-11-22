@@ -18,6 +18,12 @@ contract DiplomaNFTFactory {
     //@dev - Created-contract address of DiplomaNFTs are assigned into this variable.
     address[] diplomaNFTsList;
 
+    //@dev - Counter of the DiplomaNFT created
+    uint256 diplomaNFTsCounter;  // [NOTE]: Counter is startted from "0"
+
+    //@dev - Event
+    event DiplomaNFTCreated(address indexed newDiplomaNFT);
+
     /**
      * Constructor inherits VRFConsumerBase
      *
@@ -52,8 +58,17 @@ contract DiplomaNFTFactory {
         address NEW_DIPLOMA_NFT = address(newDiplomaNFT);
 
         diplomaNFTsList.push(NEW_DIPLOMA_NFT);
+        diplomaNFTsCounter++;
+
+        emit DiplomaNFTCreated(NEW_DIPLOMA_NFT);
 
         return newDiplomaNFT;
     }
 
+    /**
+     * @dev - Get a DiplomaNFT address that is created the latest
+     */
+    function getDiplomaNFTAddressCreatedTheLatest() public view returns (address _diplomaNFTAddressCreatedTheLatest) {
+        return diplomaNFTsList[diplomaNFTsCounter];
+    }
 }
