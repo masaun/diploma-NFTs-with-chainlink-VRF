@@ -42,7 +42,9 @@ async function main() {
     //@dev - Register a new graduate
     //@dev - Gas Fee the best to call getRandomNumber method: gasLimit (12500000 wei) * gasPrice (10000000000 wei = 10 Gwei) = 0.001 ETH 
     console.log('registerNewGraduate() - Should successfully execute registerNewGraduate()')
-    const transaction = await graduatesRegistry.registerNewGraduate(DIPLOMA_NFT, { gasLimit: 12500000, gasPrice: 10000000000 })  // Kovan
+
+    const graduate = "0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1" /// [NOTE]: This is an example of wallet address of a new graduate.  
+    const transaction = await graduatesRegistry.registerNewGraduate(DIPLOMA_NFT, graduate, { gasLimit: 12500000, gasPrice: 10000000000 })  // Kovan
     console.log(`\n transaction: ${ JSON.stringify(transaction, null, 2) }`)  /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
     const tx_receipt = await transaction.wait()
