@@ -34,6 +34,7 @@ async function main() {
     //     console.log(`An event of "DiplomaNFTCreated" is executed: `, newDiplomaNFT, eventLog)
     // })
 
+    //@dev - Using getDiplomaNFTAddressCreatedTheLatest() instead of using eventLog of "DiplomaNFTCreated" in order to retrieve a DiplomaNFT's address
     let DIPLOMA_NFT = await diplomaNFTFactory.getDiplomaNFTAddressCreatedTheLatest()
     console.log(`=== DIPLOMA_NFT ===`, DIPLOMA_NFT)
 

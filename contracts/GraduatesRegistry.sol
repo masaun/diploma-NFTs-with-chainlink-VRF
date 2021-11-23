@@ -27,7 +27,7 @@ contract GraduatesRegistry {
     /**
      * @dev - A new graduate is registered by owner of each college or university.
      */
-    function registerNewGraduate(DiplomaNFT _diplomaNFT) public returns (bool) {
+    function registerNewGraduate(DiplomaNFT _diplomaNFT, address graduate) public returns (bool) {
         //@dev - Contract instance
         DiplomaNFT diplomaNFT = _diplomaNFT;
 
@@ -35,7 +35,7 @@ contract GraduatesRegistry {
         graduatesCounter++;
 
         // [Todo]: Create a new graduates ID that is a requestId which was used for retrieving RN (Random Number) via Chainlink-VRF 
-        bytes32 newGraduateId = diplomaNFT.mintDiplomaNFT();  // [NOTE]: Returned-value is "requestId" 
+        bytes32 newGraduateId = diplomaNFT.mintDiplomaNFT(graduate);  // [NOTE]: Returned-value is "requestId" 
 
         // [Todo]: Assign values into each properties of the Graduate struct
         bytes32 newDiplomaNFTTokenId; // [NOTE]: Token ID of the DiplomaNFT 
