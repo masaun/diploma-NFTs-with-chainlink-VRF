@@ -24,16 +24,7 @@ async function main() {
     const _diplomaNFTSymbol = "DIPLOMA_OF_EAST_UNIVERSITY" 
     let txReceipt = await diplomaNFTFactory.createNewDiplomaNFT(_diplomaNFTName, _diplomaNFTSymbol)
 
-    // const currentProvider = ethers.getDefaultProvider(42)  // ChainID=42 is Kovan   
-    // currentProvider.once(txReceipt.value.hash, (transaction) => {
-    //     console.log('=== eventLog (transaction) ===', transaction)
-    // })
- 
-    // let eventLog
-    // diplomaNFTFactory.on("DiplomaNFTCreated", (newDiplomaNFT, eventLog) => {
-    //     console.log(`An event of "DiplomaNFTCreated" is executed: `, newDiplomaNFT, eventLog)
-    // })
-
+    //@dev - Using getDiplomaNFTAddressCreatedTheLatest() instead of using eventLog of "DiplomaNFTCreated" in order to retrieve a DiplomaNFT's address
     let DIPLOMA_NFT = await diplomaNFTFactory.getDiplomaNFTAddressCreatedTheLatest()
     console.log(`=== DIPLOMA_NFT ===`, DIPLOMA_NFT)
 
@@ -41,7 +32,17 @@ async function main() {
     //@dev - Register a new graduate
     //@dev - Gas Fee the best to call getRandomNumber method: gasLimit (12500000 wei) * gasPrice (10000000000 wei = 10 Gwei) = 0.001 ETH 
     console.log('registerNewGraduate() - Should successfully execute registerNewGraduate()')
-    const transaction = await graduatesRegistry.registerNewGraduate(DIPLOMA_NFT, { gasLimit: 12500000, gasPrice: 10000000000 })  // Kovan
+
+    //@dev - Approve spending $LINK Token for the GraduatesRegistry.sol
+    const LINK_TOKEN = "0xa36085F69e2889c224210F603D836748e7dC0088"  // Kovan
+    const linkToken = await ethers.getContractAt('@chainlink/contracts/src/v0.7/interfaces/LinkTokenInterface.sol:LinkTokenInterface', LINK_TOKEN)
+    const linkAmount = ethers.utils.parseEther('0.1')  // 0.1 LINK
+    const txReceipt2 = await linkToken.approve(GRADUATES_REGISTRY, linkAmount)
+    console.log(`\n txReceipt that linkToken.approve() for the GraduatesRegistry.sol: ${ JSON.stringify(txReceipt2, null, 2) }`)
+    const tx_receipt_2 = await txReceipt2.wait()  /// [NOTE]: Next step must wait until linkToken.approve() is finished
+
+    const graduate = "0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1" /// [NOTE]: This is an example of wallet address of a new graduate.  
+    const transaction = await graduatesRegistry.registerNewGraduate(DIPLOMA_NFT, graduate, { gasLimit: 12500000, gasPrice: 10000000000 })  // Kovan
     console.log(`\n transaction: ${ JSON.stringify(transaction, null, 2) }`)  /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
     const tx_receipt = await transaction.wait()

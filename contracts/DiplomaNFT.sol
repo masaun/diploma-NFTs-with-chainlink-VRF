@@ -92,8 +92,14 @@ contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
     // NFT (ERC721) related method
     //--------------------------------
 
-    function mintDiplomaNFT() public returns (bytes32 _requestId) {
-        _safeMint(msg.sender, tokenCounter);
+    /**
+     * @dev - Mint a new Diploma NFT.
+     * @param graduate - "to" address that NFT minted will be transferred. Eligible address assigned is a new graduate's address 
+     */
+    function mintDiplomaNFT(address graduate) public returns (bytes32 _requestId) {
+        _safeMint(graduate, tokenCounter);      // [NOTE]: In case of this, a receiver of a new Diploma NFT minted is "graduate" address specified.
+        //_safeMint(msg.sender, tokenCounter);  // [NOTE]: In case of this, mintDiplomaNFT() is called from the GraduatesRegistry.sol and therefore "msg.sender" is the GraduatesRegistry.sol and the GraduatesRegistry.sol will receive a new Diploma NFT minted. 
+        
         tokenCounter = tokenCounter + 1;
 
         bytes32 requestId = getRandomNumber();

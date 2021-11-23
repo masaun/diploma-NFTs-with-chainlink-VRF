@@ -3,10 +3,15 @@ pragma abicoder v2;
 
 import { DiplomaNFT } from "./DiplomaNFT.sol";
 
+import { LinkTokenInterface } from "@chainlink/contracts/src/v0.7/interfaces/LinkTokenInterface.sol";
+
+
 /**
  * @notice - This is a smart contract for graduates registry.
  */
 contract GraduatesRegistry {
+
+    LinkTokenInterface public linkToken;
 
     //@dev - Variable to count total number of graduates
     uint256 graduatesCounter;
@@ -22,12 +27,19 @@ contract GraduatesRegistry {
     /**
      * @dev - Constructor 
      */
-    constructor() public {}
+    constructor(LinkTokenInterface _linkToken) public {
+        linkToken = _linkToken;
+    }
 
     /**
      * @dev - A new graduate is registered by owner of each college or university.
      */
-    function registerNewGraduate(DiplomaNFT _diplomaNFT) public returns (bool) {
+    function registerNewGraduate(DiplomaNFT _diplomaNFT, address graduate) public returns (bool) {
+        //@dev - $LINK Token in order to send a request of random number to Chainlink-VRF
+        //@dev - [NOTE]: In advance, a user who execute this method must approve spending $LINK Token by this contract
+        uint256 feeAmount = 1e17;  // 0.1 LINK
+        linkToken.transferFrom(msg.sender, address(this), feeAmount);
+
         //@dev - Contract instance
         DiplomaNFT diplomaNFT = _diplomaNFT;
 
@@ -35,7 +47,7 @@ contract GraduatesRegistry {
         graduatesCounter++;
 
         // [Todo]: Create a new graduates ID that is a requestId which was used for retrieving RN (Random Number) via Chainlink-VRF 
-        bytes32 newGraduateId = diplomaNFT.mintDiplomaNFT();  // [NOTE]: Returned-value is "requestId" 
+        bytes32 newGraduateId = diplomaNFT.mintDiplomaNFT(graduate);  // [NOTE]: Returned-value is "requestId" 
 
         // [Todo]: Assign values into each properties of the Graduate struct
         bytes32 newDiplomaNFTTokenId; // [NOTE]: Token ID of the DiplomaNFT 
