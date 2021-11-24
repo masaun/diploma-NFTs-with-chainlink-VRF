@@ -34,10 +34,10 @@ contract GraduatesRegistry {
     /**
      * @dev - A new graduate is registered by owner of each college or university.
      */
-    function registerNewGraduate(DiplomaNFT _diplomaNFT, address graduate) public returns (bool) {
+    function registerNewGraduate(DiplomaNFT _diplomaNFT, address graduate, uint256 feeAmount) public returns (bool) {
         //@dev - $LINK Token in order to send a request of random number to Chainlink-VRF
         //@dev - [NOTE]: In advance, a user who execute this method must approve spending $LINK Token by this contract
-        uint256 feeAmount = 1e17;  // 0.1 LINK
+        //uint256 feeAmount = 1e17;  // 0.1 LINK
         linkToken.transferFrom(msg.sender, address(this), feeAmount);
 
         //@dev - Contract instance
