@@ -102,7 +102,7 @@ contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
         
         tokenCounter = tokenCounter + 1;
 
-        bytes32 requestId = getRandomNumber();
+        bytes32 requestId = getRandomNumber(); // [Error]: This row is cause of error
 
         emit DiplomaNFTMinted(msg.sender, tokenCounter);
 
