@@ -35,8 +35,7 @@ async function main() {
     //@dev - Approve spending $LINK Token for the GraduatesRegistry.sol
     const LINK_TOKEN = "0xa36085F69e2889c224210F603D836748e7dC0088"  // Kovan
     const linkToken = await ethers.getContractAt('@chainlink/contracts/src/v0.7/interfaces/LinkTokenInterface.sol:LinkTokenInterface', LINK_TOKEN)
-    const linkAmount = ethers.utils.parseEther('1')      // 1 LINK
-    //const linkAmount = ethers.utils.parseEther('0.1')  // 0.1 LINK
+    const linkAmount = ethers.utils.parseEther('0.1')  // 0.1 LINK
     const txReceipt2 = await linkToken.approve(GRADUATES_REGISTRY, linkAmount)
     console.log(`\n txReceipt that linkToken.approve() for the GraduatesRegistry.sol: ${ JSON.stringify(txReceipt2, null, 2) }`)
     const tx_receipt_2 = await txReceipt2.wait()  /// [NOTE]: Next step must wait until linkToken.approve() is finished
@@ -57,11 +56,12 @@ async function main() {
     console.log("=== requestId ===", requestId)
 
     ///@dev - Check log of callback ("requestId" that is used and "randomNumber" that is retrieved via VRF)
-    let _requestIdUsed = await randomNumberConsumer.requestIdUsed()
+    const diplomaNFT = await ethers.getContractAt("DiplomaNFT", DIPLOMA_NFT)
+    let _requestIdUsed = await diplomaNFT.requestIdUsed()
     console.log('=== requestIdUsed ===', String(_requestIdUsed))
 
-    let _randomResult = await randomNumberConsumer.randomResult()
-    console.log('=== randomResult of getRandomNumber() via fulfillRandomness() of the VRFConsumerBase.sol ===', String(_randomResult))
+    let _randomResult = await diplomaNFT.randomNumberStored()
+    console.log('=== randomNumberStored of DiplomaNFT that is retrieved via getRandomNumber() that the VRFConsumerBase.sol is used ===', String(_randomResult))
 
 }
 
