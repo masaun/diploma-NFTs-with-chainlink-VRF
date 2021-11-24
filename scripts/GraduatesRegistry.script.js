@@ -9,8 +9,8 @@ async function main() {
     console.log('---- This is a script file for the GraduatesRegistry.sol ---')
 
     //@dev - Deployed-addresses
-    const DIPLOMA_NFT_FACTORY = "0x7c449C34F1179E9EfAf7A8D99515D470BaF70651"  // Kovan    
-    const GRADUATES_REGISTRY = "0x14C722A813C359332d1d9D9E5F897a89b6d11B45"   // Kovan
+    const DIPLOMA_NFT_FACTORY = "0x5d1a9d12656496B4842f569b598a93Cd8aa1ED03"  // Kovan    
+    const GRADUATES_REGISTRY = "0xB55ae04943545B53B753E8A3FBD4609c8FE4aAA5"   // Kovan
     //const GRADUATES_REGISTRY = "0xc4d5A87471185eB469bd86c8758061393E22a31d" // Polygon-Mumbai
     
     const diplomaNFTFactory = await ethers.getContractAt("DiplomaNFTFactory", DIPLOMA_NFT_FACTORY)
@@ -28,7 +28,6 @@ async function main() {
     let DIPLOMA_NFT = await diplomaNFTFactory.getDiplomaNFTAddressCreatedTheLatest()
     console.log(`=== DIPLOMA_NFT ===`, DIPLOMA_NFT)
 
-
     //@dev - Register a new graduate
     //@dev - Gas Fee the best to call getRandomNumber method: gasLimit (12500000 wei) * gasPrice (10000000000 wei = 10 Gwei) = 0.001 ETH 
     console.log('registerNewGraduate() - Should successfully execute registerNewGraduate()')
@@ -42,7 +41,7 @@ async function main() {
     const tx_receipt_2 = await txReceipt2.wait()  /// [NOTE]: Next step must wait until linkToken.approve() is finished
 
     const graduate = "0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1" /// [NOTE]: This is an example of wallet address of a new graduate.  
-    const transaction = await graduatesRegistry.registerNewGraduate(DIPLOMA_NFT, graduate, linkAmount, { gasLimit: 12500000, gasPrice: 10000000000 })  // Kovan
+    const transaction = await graduatesRegistry.registerNewGraduate(DIPLOMA_NFT, graduate, { gasLimit: 12500000, gasPrice: 10000000000 })  // Kovan
     console.log(`\n transaction: ${ JSON.stringify(transaction, null, 2) }`)  /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
     const tx_receipt = await transaction.wait()
