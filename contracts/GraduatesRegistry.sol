@@ -37,7 +37,7 @@ contract GraduatesRegistry {
     function registerNewGraduate(DiplomaNFT _diplomaNFT, address graduate) public returns (bool) {
         //@dev - $LINK Token in order to send a request of random number to Chainlink-VRF
         //@dev - [NOTE]: In advance, a user who execute this method must approve spending $LINK Token by this contract
-        uint256 feeAmount = 1 * 1e17;  // 0.1 LINK
+        uint256 feeAmount = 1 * 1e18;  // 1 LINK
         linkToken.transferFrom(msg.sender, address(this), feeAmount);
 
         //@dev - Contract instance
@@ -50,17 +50,17 @@ contract GraduatesRegistry {
         // [Todo]: Create a new graduates ID that is a requestId which was used for retrieving RN (Random Number) via Chainlink-VRF 
         bytes32 newGraduateId = diplomaNFT.mintDiplomaNFT(graduate);  // [NOTE]: Returned-value is "requestId" 
 
-        // // [Todo]: Assign values into each properties of the Graduate struct
-        // bytes32 newDiplomaNFTTokenId; // [NOTE]: Token ID of the DiplomaNFT 
-        // string memory newGraduateName;
-        // address newGraduateAddress;
+        // [Todo]: Assign values into each properties of the Graduate struct
+        bytes32 newDiplomaNFTTokenId; // [NOTE]: Token ID of the DiplomaNFT 
+        string memory newGraduateName;
+        address newGraduateAddress;
 
-        // // [Todo]: Store data of a new graduate
-        // Graduate storage graduate = graduates[newGraduateId];
-        // graduate.graduateId = newGraduateId;
-        // graduate.diplomaNFTTokenId = newDiplomaNFTTokenId;
-        // graduate.graduateName = newGraduateName;
-        // graduate.graduateAddress = newGraduateAddress;
+        // [Todo]: Store data of a new graduate
+        Graduate storage graduate = graduates[newGraduateId];
+        graduate.graduateId = newGraduateId;
+        graduate.diplomaNFTTokenId = newDiplomaNFTTokenId;
+        graduate.graduateName = newGraduateName;
+        graduate.graduateAddress = newGraduateAddress;
     }
 
 

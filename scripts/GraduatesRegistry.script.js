@@ -9,8 +9,8 @@ async function main() {
     console.log('---- This is a script file for the GraduatesRegistry.sol ---')
 
     //@dev - Deployed-addresses
-    const DIPLOMA_NFT_FACTORY = "0x5d1a9d12656496B4842f569b598a93Cd8aa1ED03"  // Kovan    
-    const GRADUATES_REGISTRY = "0xB55ae04943545B53B753E8A3FBD4609c8FE4aAA5"   // Kovan
+    const DIPLOMA_NFT_FACTORY = "0x569f7ab0993e22a0d6EdD4f6355ACed34010921e"  // Kovan    
+    const GRADUATES_REGISTRY = "0x162e37075650a8a89Cf6CBC9B7F9004d2591cE75"   // Kovan
     //const GRADUATES_REGISTRY = "0xc4d5A87471185eB469bd86c8758061393E22a31d" // Polygon-Mumbai
     
     const diplomaNFTFactory = await ethers.getContractAt("DiplomaNFTFactory", DIPLOMA_NFT_FACTORY)
@@ -35,7 +35,8 @@ async function main() {
     //@dev - Approve spending $LINK Token for the GraduatesRegistry.sol
     const LINK_TOKEN = "0xa36085F69e2889c224210F603D836748e7dC0088"  // Kovan
     const linkToken = await ethers.getContractAt('@chainlink/contracts/src/v0.7/interfaces/LinkTokenInterface.sol:LinkTokenInterface', LINK_TOKEN)
-    const linkAmount = ethers.utils.parseEther('0.1')  // 0.1 LINK
+    const linkAmount = ethers.utils.parseEther('1')      // 1 LINK
+    //const linkAmount = ethers.utils.parseEther('0.1')  // 0.1 LINK
     const txReceipt2 = await linkToken.approve(GRADUATES_REGISTRY, linkAmount)
     console.log(`\n txReceipt that linkToken.approve() for the GraduatesRegistry.sol: ${ JSON.stringify(txReceipt2, null, 2) }`)
     const tx_receipt_2 = await txReceipt2.wait()  /// [NOTE]: Next step must wait until linkToken.approve() is finished
