@@ -6,25 +6,25 @@ import { DiplomaNFT } from "./DiplomaNFT.sol";
 import { LinkTokenInterface } from "@chainlink/contracts/src/v0.7/interfaces/LinkTokenInterface.sol";
 
 //@dev - Chainlink VRF
-import { VRFConsumerBase } from "@chainlink/contracts/src/v0.7/VRFConsumerBase.sol";
+//import { VRFConsumerBase } from "@chainlink/contracts/src/v0.7/VRFConsumerBase.sol";
 
 
 /**
  * @notice - This is a smart contract for graduates registry.
  */
-contract GraduatesRegistry is VRFConsumerBase {
-//contract GraduatesRegistry {
+//contract GraduatesRegistry is VRFConsumerBase {
+contract GraduatesRegistry {
 
-    //----------------------------
-    // RNG via Chainlink VRF
-    //----------------------------
-    bytes32 internal keyHash;
-    uint256 internal fee;
+    // //----------------------------
+    // // RNG via Chainlink VRF
+    // //----------------------------
+    // bytes32 internal keyHash;
+    // uint256 internal fee;
 
-    mapping (bytes32 => uint256) public randomNumberStored;   // [Param]: requestId -> randomness (random number) that is retrieved
+    // mapping (bytes32 => uint256) public randomNumberStored;   // [Param]: requestId -> randomness (random number) that is retrieved
 
-    //uint256 public randomResult;   // [Note]: Assign "randomness (randomNumber)" retrieved
-    bytes32 public requestIdUsed;    // [Note]: Assign "requestId"
+    // //uint256 public randomResult;   // [Note]: Assign "randomness (randomNumber)" retrieved
+    // bytes32 public requestIdUsed;    // [Note]: Assign "requestId"
 
 
 
@@ -53,16 +53,18 @@ contract GraduatesRegistry is VRFConsumerBase {
      * Fee: 0.1 LINK     * 
      */
     constructor(
-        LinkTokenInterface _linkToken,
-        address _vrfCoordinator, 
-        address _link, 
-        bytes32 _keyHash, 
-        uint _fee
-    ) public VRFConsumerBase(_vrfCoordinator, _link) {
+        LinkTokenInterface _linkToken
+        // address _vrfCoordinator, 
+        // address _link, 
+        // bytes32 _keyHash, 
+        // uint _fee
+    ) 
+        public 
+        //VRFConsumerBase(_vrfCoordinator, _link) 
+    {
         linkToken = _linkToken;
-
-        keyHash = _keyHash;
-        fee = _fee;        
+        // keyHash = _keyHash;
+        // fee = _fee;
     }
 
     /**
@@ -83,9 +85,9 @@ contract GraduatesRegistry is VRFConsumerBase {
 
         // [Error]: Arise an error here now
         // [Todo]: Create a new graduates ID that is a requestId which was used for retrieving RN (Random Number) via Chainlink-VRF 
-        //linkToken.approve(DIPLOMA_NFT, feeAmount);
-        //bytes32 newGraduateId = diplomaNFT.mintDiplomaNFT(graduate);  // [NOTE]: Returned-value is "requestId" 
-        bytes32 newGraduateId = getRandomNumber(); // [NOTE]: Returned-value is "requestId" 
+        linkToken.approve(DIPLOMA_NFT, feeAmount);
+        bytes32 newGraduateId = diplomaNFT.mintDiplomaNFT(graduate);  // [NOTE]: Returned-value is "requestId" 
+        //bytes32 newGraduateId = getRandomNumber();                  // [NOTE]: Returned-value is "requestId" 
 
         // [Todo]: Assign values into each properties of the Graduate struct
         bytes32 newDiplomaNFTTokenId; // [NOTE]: Token ID of the DiplomaNFT 
@@ -116,28 +118,28 @@ contract GraduatesRegistry is VRFConsumerBase {
     /**
      * Requests randomness
      */
-    function getRandomNumber() public returns (bytes32 requestId) {
-        LINK.transferFrom(msg.sender, address(this), fee);  // 1 LINK
+    // function getRandomNumber() public returns (bytes32 requestId) {
+    //     LINK.transferFrom(msg.sender, address(this), fee);  // 1 LINK
 
-        require(LINK.balanceOf(address(this)) >= fee, "Not enough LINK - fill contract with faucet");
-        return requestRandomness(keyHash, fee);
-    }
+    //     require(LINK.balanceOf(address(this)) >= fee, "Not enough LINK - fill contract with faucet");
+    //     return requestRandomness(keyHash, fee);
+    // }
 
     /**
      * Callback function used by VRF Coordinator
      */
-    function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
-        requestIdUsed = requestId;
+    // function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
+    //     requestIdUsed = requestId;
 
-        //randomResult = randomness;
-        randomNumberStored[requestId] = randomness;
-    }
+    //     //randomResult = randomness;
+    //     randomNumberStored[requestId] = randomness;
+    // }
 
     /**
      * Get a existing random number stored
      */
-    function getRandomNumberStored(bytes32 requestId) public view returns (uint256 _randomNumberStored) {
-        return randomNumberStored[requestId];
-    }
+    // function getRandomNumberStored(bytes32 requestId) public view returns (uint256 _randomNumberStored) {
+    //     return randomNumberStored[requestId];
+    // }
 
 }

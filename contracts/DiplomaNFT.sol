@@ -1,7 +1,7 @@
 pragma solidity 0.7.6;
 
 //@dev - Chainlink VRF
-//import { VRFConsumerBase } from "@chainlink/contracts/src/v0.7/VRFConsumerBase.sol";
+import { VRFConsumerBase } from "@chainlink/contracts/src/v0.7/VRFConsumerBase.sol";
 
 //@dev - NFT (ERC721)
 import { ERC721 } from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
@@ -12,19 +12,19 @@ import { Strings } from "@openzeppelin/contracts/utils/Strings.sol";
 /**
  * @notice - This is a smart contract that manage the Diploma NFTs using RNG via VRF 
  */
-contract DiplomaNFT is ERC721, Ownable {
-//contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
+//contract DiplomaNFT is ERC721, Ownable {
+contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
 
-    // //----------------------------
-    // // RNG via Chainlink VRF
-    // //----------------------------
-    // bytes32 internal keyHash;
-    // uint256 internal fee;
+    //----------------------------
+    // RNG via Chainlink VRF
+    //----------------------------
+    bytes32 internal keyHash;
+    uint256 internal fee;
 
-    // mapping (bytes32 => uint256) public randomNumberStored;   // [Param]: requestId -> randomness (random number) that is retrieved
+    mapping (bytes32 => uint256) public randomNumberStored;   // [Param]: requestId -> randomness (random number) that is retrieved
 
-    // //uint256 public randomResult;   // [Note]: Assign "randomness (randomNumber)" retrieved
-    // bytes32 public requestIdUsed;    // [Note]: Assign "requestId"
+    //uint256 public randomResult;   // [Note]: Assign "randomness (randomNumber)" retrieved
+    bytes32 public requestIdUsed;    // [Note]: Assign "requestId"
 
 
     //--------------------------------
@@ -48,44 +48,44 @@ contract DiplomaNFT is ERC721, Ownable {
      */
     constructor(
         string memory _diplomaNFTName,
-        string memory _diplomaNFTSymbol
-        // address _vrfCoordinator, 
-        // address _link, 
-        // bytes32 _keyHash, 
-        // uint _fee
+        string memory _diplomaNFTSymbol,
+        address _vrfCoordinator, 
+        address _link, 
+        bytes32 _keyHash, 
+        uint _fee
     )
-        // VRFConsumerBase(_vrfCoordinator, _link) 
+        VRFConsumerBase(_vrfCoordinator, _link) 
         ERC721(_diplomaNFTName, _diplomaNFTSymbol)
         public
     {
-        // keyHash = _keyHash;
-        // fee = _fee;
+        keyHash = _keyHash;
+        fee = _fee;
     }
 
 
-    // //----------------------------
-    // // RNG via Chainlink VRF
-    // //----------------------------
+    //----------------------------
+    // RNG via Chainlink VRF
+    //----------------------------
 
-    // /**
-    //  * Requests randomness
-    //  */
-    // function getRandomNumber() public returns (bytes32 requestId) {
-    //     LINK.transferFrom(msg.sender, address(this), fee);  // 1 LINK
+    /**
+     * Requests randomness
+     */
+    function getRandomNumber() public returns (bytes32 requestId) {
+        LINK.transferFrom(msg.sender, address(this), fee);  // 1 LINK
 
-    //     require(LINK.balanceOf(address(this)) >= fee, "Not enough LINK - fill contract with faucet");
-    //     return requestRandomness(keyHash, fee);
-    // }
+        require(LINK.balanceOf(address(this)) >= fee, "Not enough LINK - fill contract with faucet");
+        return requestRandomness(keyHash, fee);
+    }
 
-    // /**
-    //  * Callback function used by VRF Coordinator
-    //  */
-    // function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
-    //     requestIdUsed = requestId;
+    /**
+     * Callback function used by VRF Coordinator
+     */
+    function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
+        requestIdUsed = requestId;
 
-    //     //randomResult = randomness;
-    //     randomNumberStored[requestId] = randomness;
-    // }
+        //randomResult = randomness;
+        randomNumberStored[requestId] = randomness;
+    }
 
 
     //--------------------------------
@@ -96,18 +96,18 @@ contract DiplomaNFT is ERC721, Ownable {
      * @dev - Mint a new Diploma NFT.
      * @param graduate - "to" address that NFT minted will be transferred. Eligible address assigned is a new graduate's address 
      */
-    function mintDiplomaNFT(address graduate) public returns (bool) {
-    //function mintDiplomaNFT(address graduate) public returns (bytes32 _requestId) {
+    //function mintDiplomaNFT(address graduate) public returns (bool) {
+    function mintDiplomaNFT(address graduate) public returns (bytes32 _requestId) {
         _safeMint(graduate, tokenCounter);      // [NOTE]: In case of this, a receiver of a new Diploma NFT minted is "graduate" address specified.
         //_safeMint(msg.sender, tokenCounter);  // [NOTE]: In case of this, mintDiplomaNFT() is called from the GraduatesRegistry.sol and therefore "msg.sender" is the GraduatesRegistry.sol and the GraduatesRegistry.sol will receive a new Diploma NFT minted. 
         
         tokenCounter = tokenCounter + 1;
 
-        //bytes32 requestId = getRandomNumber(); // [Error]: This row is cause of error
+        bytes32 requestId = getRandomNumber(); // [Error]: This row is cause of error
 
         emit DiplomaNFTMinted(msg.sender, tokenCounter);
 
-        //return requestId;
+        return requestId;
     }
 
     function setDiplomaURI(string memory diploma, string memory tokenUri, uint256 tokenId) public {
@@ -122,8 +122,8 @@ contract DiplomaNFT is ERC721, Ownable {
     /**
      * Get a existing random number stored
      */
-    // function getRandomNumberStored(bytes32 requestId) public view returns (uint256 _randomNumberStored) {
-    //     return randomNumberStored[requestId];
-    // }
+    function getRandomNumberStored(bytes32 requestId) public view returns (uint256 _randomNumberStored) {
+        return randomNumberStored[requestId];
+    }
 
 }

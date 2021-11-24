@@ -9,8 +9,8 @@ async function main() {
     console.log('---- This is a script file for the GraduatesRegistry.sol ---')
 
     //@dev - Deployed-addresses
-    const DIPLOMA_NFT_FACTORY = "0x5838A26CCbc9C8B915955625353FCaB61288b311"  // Kovan    
-    const GRADUATES_REGISTRY = "0x1A5cC95E4dfD7d4933cAd45324Af79085Ad99B5b"   // Kovan
+    const DIPLOMA_NFT_FACTORY = "0x2b3C382612df6A4e2D1b460481a386956f585B0F"  // Kovan    
+    const GRADUATES_REGISTRY = "0x7658f04A88B78fCCba48AB47e39921929C6a1020"   // Kovan
     //const GRADUATES_REGISTRY = "0xc4d5A87471185eB469bd86c8758061393E22a31d" // Polygon-Mumbai
     
     const diplomaNFTFactory = await ethers.getContractAt("DiplomaNFTFactory", DIPLOMA_NFT_FACTORY)

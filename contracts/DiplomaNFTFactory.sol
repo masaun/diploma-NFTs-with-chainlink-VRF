@@ -8,12 +8,12 @@ import { DiplomaNFT } from "./DiplomaNFT.sol";
 contract DiplomaNFTFactory {
 
     //@dev - Variable for getting random number via Chainlink VRF
-    // address internal vrfCoordinator; 
-    // bytes32 internal keyHash;
-    // uint256 internal fee;
+    address internal vrfCoordinator; 
+    bytes32 internal keyHash;
+    uint256 internal fee;
 
     //@dev - LINK Token address
-    // address internal link;
+    address internal link;
 
     //@dev - Created-contract address of DiplomaNFTs are assigned into this variable.
     address[] diplomaNFTsList;
@@ -34,17 +34,17 @@ contract DiplomaNFTFactory {
      * Fee: 0.1 LINK     * 
      */
     constructor(
-        // address _vrfCoordinator, 
-        // address _link, 
-        // bytes32 _keyHash, 
-        // uint _fee
+        address _vrfCoordinator, 
+        address _link, 
+        bytes32 _keyHash, 
+        uint _fee
     ) 
         public
     {
-        // vrfCoordinator = _vrfCoordinator;
-        // link = _link;
-        // keyHash = _keyHash;
-        // fee = _fee;
+        vrfCoordinator = _vrfCoordinator;
+        link = _link;
+        keyHash = _keyHash;
+        fee = _fee;
     }
 
     /**
@@ -54,8 +54,8 @@ contract DiplomaNFTFactory {
         string memory _diplomaNFTName,
         string memory _diplomaNFTSymbol
     ) public returns (DiplomaNFT _newDiplomaNFT) {
-        DiplomaNFT newDiplomaNFT = new DiplomaNFT(_diplomaNFTName, _diplomaNFTSymbol);
-        //DiplomaNFT newDiplomaNFT = new DiplomaNFT(_diplomaNFTName, _diplomaNFTSymbol, vrfCoordinator, link, keyHash, fee);
+        //DiplomaNFT newDiplomaNFT = new DiplomaNFT(_diplomaNFTName, _diplomaNFTSymbol);
+        DiplomaNFT newDiplomaNFT = new DiplomaNFT(_diplomaNFTName, _diplomaNFTSymbol, vrfCoordinator, link, keyHash, fee);
         address NEW_DIPLOMA_NFT = address(newDiplomaNFT);
 
         diplomaNFTsList.push(NEW_DIPLOMA_NFT);
