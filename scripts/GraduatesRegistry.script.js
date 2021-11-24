@@ -48,6 +48,21 @@ async function main() {
     const tx_receipt = await transaction.wait()
     console.log(`\n tx_receipt: ${ JSON.stringify(tx_receipt, null, 2) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
     
+
+    ///------------------------------------------------------------------
+    /// Check requestId and random number that is retrieved and stored
+    ///------------------------------------------------------------------
+
+    const requestId = tx_receipt.events[2].topics[1]
+    console.log("=== requestId ===", requestId)
+
+    ///@dev - Check log of callback ("requestId" that is used and "randomNumber" that is retrieved via VRF)
+    let _requestIdUsed = await randomNumberConsumer.requestIdUsed()
+    console.log('=== requestIdUsed ===', String(_requestIdUsed))
+
+    let _randomResult = await randomNumberConsumer.randomResult()
+    console.log('=== randomResult of getRandomNumber() via fulfillRandomness() of the VRFConsumerBase.sol ===', String(_randomResult))
+
 }
 
 
