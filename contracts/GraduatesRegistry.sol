@@ -42,12 +42,14 @@ contract GraduatesRegistry {
 
         //@dev - Contract instance
         DiplomaNFT diplomaNFT = _diplomaNFT;
+        address DIPLOMA_NFT = address(diplomaNFT);
 
         //@dev - Count up total number of graduates
         graduatesCounter++;
 
         // [Error]: Now
         // [Todo]: Create a new graduates ID that is a requestId which was used for retrieving RN (Random Number) via Chainlink-VRF 
+        linkToken.approve(DIPLOMA_NFT, feeAmount);
         bytes32 newGraduateId = diplomaNFT.mintDiplomaNFT(graduate);  // [NOTE]: Returned-value is "requestId" 
 
         // [Todo]: Assign values into each properties of the Graduate struct
