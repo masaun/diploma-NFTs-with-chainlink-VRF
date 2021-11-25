@@ -446,7 +446,7 @@ async function main() {
             let eventLogs = iface.decodeEventLog("RandomnessRequest", _data, _topics)  // [NOTE]: Retrieve an event of "RandomnessRequest"
             console.log(`=== eventLogs of "RandomnessRequest" ===`, eventLogs)
 
-            const requestId = eventLogs[4]
+            const requestId = eventLogs.requestID
             console.log(`=== requestId ===`, requestId)
         }
     }
@@ -456,11 +456,12 @@ async function main() {
 
     ///@dev - Check log of callback ("requestId" that is used and "randomNumber" that is retrieved via VRF)
     const diplomaNFT = await ethers.getContractAt("DiplomaNFT", DIPLOMA_NFT)
-    let _requestIdUsed = await diplomaNFT.requestIdUsed()
-    console.log('=== requestIdUsed ===', String(_requestIdUsed))
+    // let _requestIdUsed = await diplomaNFT.requestIdUsed()
+    // console.log('=== requestIdUsed ===', String(_requestIdUsed))
 
-    let _randomResult = await diplomaNFT.randomNumberStored(_requestIdUsed)
-    console.log('=== randomNumberStored of DiplomaNFT that is retrieved via getRandomNumber() that the VRFConsumerBase.sol is used ===', String(_randomResult))
+    let _randomResult = await diplomaNFT.randomNumberStored(requestId)
+    //let _randomResult = await diplomaNFT.randomNumberStored(_requestIdUsed)
+    console.log('=== randomNumberStored ===', String(_randomResult))
 
 
     ///--------------------------------------------------------------------------------
