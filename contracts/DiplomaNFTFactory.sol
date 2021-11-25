@@ -54,6 +54,7 @@ contract DiplomaNFTFactory {
         string memory _diplomaNFTName,
         string memory _diplomaNFTSymbol
     ) public returns (DiplomaNFT _newDiplomaNFT) {
+        //DiplomaNFT newDiplomaNFT = new DiplomaNFT(_diplomaNFTName, _diplomaNFTSymbol);
         DiplomaNFT newDiplomaNFT = new DiplomaNFT(_diplomaNFTName, _diplomaNFTSymbol, vrfCoordinator, link, keyHash, fee);
         address NEW_DIPLOMA_NFT = address(newDiplomaNFT);
 

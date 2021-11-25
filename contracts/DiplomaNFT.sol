@@ -2,7 +2,6 @@ pragma solidity 0.7.6;
 
 //@dev - Chainlink VRF
 import { VRFConsumerBase } from "@chainlink/contracts/src/v0.7/VRFConsumerBase.sol";
-//import { VRFConsumerBase } from "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
 
 //@dev - NFT (ERC721)
 import { ERC721 } from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
@@ -13,6 +12,7 @@ import { Strings } from "@openzeppelin/contracts/utils/Strings.sol";
 /**
  * @notice - This is a smart contract that manage the Diploma NFTs using RNG via VRF 
  */
+//contract DiplomaNFT is ERC721, Ownable {
 contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
 
     //----------------------------
@@ -96,6 +96,7 @@ contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
      * @dev - Mint a new Diploma NFT.
      * @param graduate - "to" address that NFT minted will be transferred. Eligible address assigned is a new graduate's address 
      */
+    //function mintDiplomaNFT(address graduate) public returns (bool) {
     function mintDiplomaNFT(address graduate) public returns (bytes32 _requestId) {
         _safeMint(graduate, tokenCounter);      // [NOTE]: In case of this, a receiver of a new Diploma NFT minted is "graduate" address specified.
         //_safeMint(msg.sender, tokenCounter);  // [NOTE]: In case of this, mintDiplomaNFT() is called from the GraduatesRegistry.sol and therefore "msg.sender" is the GraduatesRegistry.sol and the GraduatesRegistry.sol will receive a new Diploma NFT minted. 
@@ -118,6 +119,9 @@ contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
         require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token");
     }
 
+    /**
+     * Get a existing random number stored
+     */
     function getRandomNumberStored(bytes32 requestId) public view returns (uint256 _randomNumberStored) {
         return randomNumberStored[requestId];
     }
