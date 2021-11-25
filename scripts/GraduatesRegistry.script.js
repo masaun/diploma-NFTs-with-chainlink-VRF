@@ -53,16 +53,16 @@ async function main() {
     /// Check requestId and random number that is retrieved and stored
     ///------------------------------------------------------------------
 
-    // const requestId = tx_receipt.events[2].topics[1]
-    // console.log("=== requestId ===", requestId)
+    const requestId = tx_receipt.events[0].topics[1]
+    console.log("=== requestId ===", requestId)
 
-    // ///@dev - Check log of callback ("requestId" that is used and "randomNumber" that is retrieved via VRF)
-    // const diplomaNFT = await ethers.getContractAt("DiplomaNFT", DIPLOMA_NFT)
-    // let _requestIdUsed = await diplomaNFT.requestIdUsed()
-    // console.log('=== requestIdUsed ===', String(_requestIdUsed))
+    ///@dev - Check log of callback ("requestId" that is used and "randomNumber" that is retrieved via VRF)
+    const diplomaNFT = await ethers.getContractAt("DiplomaNFT", DIPLOMA_NFT)
+    let _requestIdUsed = await diplomaNFT.requestIdUsed()
+    console.log('=== requestIdUsed ===', String(_requestIdUsed))
 
-    // let _randomResult = await diplomaNFT.randomNumberStored()
-    // console.log('=== randomNumberStored of DiplomaNFT that is retrieved via getRandomNumber() that the VRFConsumerBase.sol is used ===', String(_randomResult))
+    let _randomResult = await diplomaNFT.randomNumberStored(_requestIdUsed)
+    console.log('=== randomNumberStored of DiplomaNFT that is retrieved via getRandomNumber() that the VRFConsumerBase.sol is used ===', String(_randomResult))
 
 }
 
