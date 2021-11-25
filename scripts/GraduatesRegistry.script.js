@@ -9,8 +9,8 @@ async function main() {
     console.log('---- This is a script file for the GraduatesRegistry.sol ---')
 
     //@dev - Deployed-addresses
-    const DIPLOMA_NFT_FACTORY = "0x2b3C382612df6A4e2D1b460481a386956f585B0F"  // Kovan    
-    const GRADUATES_REGISTRY = "0x7658f04A88B78fCCba48AB47e39921929C6a1020"   // Kovan
+    const DIPLOMA_NFT_FACTORY = "0xF5940FAAFeEFab8df1B6E4cD3cED2878C22b2A94"  // Kovan    
+    const GRADUATES_REGISTRY = "0x8D96158D55Db5eF407674aB525E22B4eDE5bfa91"   // Kovan
     //const GRADUATES_REGISTRY = "0xc4d5A87471185eB469bd86c8758061393E22a31d" // Polygon-Mumbai
     
     const diplomaNFTFactory = await ethers.getContractAt("DiplomaNFTFactory", DIPLOMA_NFT_FACTORY)
@@ -79,6 +79,10 @@ async function main() {
             //@dev - Retrieve a requestId used via an event log of "RandomnessRequest"
             const requestId = eventLogs.requestID
             console.log(`=== requestId ===`, requestId)
+
+            //@dev - Test
+            let _randomResult2 = await diplomaNFT.randomResult()
+            console.log('=== randomResult ===', String(_randomResult2))
 
             //@dev - Retrieve a random number by using requestId used via an event log of "RandomnessRequest"
             let _randomResult = await diplomaNFT.randomNumberStored(requestId)
