@@ -87,7 +87,6 @@ contract GraduatesRegistry {
         // [Todo]: Create a new graduates ID that is a requestId which was used for retrieving RN (Random Number) via Chainlink-VRF 
         linkToken.approve(DIPLOMA_NFT, feeAmount);
         bytes32 newGraduateId = diplomaNFT.mintDiplomaNFT(graduate);  // [NOTE]: Returned-value is "requestId" 
-        //bytes32 newGraduateId = getRandomNumber();                  // [NOTE]: Returned-value is "requestId" 
 
         // [Todo]: Assign values into each properties of the Graduate struct
         bytes32 newDiplomaNFTTokenId; // [NOTE]: Token ID of the DiplomaNFT 

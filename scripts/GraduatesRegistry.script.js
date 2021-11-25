@@ -42,7 +42,7 @@ async function main() {
     const tx_receipt_2 = await txReceipt2.wait()  /// [NOTE]: Next step must wait until linkToken.approve() is finished
 
     const graduate = "0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1" /// [NOTE]: This is an example of wallet address of a new graduate.  
-    const transaction = await graduatesRegistry.registerNewGraduate(DIPLOMA_NFT, graduate, { gasLimit: 12500000, gasPrice: 25000000000 })  // Kovan
+    const transaction = await graduatesRegistry.registerNewGraduate(DIPLOMA_NFT, graduate, { gasLimit: 12500000, gasPrice: 35000000000 })  // Kovan
     console.log(`\n transaction: ${ JSON.stringify(transaction, null, 2) }`)  /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
     const tx_receipt = await transaction.wait()
@@ -53,15 +53,16 @@ async function main() {
     /// Check requestId and random number that is retrieved and stored
     ///------------------------------------------------------------------
 
-    ///@dev - Check log of callback ("requestId" that is used and "randomNumber" that is retrieved via VRF)
+    //@dev - Check log of callback ("requestId" that is used and "randomNumber" that is retrieved via VRF)
     const diplomaNFT = await ethers.getContractAt("DiplomaNFT", DIPLOMA_NFT)
-
-    console.log("=== tx_receipt.events.length ===", tx_receipt.events.length)
 
     //@dev - ABI of the VRFCoodinator.sol
     const ABI_OF_VRF_COORDINATOR = require("@chainlink/contracts/abi/v0.6/VRFCoordinator.json") 
 
+    //@dev - Deployed-address of the VRFCoordinator.sol on Kovan 
     const VRF_COORDINATOR = "0xdD3782915140c8f3b190B5D67eAc6dc5760C46E9"  // Chainlink-VRF coordinator on Kovan
+
+    console.log("=== tx_receipt.events.length ===", tx_receipt.events.length)
     for (let i=0; tx_receipt.events.length - 1; i++) {
         let addressInLog = tx_receipt.events[i].address
         if (addressInLog == VRF_COORDINATOR) {
@@ -83,6 +84,10 @@ async function main() {
             let _randomResult = await diplomaNFT.randomNumberStored(requestId)
             //let _randomResult = await diplomaNFT.randomNumberStored(_requestIdUsed)
             console.log('=== randomNumberStored ===', String(_randomResult))
+
+            //@dev - Test an alternative way to retrieve the result of request of random nuber
+            let _randomResultByAlternativeWay = await diplomaNFT.getRandomNumberStoredTheLatest()
+            console.log('=== randomResultByAlternativeWay ===', String(_randomResultByAlternativeWay))
         }
     }
 
