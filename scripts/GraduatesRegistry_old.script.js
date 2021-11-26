@@ -3,7 +3,6 @@ const { ethers } = require("hardhat")
 
 /**
  * @notice - This is a script file for the GraduatesRegistry.sol
- * @notice - This script is that getRandomNumber() and mintDiplomaNFT() are executed separately.
  */ 
 async function main() {
 
@@ -100,6 +99,50 @@ async function main() {
         let _randomResultByAlternativeWay = await diplomaNFT.getRandomNumberStoredTheLatest()
         console.log('=== randomResultByAlternativeWay ===', String(_randomResultByAlternativeWay))
     }
+
+    // for (let i=0; tx_receipt.events.length - 1; i++) {
+    //     let addressInLog = tx_receipt.events[i].address
+    //     if (addressInLog == VRF_COORDINATOR) {
+    //         const _topics = tx_receipt.events[i].topics
+    //         const _data = tx_receipt.events[i].data
+
+    //         //@dev - Create an interface (iface) for getting eventLog of "RandomnessRequest" below 
+    //         const iface = new ethers.utils.Interface(ABI_OF_VRF_COORDINATOR)
+
+    //         //@dev - Retrieve an event log of "RandomnessRequest" that is defined in the VRFCoodinator.sol
+    //         let eventLogs = iface.decodeEventLog("RandomnessRequest", _data, _topics)  // [NOTE]: Retrieve an event of "RandomnessRequest"
+    //         console.log(`=== eventLogs of "RandomnessRequest" ===`, eventLogs)
+
+    //         //@dev - Retrieve a requestId used via an event log of "RandomnessRequest"
+    //         const requestId = eventLogs.requestID
+    //         console.log(`=== requestId ===`, requestId)
+
+    //         //@dev - Wait 10 seconds
+    //         await new Promise(resolve => setTimeout(resolve, 10000))    // 10 seconds
+
+    //         //@dev - GET a random number that is stored in "randomResult"
+    //         let _randomResult2 = await diplomaNFT.randomResult()
+    //         console.log('=== randomResult ===', String(_randomResult2))
+
+    //         //@dev - Retrieve a random number by using requestId used via an event log of "RandomnessRequest"
+    //         let _randomResult = await diplomaNFT.randomNumberStored(requestId)
+    //         console.log('=== randomNumberStored 1 ===', String(_randomResult))
+
+    //         //@dev - Execute getRandomNumberStored()
+    //         let _randomNumberStored = await diplomaNFT.getRandomNumberStored(String(requestId))
+    //         console.log('=== randomNumberStored 2 ===', String(_randomNumberStored))
+
+    //         //@dev - Test an alternative way to retrieve the result of request of random nuber
+    //         let _randomResultByAlternativeWay = await diplomaNFT.getRandomNumberStoredTheLatest()
+    //         console.log('=== randomResultByAlternativeWay ===', String(_randomResultByAlternativeWay))
+    //     }
+    // }
+
+
+    ///--------------------------------------------------------------------------------
+    /// Check requestId and random number that is retrieved and stored - via EventLogs 
+    ///--------------------------------------------------------------------------------
+
 
 }
 
