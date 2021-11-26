@@ -29,6 +29,17 @@ async function main() {
     let DIPLOMA_NFT = await diplomaNFTFactory.getDiplomaNFTAddressCreatedTheLatest()
     console.log(`=== DIPLOMA_NFT ===`, DIPLOMA_NFT)
 
+    //@dev - Create a DiplomaNFT instance
+    const diplomaNFT = await ethers.getContractAt("DiplomaNFT", DIPLOMA_NFT)
+
+    //@dev - Get a random number
+    let txReceipt4 = await linkToken.approve(DIPLOMA_NFT, linkAmount, { gasLimit: 12500000, gasPrice: 20000000000 })
+    let txReceipt3 = await diplomaNFT.getRandomNumber({ gasLimit: 2500000, gasPrice: 200000000000 })
+    const tx_receipt3 = await txReceipt3.wait()
+    console.log(`\n tx_receipt3: ${ JSON.stringify(tx_receipt3, null, 2) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
+
+
+
     //@dev - Register a new graduate
     //@dev - Gas Fee the best to call getRandomNumber method: gasLimit (12500000 wei) * gasPrice (10000000000 wei = 10 Gwei) = 0.001 ETH 
     console.log('registerNewGraduate() - Should successfully execute registerNewGraduate()')
@@ -53,15 +64,6 @@ async function main() {
     ///------------------------------------------------------------------
     /// Check requestId and random number that is retrieved and stored
     ///------------------------------------------------------------------
-
-    //@dev - Check log of callback ("requestId" that is used and "randomNumber" that is retrieved via VRF)
-    const diplomaNFT = await ethers.getContractAt("DiplomaNFT", DIPLOMA_NFT)
-
-    //@dev - Get a random number
-    let txReceipt4 = await linkToken.approve(DIPLOMA_NFT, linkAmount, { gasLimit: 12500000, gasPrice: 20000000000 })
-    let txReceipt3 = await diplomaNFT.getRandomNumber({ gasLimit: 2500000, gasPrice: 200000000000 })
-    const tx_receipt3 = await txReceipt3.wait()
-    console.log(`\n tx_receipt3: ${ JSON.stringify(tx_receipt3, null, 2) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
     //@dev - ABI of the VRFCoodinator.sol
     const ABI_OF_VRF_COORDINATOR = require("@chainlink/contracts/abi/v0.6/VRFCoordinator.json") 
