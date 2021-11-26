@@ -32,6 +32,8 @@ contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
     //uint256 public randomResult;   // [Note]: Assign "randomness (randomNumber)" retrieved
     bytes32 public requestIdUsed;    // [Note]: Assign "requestId"
 
+    event RandomResultRetrieved(bytes32 indexed requestId, uint256 indexed randomness);
+
 
     //--------------------------------
     // NFT (ERC721) related method
@@ -98,6 +100,9 @@ contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
         //@dev - Using alternative ways
         requestIdsList.push(requestId);
         randomNumbersStoredList.push(randomness);
+
+        //@dev - Emit event of "RandomResultRetrieved"
+        emit RandomResultRetrieved(requestId, randomness);
     }
 
 

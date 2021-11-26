@@ -9,8 +9,8 @@ async function main() {
     console.log('---- This is a script file for the GraduatesRegistry.sol ---')
 
     //@dev - Deployed-addresses
-    const DIPLOMA_NFT_FACTORY = "0xF5940FAAFeEFab8df1B6E4cD3cED2878C22b2A94"  // Kovan    
-    const GRADUATES_REGISTRY = "0x8D96158D55Db5eF407674aB525E22B4eDE5bfa91"   // Kovan
+    const DIPLOMA_NFT_FACTORY = "0x6688Bcf5F991Eec26F5AF0e99Cf26FC71568996B"  // Kovan    
+    const GRADUATES_REGISTRY = "0x0FF1001D1f78b9abdb23c7b37E5a99087E12Ec09"   // Kovan
     //const GRADUATES_REGISTRY = "0xc4d5A87471185eB469bd86c8758061393E22a31d" // Polygon-Mumbai
     
     const diplomaNFTFactory = await ethers.getContractAt("DiplomaNFTFactory", DIPLOMA_NFT_FACTORY)
@@ -47,7 +47,7 @@ async function main() {
 
     const tx_receipt = await transaction.wait()
     console.log(`\n tx_receipt: ${ JSON.stringify(tx_receipt, null, 2) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
-    
+
 
     ///------------------------------------------------------------------
     /// Check requestId and random number that is retrieved and stored
@@ -80,18 +80,20 @@ async function main() {
             const requestId = eventLogs.requestID
             console.log(`=== requestId ===`, requestId)
 
-            //@dev - Test
+            //@dev - Wait 10 seconds
+            await new Promise(resolve => setTimeout(resolve, 10000))    // 10 seconds
+
+            //@dev - GET a random number that is stored in "randomResult"
             let _randomResult2 = await diplomaNFT.randomResult()
             console.log('=== randomResult ===', String(_randomResult2))
 
             //@dev - Retrieve a random number by using requestId used via an event log of "RandomnessRequest"
             let _randomResult = await diplomaNFT.randomNumberStored(requestId)
-            //let _randomResult = await diplomaNFT.randomNumberStored(_requestIdUsed)
-            console.log('=== randomNumberStored ===', String(_randomResult))
+            console.log('=== randomNumberStored 1 ===', String(_randomResult))
 
             //@dev - Execute getRandomNumberStored()
-            let _randomNumberStored = await diplomaNFT.getRandomNumberStored()
-            console.log('=== randomNumberStored ===', String(_randomNumberStored))
+            let _randomNumberStored = await diplomaNFT.getRandomNumberStored(String(requestId))
+            console.log('=== randomNumberStored 2 ===', String(_randomNumberStored))
 
             //@dev - Test an alternative way to retrieve the result of request of random nuber
             let _randomResultByAlternativeWay = await diplomaNFT.getRandomNumberStoredTheLatest()
