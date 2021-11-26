@@ -32,14 +32,6 @@ async function main() {
     //@dev - Create a DiplomaNFT instance
     const diplomaNFT = await ethers.getContractAt("DiplomaNFT", DIPLOMA_NFT)
 
-    //@dev - Get a random number
-    let txReceipt4 = await linkToken.approve(DIPLOMA_NFT, linkAmount, { gasLimit: 12500000, gasPrice: 20000000000 })
-    let txReceipt3 = await diplomaNFT.getRandomNumber({ gasLimit: 2500000, gasPrice: 200000000000 })
-    const tx_receipt3 = await txReceipt3.wait()
-    console.log(`\n tx_receipt3: ${ JSON.stringify(tx_receipt3, null, 2) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
-
-
-
     //@dev - Register a new graduate
     //@dev - Gas Fee the best to call getRandomNumber method: gasLimit (12500000 wei) * gasPrice (10000000000 wei = 10 Gwei) = 0.001 ETH 
     console.log('registerNewGraduate() - Should successfully execute registerNewGraduate()')
@@ -52,6 +44,15 @@ async function main() {
     const txReceipt2 = await linkToken.approve(GRADUATES_REGISTRY, linkAmount, { gasLimit: 12500000, gasPrice: 20000000000 })
     console.log(`\n txReceipt that linkToken.approve() for the GraduatesRegistry.sol: ${ JSON.stringify(txReceipt2, null, 2) }`)
     const tx_receipt_2 = await txReceipt2.wait()  /// [NOTE]: Next step must wait until linkToken.approve() is finished
+
+
+    //@dev - Get a random number
+    let txReceipt4 = await linkToken.approve(DIPLOMA_NFT, linkAmount, { gasLimit: 12500000, gasPrice: 20000000000 })
+    let txReceipt3 = await diplomaNFT.getRandomNumber({ gasLimit: 2500000, gasPrice: 200000000000 })
+    const tx_receipt_3 = await txReceipt3.wait()
+    console.log(`\n tx_receipt_3: ${ JSON.stringify(tx_receipt_3, null, 2) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
+
+
 
     const graduate = "0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1" /// [NOTE]: This is an example of wallet address of a new graduate.  
     const transaction = await graduatesRegistry.registerNewGraduate(DIPLOMA_NFT, graduate, { gasLimit: 12500000, gasPrice: 20000000000 })  // Kovan
