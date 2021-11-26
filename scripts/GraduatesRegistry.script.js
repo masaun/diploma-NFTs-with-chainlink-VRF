@@ -42,7 +42,7 @@ async function main() {
     const tx_receipt_2 = await txReceipt2.wait()  /// [NOTE]: Next step must wait until linkToken.approve() is finished
 
     const graduate = "0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1" /// [NOTE]: This is an example of wallet address of a new graduate.  
-    const transaction = await graduatesRegistry.registerNewGraduate(DIPLOMA_NFT, graduate, { gasLimit: 12500000, gasPrice: 10000000000 })  // Kovan
+    const transaction = await graduatesRegistry.registerNewGraduate(DIPLOMA_NFT, graduate, { gasLimit: 12500000, gasPrice: 20000000000 })  // Kovan
     console.log(`\n transaction: ${ JSON.stringify(transaction, null, 2) }`)  /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
     const tx_receipt = await transaction.wait()
@@ -63,43 +63,80 @@ async function main() {
     const VRF_COORDINATOR = "0xdD3782915140c8f3b190B5D67eAc6dc5760C46E9"  // Chainlink-VRF coordinator on Kovan
 
     console.log("=== tx_receipt.events.length ===", tx_receipt.events.length)
-    for (let i=0; tx_receipt.events.length - 1; i++) {
-        let addressInLog = tx_receipt.events[i].address
-        if (addressInLog == VRF_COORDINATOR) {
-            const _topics = tx_receipt.events[i].topics
-            const _data = tx_receipt.events[i].data
+    const indexOfEvent = 6 // Index number of event of "RandomnessRequest" (that can identify the result on Etherscan)
+    let addressInLog = tx_receipt.events[indexOfEvent].address
+    if (addressInLog == VRF_COORDINATOR) {
+        const _topics = tx_receipt.events[indexOfEvent].topics
+        const _data = tx_receipt.events[indexOfEvent].data
 
-            //@dev - Create an interface (iface) for getting eventLog of "RandomnessRequest" below 
-            const iface = new ethers.utils.Interface(ABI_OF_VRF_COORDINATOR)
+        //@dev - Create an interface (iface) for getting eventLog of "RandomnessRequest" below 
+        const iface = new ethers.utils.Interface(ABI_OF_VRF_COORDINATOR)
 
-            //@dev - Retrieve an event log of "RandomnessRequest" that is defined in the VRFCoodinator.sol
-            let eventLogs = iface.decodeEventLog("RandomnessRequest", _data, _topics)  // [NOTE]: Retrieve an event of "RandomnessRequest"
-            console.log(`=== eventLogs of "RandomnessRequest" ===`, eventLogs)
+        //@dev - Retrieve an event log of "RandomnessRequest" that is defined in the VRFCoodinator.sol
+        let eventLogs = iface.decodeEventLog("RandomnessRequest", _data, _topics)  // [NOTE]: Retrieve an event of "RandomnessRequest"
+        console.log(`=== eventLogs of "RandomnessRequest" ===`, eventLogs)
 
-            //@dev - Retrieve a requestId used via an event log of "RandomnessRequest"
-            const requestId = eventLogs.requestID
-            console.log(`=== requestId ===`, requestId)
+        //@dev - Retrieve a requestId used via an event log of "RandomnessRequest"
+        const requestId = eventLogs.requestID
+        console.log(`=== requestId ===`, requestId)
 
-            //@dev - Wait 10 seconds
-            await new Promise(resolve => setTimeout(resolve, 10000))    // 10 seconds
+        //@dev - Wait 10 seconds
+        await new Promise(resolve => setTimeout(resolve, 10000))    // 10 seconds
 
-            //@dev - GET a random number that is stored in "randomResult"
-            let _randomResult2 = await diplomaNFT.randomResult()
-            console.log('=== randomResult ===', String(_randomResult2))
+        //@dev - GET a random number that is stored in "randomResult"
+        let _randomResult2 = await diplomaNFT.randomResult()
+        console.log('=== randomResult ===', String(_randomResult2))
 
-            //@dev - Retrieve a random number by using requestId used via an event log of "RandomnessRequest"
-            let _randomResult = await diplomaNFT.randomNumberStored(requestId)
-            console.log('=== randomNumberStored 1 ===', String(_randomResult))
+        //@dev - Retrieve a random number by using requestId used via an event log of "RandomnessRequest"
+        let _randomResult = await diplomaNFT.randomNumberStored(requestId)
+        console.log('=== randomNumberStored 1 ===', String(_randomResult))
 
-            //@dev - Execute getRandomNumberStored()
-            let _randomNumberStored = await diplomaNFT.getRandomNumberStored(String(requestId))
-            console.log('=== randomNumberStored 2 ===', String(_randomNumberStored))
+        //@dev - Execute getRandomNumberStored()
+        let _randomNumberStored = await diplomaNFT.getRandomNumberStored(String(requestId))
+        console.log('=== randomNumberStored 2 ===', String(_randomNumberStored))
 
-            //@dev - Test an alternative way to retrieve the result of request of random nuber
-            let _randomResultByAlternativeWay = await diplomaNFT.getRandomNumberStoredTheLatest()
-            console.log('=== randomResultByAlternativeWay ===', String(_randomResultByAlternativeWay))
-        }
+        //@dev - Test an alternative way to retrieve the result of request of random nuber
+        let _randomResultByAlternativeWay = await diplomaNFT.getRandomNumberStoredTheLatest()
+        console.log('=== randomResultByAlternativeWay ===', String(_randomResultByAlternativeWay))
     }
+
+    // for (let i=0; tx_receipt.events.length - 1; i++) {
+    //     let addressInLog = tx_receipt.events[i].address
+    //     if (addressInLog == VRF_COORDINATOR) {
+    //         const _topics = tx_receipt.events[i].topics
+    //         const _data = tx_receipt.events[i].data
+
+    //         //@dev - Create an interface (iface) for getting eventLog of "RandomnessRequest" below 
+    //         const iface = new ethers.utils.Interface(ABI_OF_VRF_COORDINATOR)
+
+    //         //@dev - Retrieve an event log of "RandomnessRequest" that is defined in the VRFCoodinator.sol
+    //         let eventLogs = iface.decodeEventLog("RandomnessRequest", _data, _topics)  // [NOTE]: Retrieve an event of "RandomnessRequest"
+    //         console.log(`=== eventLogs of "RandomnessRequest" ===`, eventLogs)
+
+    //         //@dev - Retrieve a requestId used via an event log of "RandomnessRequest"
+    //         const requestId = eventLogs.requestID
+    //         console.log(`=== requestId ===`, requestId)
+
+    //         //@dev - Wait 10 seconds
+    //         await new Promise(resolve => setTimeout(resolve, 10000))    // 10 seconds
+
+    //         //@dev - GET a random number that is stored in "randomResult"
+    //         let _randomResult2 = await diplomaNFT.randomResult()
+    //         console.log('=== randomResult ===', String(_randomResult2))
+
+    //         //@dev - Retrieve a random number by using requestId used via an event log of "RandomnessRequest"
+    //         let _randomResult = await diplomaNFT.randomNumberStored(requestId)
+    //         console.log('=== randomNumberStored 1 ===', String(_randomResult))
+
+    //         //@dev - Execute getRandomNumberStored()
+    //         let _randomNumberStored = await diplomaNFT.getRandomNumberStored(String(requestId))
+    //         console.log('=== randomNumberStored 2 ===', String(_randomNumberStored))
+
+    //         //@dev - Test an alternative way to retrieve the result of request of random nuber
+    //         let _randomResultByAlternativeWay = await diplomaNFT.getRandomNumberStoredTheLatest()
+    //         console.log('=== randomResultByAlternativeWay ===', String(_randomResultByAlternativeWay))
+    //     }
+    // }
 
 
     ///--------------------------------------------------------------------------------
