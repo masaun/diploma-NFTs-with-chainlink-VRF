@@ -31,7 +31,7 @@ contract DiplomaNFTFactory {
      * Chainlink VRF Coordinator address: 0xdD3782915140c8f3b190B5D67eAc6dc5760C46E9
      * LINK token address:                0xa36085F69e2889c224210F603D836748e7dC0088
      * Key Hash: 0x2ed0feb3e7fd2022120aa84fab1945545a9f2ffc9076fd6156fa96eaff4c1311
-     * Fee: 0.1 LINK     * 
+     * Fee: 0.1 LINK
      */
     constructor(
         address _vrfCoordinator, 
@@ -70,7 +70,8 @@ contract DiplomaNFTFactory {
      * @dev - Get a DiplomaNFT address that is created the latest
      */
     function getDiplomaNFTAddressCreatedTheLatest() public view returns (address _diplomaNFTAddressCreatedTheLatest) {
-        uint256 index = diplomaNFTsCounter - 1;
+        uint256 index = diplomaNFTsList.length - 1;
+        //uint256 index = diplomaNFTsCounter - 1;
         return diplomaNFTsList[index];
     }
 }

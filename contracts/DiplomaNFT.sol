@@ -1,7 +1,9 @@
 pragma solidity 0.7.6;
 
 //@dev - Chainlink VRF
-import { VRFConsumerBase } from "@chainlink/contracts/src/v0.7/VRFConsumerBase.sol";
+import { VRFConsumerBase } from "@chainlink/contracts/src/v0.7/VRFConsumerBase.sol";   // Solidity-v0.7
+//import { VRFConsumerBase } from "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol"; // Solidity-v0.8
+
 
 //@dev - NFT (ERC721)
 import { ERC721 } from "@openzeppelin/contracts/token/ERC721/ERC721.sol";

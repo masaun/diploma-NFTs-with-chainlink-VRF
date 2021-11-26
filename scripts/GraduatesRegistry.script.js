@@ -10,7 +10,7 @@ async function main() {
     console.log('---- This is a script file for the GraduatesRegistry.sol ---')
 
     //@dev - Deployed-addresses
-    const DIPLOMA_NFT_FACTORY = "0x6688Bcf5F991Eec26F5AF0e99Cf26FC71568996B"  // Kovan    
+    const DIPLOMA_NFT_FACTORY = "0x6688Bcf5F991Eec26F5AF0e99Cf26FC71568996B"  // Kovan
     const GRADUATES_REGISTRY = "0x0FF1001D1f78b9abdb23c7b37E5a99087E12Ec09"   // Kovan
     //const GRADUATES_REGISTRY = "0xc4d5A87471185eB469bd86c8758061393E22a31d" // Polygon-Mumbai
     
@@ -54,7 +54,7 @@ async function main() {
     let txReceipt4 = await linkToken.approve(DIPLOMA_NFT, linkAmount) // 1 LINK
     const tx_receipt_4 = await txReceipt4.wait()  /// [NOTE]: Next step must wait until linkToken.approve() is finished
 
-    let txReceipt3 = await diplomaNFT.getRandomNumber({ gasLimit: 2500000, gasPrice: 350000000000 })
+    let txReceipt3 = await diplomaNFT.getRandomNumber({ gasLimit: 2500000, gasPrice: 200000000000 })
     const tx_receipt_3 = await txReceipt3.wait()
     console.log(`\n tx_receipt_3: ${ JSON.stringify(tx_receipt_3, null, 2) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
