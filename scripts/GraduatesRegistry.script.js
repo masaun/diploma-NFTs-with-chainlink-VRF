@@ -38,7 +38,7 @@ async function main() {
     const linkToken = await ethers.getContractAt('@chainlink/contracts/src/v0.7/interfaces/LinkTokenInterface.sol:LinkTokenInterface', LINK_TOKEN)
     const linkAmount = ethers.utils.parseEther('1')      // 1 LINK
     //const linkAmount = ethers.utils.parseEther('0.1')  // 0.1 LINK
-    const txReceipt2 = await linkToken.approve(GRADUATES_REGISTRY, linkAmount)
+    const txReceipt2 = await linkToken.approve(GRADUATES_REGISTRY, linkAmount, { gasLimit: 12500000, gasPrice: 20000000000 })
     console.log(`\n txReceipt that linkToken.approve() for the GraduatesRegistry.sol: ${ JSON.stringify(txReceipt2, null, 2) }`)
     const tx_receipt_2 = await txReceipt2.wait()  /// [NOTE]: Next step must wait until linkToken.approve() is finished
 
@@ -56,6 +56,12 @@ async function main() {
 
     //@dev - Check log of callback ("requestId" that is used and "randomNumber" that is retrieved via VRF)
     const diplomaNFT = await ethers.getContractAt("DiplomaNFT", DIPLOMA_NFT)
+
+    //@dev - Get a random number
+    let txReceipt4 = await linkToken.approve(DIPLOMA_NFT, linkAmount, { gasLimit: 12500000, gasPrice: 20000000000 })
+    let txReceipt3 = await diplomaNFT.getRandomNumber({ gasLimit: 2500000, gasPrice: 200000000000 })
+    const tx_receipt3 = await txReceipt3.wait()
+    console.log(`\n tx_receipt3: ${ JSON.stringify(tx_receipt3, null, 2) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
     //@dev - ABI of the VRFCoodinator.sol
     const ABI_OF_VRF_COORDINATOR = require("@chainlink/contracts/abi/v0.6/VRFCoordinator.json") 
