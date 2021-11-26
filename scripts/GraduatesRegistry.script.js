@@ -42,7 +42,7 @@ async function main() {
     const tx_receipt_2 = await txReceipt2.wait()  /// [NOTE]: Next step must wait until linkToken.approve() is finished
 
     const graduate = "0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1" /// [NOTE]: This is an example of wallet address of a new graduate.  
-    const transaction = await graduatesRegistry.registerNewGraduate(DIPLOMA_NFT, graduate, { gasLimit: 12500000, gasPrice: 35000000000 })  // Kovan
+    const transaction = await graduatesRegistry.registerNewGraduate(DIPLOMA_NFT, graduate, { gasLimit: 12500000, gasPrice: 10000000000 })  // Kovan
     console.log(`\n transaction: ${ JSON.stringify(transaction, null, 2) }`)  /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
     const tx_receipt = await transaction.wait()
@@ -88,6 +88,10 @@ async function main() {
             let _randomResult = await diplomaNFT.randomNumberStored(requestId)
             //let _randomResult = await diplomaNFT.randomNumberStored(_requestIdUsed)
             console.log('=== randomNumberStored ===', String(_randomResult))
+
+            //@dev - Execute getRandomNumberStored()
+            let _randomNumberStored = await diplomaNFT.getRandomNumberStored()
+            console.log('=== randomNumberStored ===', String(_randomNumberStored))
 
             //@dev - Test an alternative way to retrieve the result of request of random nuber
             let _randomResultByAlternativeWay = await diplomaNFT.getRandomNumberStoredTheLatest()
