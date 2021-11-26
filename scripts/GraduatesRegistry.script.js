@@ -10,8 +10,8 @@ async function main() {
     console.log('---- This is a script file for the GraduatesRegistry.sol ---')
 
     //@dev - Deployed-addresses
-    const DIPLOMA_NFT_FACTORY = "0x6688Bcf5F991Eec26F5AF0e99Cf26FC71568996B"  // Kovan
-    const GRADUATES_REGISTRY = "0x0FF1001D1f78b9abdb23c7b37E5a99087E12Ec09"   // Kovan
+    const DIPLOMA_NFT_FACTORY = "0xE056E527dC45ea1E8dCDBCf76882cEDc335dCF5a"  // Kovan
+    const GRADUATES_REGISTRY = "0xE1A1dCf5Ec3316763FdC95e7152e55cec76fE83A"   // Kovan
     //const GRADUATES_REGISTRY = "0xc4d5A87471185eB469bd86c8758061393E22a31d" // Polygon-Mumbai
     
     const diplomaNFTFactory = await ethers.getContractAt("DiplomaNFTFactory", DIPLOMA_NFT_FACTORY)
@@ -57,6 +57,9 @@ async function main() {
     let txReceipt3 = await diplomaNFT.getRandomNumber({ gasLimit: 2500000, gasPrice: 200000000000 })
     const tx_receipt_3 = await txReceipt3.wait()
     console.log(`\n tx_receipt_3: ${ JSON.stringify(tx_receipt_3, null, 2) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
+
+    ///@dev - Wait 30 seconds for calling a result of requesting a random number retrieved.
+    await new Promise(resolve => setTimeout(resolve, 30000))  // 30 seconds
 
     ///@dev - Check log of callback ("requestId" that is used and "randomNumber" that is retrieved via VRF)
     let _requestIdUsed = await diplomaNFT.requestIdUsed()
