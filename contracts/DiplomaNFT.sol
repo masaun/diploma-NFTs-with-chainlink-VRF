@@ -21,10 +21,18 @@ contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
     bytes32 internal keyHash;
     uint256 internal fee;
 
+    //@dev - Test variable to assign a random number retrieved
+    uint256 public randomResult;
+
+    //@dev - Mappling for storing a random number retrieved
     mapping (bytes32 => uint256) public randomNumberStored;   // [Param]: requestId -> randomness (random number) that is retrieved
+    bytes32[] requestIdsList;          // [NOTE]: Alternative way of mapping of "randomNumberStored" above
+    uint256[] randomNumbersStoredList; // [NOTE]: Alternative way of mapping of "randomNumberStored" above
 
     //uint256 public randomResult;   // [Note]: Assign "randomness (randomNumber)" retrieved
     bytes32 public requestIdUsed;    // [Note]: Assign "requestId"
+
+    event RandomResultRetrieved(bytes32 indexed requestId, uint256 indexed randomness);
 
 
     //--------------------------------
@@ -85,6 +93,16 @@ contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
 
         //randomResult = randomness;
         randomNumberStored[requestId] = randomness;
+
+        //@dev - Test
+        randomResult = randomness;
+
+        //@dev - Using alternative ways
+        requestIdsList.push(requestId);
+        randomNumbersStoredList.push(randomness);
+
+        //@dev - Emit event of "RandomResultRetrieved"
+        emit RandomResultRetrieved(requestId, randomness);
     }
 
 
@@ -124,6 +142,13 @@ contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
      */
     function getRandomNumberStored(bytes32 requestId) public view returns (uint256 _randomNumberStored) {
         return randomNumberStored[requestId];
+    }
+
+    /**
+     * Get a existing random number stored (by using alternative way)
+     */
+    function getRandomNumberStoredTheLatest() public view returns (uint256 _randomNumberStoredTheLatest) {
+        return randomNumbersStoredList[randomNumbersStoredList.length - 1];
     }
 
 }
