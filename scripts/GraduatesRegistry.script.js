@@ -42,14 +42,37 @@ async function main() {
     const linkAmount = ethers.utils.parseEther('1')      // 1 LINK
     //const linkAmount = ethers.utils.parseEther('0.1')  // 0.1 LINK
 
+
+
+
+
+    ///----------------------------------------------------------
+    /// Get a random number directly by using getRandomNumber()
+    ///----------------------------------------------------------
+
     //@dev - Get a random number
     let txReceipt4 = await linkToken.approve(DIPLOMA_NFT, linkAmount) // 1 LINK
     const tx_receipt_4 = await txReceipt4.wait()  /// [NOTE]: Next step must wait until linkToken.approve() is finished
 
-    let txReceipt3 = await diplomaNFT.getRandomNumber({ gasLimit: 2500000, gasPrice: 300000000000 })
+    let txReceipt3 = await diplomaNFT.getRandomNumber({ gasLimit: 2500000, gasPrice: 350000000000 })
     const tx_receipt_3 = await txReceipt3.wait()
     console.log(`\n tx_receipt_3: ${ JSON.stringify(tx_receipt_3, null, 2) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
+    ///@dev - Check log of callback ("requestId" that is used and "randomNumber" that is retrieved via VRF)
+    let _requestIdUsed = await diplomaNFT.requestIdUsed()
+    console.log('=== requestIdUsed ===', String(_requestIdUsed))
+
+    let _randomResult = await diplomaNFT.randomResult()
+    console.log('=== randomResult ===', String(_randomResult))
+
+
+
+
+
+
+    ///--------------------------------------------------------------------------------------
+    /// Get a random number via registerNewGraduate() defined in the GraduatesRegistry.sol
+    ///--------------------------------------------------------------------------------------
 
     const txReceipt2 = await linkToken.approve(GRADUATES_REGISTRY, linkAmount)
     console.log(`\n txReceipt that linkToken.approve() for the GraduatesRegistry.sol: ${ JSON.stringify(txReceipt2, null, 2) }`)
@@ -60,6 +83,9 @@ async function main() {
 
     const tx_receipt = await transaction.wait()
     console.log(`\n tx_receipt: ${ JSON.stringify(tx_receipt, null, 2) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
+
+
+
 
 
     ///------------------------------------------------------------------
