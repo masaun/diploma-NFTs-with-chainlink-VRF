@@ -20,7 +20,9 @@ async function main() {
     console.log("Deployed-address of the GraduatesRegistry.sol on Kovan: ", graduatesRegistry.address) 
 
 
-    //@dev - Create a new DiplomaNFT
+    ///-------------------------------------------------------
+    /// Create a new DiplomaNFT
+    ///-------------------------------------------------------
     const _diplomaNFTName = "Diploma of the East University"
     const _diplomaNFTSymbol = "DIPLOMA_OF_EAST_UNIVERSITY" 
     let txReceipt = await diplomaNFTFactory.createNewDiplomaNFT(_diplomaNFTName, _diplomaNFTSymbol)
@@ -32,26 +34,19 @@ async function main() {
     //@dev - Create a DiplomaNFT instance
     const diplomaNFT = await ethers.getContractAt("DiplomaNFT", DIPLOMA_NFT)
 
-    //@dev - Register a new graduate
-    //@dev - Gas Fee the best to call getRandomNumber method: gasLimit (12500000 wei) * gasPrice (10000000000 wei = 10 Gwei) = 0.001 ETH 
-    console.log('registerNewGraduate() - Should successfully execute registerNewGraduate()')
-
-    //@dev - Approve spending $LINK Token for the GraduatesRegistry.sol
-    const LINK_TOKEN = "0xa36085F69e2889c224210F603D836748e7dC0088"  // Kovan
-    const linkToken = await ethers.getContractAt('@chainlink/contracts/src/v0.7/interfaces/LinkTokenInterface.sol:LinkTokenInterface', LINK_TOKEN)
-    const linkAmount = ethers.utils.parseEther('1')      // 1 LINK
-    //const linkAmount = ethers.utils.parseEther('0.1')  // 0.1 LINK
-
-
-
 
 
     ///----------------------------------------------------------
     /// Get a random number directly by using getRandomNumber()
     ///----------------------------------------------------------
 
+    const LINK_TOKEN = "0xa36085F69e2889c224210F603D836748e7dC0088"  // Kovan
+    const linkToken = await ethers.getContractAt('@chainlink/contracts/src/v0.7/interfaces/LinkTokenInterface.sol:LinkTokenInterface', LINK_TOKEN)
+    const linkAmount = ethers.utils.parseEther('1')      // 1 LINK
+    //const linkAmount = ethers.utils.parseEther('0.1')  // 0.1 LINK
+
     ///@dev - Get a random number
-    let txReceipt4 = await linkToken.approve(DIPLOMA_NFT, linkAmount) // 1 LINK
+    let txReceipt4 = await linkToken.approve(DIPLOMA_NFT, linkAmount) // 1 LINK as a fee to request a randomNumber via VRF
     const tx_receipt_4 = await txReceipt4.wait()  /// [NOTE]: Next step must wait until linkToken.approve() is finished
 
     let txReceipt3 = await diplomaNFT.getRandomNumber({ gasLimit: 2500000, gasPrice: 100000000000 })
@@ -67,22 +62,21 @@ async function main() {
 
 
 
+    ///-------------------------------------------------------
+    /// Register a new graduate
+    ///-------------------------------------------------------
 
-    ///--------------------------------------------------------------------------------------
-    /// Get a random number via registerNewGraduate() defined in the GraduatesRegistry.sol
-    ///--------------------------------------------------------------------------------------
-
+    //@dev - Gas Fee the best to call getRandomNumber method: gasLimit (12500000 wei) * gasPrice (10000000000 wei = 10 Gwei) = 0.001 ETH 
     const txReceipt2 = await linkToken.approve(GRADUATES_REGISTRY, linkAmount)
-    console.log(`\n txReceipt that linkToken.approve() for the GraduatesRegistry.sol: ${ JSON.stringify(txReceipt2, null, 2) }`)
     const tx_receipt_2 = await txReceipt2.wait()  /// [NOTE]: Next step must wait until linkToken.approve() is finished
+    console.log(`\n txReceipt that linkToken.approve() for the GraduatesRegistry.sol: ${ JSON.stringify(txReceipt2, null, 2) }`)
+
     const graduate = "0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1" /// [NOTE]: This is an example of wallet address of a new graduate.  
     const transaction = await graduatesRegistry.registerNewGraduate(DIPLOMA_NFT, graduate, { gasLimit: 12500000, gasPrice: 10000000000 })  // Kovan
     console.log(`\n transaction: ${ JSON.stringify(transaction, null, 2) }`)  /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
     const tx_receipt = await transaction.wait()
     console.log(`\n tx_receipt: ${ JSON.stringify(tx_receipt, null, 2) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
-
-
 
 
 

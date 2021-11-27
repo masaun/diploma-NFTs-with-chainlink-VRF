@@ -89,7 +89,7 @@ contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
         //@dev - Request ID called back from VRF
         requestIdCalledBack = requestId;
 
-        //randomResult = randomness;
+        //@dev - Store a random number retrieved from VRF with requestId called back
         randomNumberStored[requestId] = randomness;
 
         //@dev - Emit event of "RandomResultRetrieved"
