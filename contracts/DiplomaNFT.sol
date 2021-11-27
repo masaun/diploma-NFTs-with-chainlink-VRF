@@ -35,7 +35,7 @@ contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
     //--------------------------------
     // NFT (ERC721) related method
     //--------------------------------
-    uint256 public tokenCounter;  
+    uint256 public tokenCounter;  // [NOTE]: TokenID counting is started from "0"
 
     mapping(string => string) public diplomaToDiplomaURI;
 
@@ -124,6 +124,11 @@ contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
     function tokenURI(uint256 tokenId) public view override (ERC721) returns (string memory) {
         require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token");
     }
+
+    function getCurrentTokenId() public view returns (uint256 _currentTokenId) {
+        return tokenCounter;
+    }
+
 
     /**
      * Get a existing random number stored
