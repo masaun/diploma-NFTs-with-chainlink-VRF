@@ -9,6 +9,10 @@ async function main() {
 
     console.log('---- This is a script file for the GraduatesRegistry.sol ---')
 
+    ///-------------------------------------------------------
+    /// Setup
+    ///-------------------------------------------------------
+
     //@dev - Deployed-addresses
     const DIPLOMA_NFT_FACTORY = "0xE1538ee65808dC992c22fd656C4CFf08350BBb9F"  // Kovan
     const GRADUATES_REGISTRY = "0xAcEa79FC1cF702C6A7F39823905d988E69784AD3"   // Kovan
@@ -18,6 +22,12 @@ async function main() {
     const graduatesRegistry = await ethers.getContractAt("GraduatesRegistry", GRADUATES_REGISTRY)
     console.log("Deployed-address of the DiplomaNFTFactory.sol on Kovan: ", diplomaNFTFactory.address) 
     console.log("Deployed-address of the GraduatesRegistry.sol on Kovan: ", graduatesRegistry.address) 
+
+    ///@dev - ABI of the VRFCoodinator.sol
+    const ABI_OF_VRF_COORDINATOR = require("@chainlink/contracts/abi/v0.6/VRFCoordinator.json") 
+
+    ///@dev - Deployed-address of the VRFCoordinator.sol on Kovan 
+    const VRF_COORDINATOR = "0xdD3782915140c8f3b190B5D67eAc6dc5760C46E9"  // Chainlink-VRF coordinator on Kovan
 
 
     ///-------------------------------------------------------
@@ -36,9 +46,9 @@ async function main() {
 
 
 
-    ///----------------------------------------------------------
-    /// Get a random number directly by using getRandomNumber()
-    ///----------------------------------------------------------
+    ///-----------------------------------------------------------------------------------------
+    /// Send a request for getting a random number to Chainlink-VRF by using getRandomNumber()
+    ///-----------------------------------------------------------------------------------------
 
     const LINK_TOKEN = "0xa36085F69e2889c224210F603D836748e7dC0088"  // Kovan
     const linkToken = await ethers.getContractAt('@chainlink/contracts/src/v0.7/interfaces/LinkTokenInterface.sol:LinkTokenInterface', LINK_TOKEN)
@@ -52,6 +62,31 @@ async function main() {
     let txReceipt3 = await diplomaNFT.getRandomNumber({ gasLimit: 2500000, gasPrice: 200000000000 })
     const tx_receipt_3 = await txReceipt3.wait()
     console.log(`\n tx_receipt_3: ${ JSON.stringify(tx_receipt_3, null, 2) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
+
+    ///@dev - Get a request ID used when sending to VRF
+    console.log("=== tx_receipt.events.length ===", tx_receipt_3.events.length)
+    const indexOfEvent = 3 // Index number of event of "RandomnessRequest" (that can identify the result on Etherscan)
+    let addressInLog = tx_receipt_3.events[indexOfEvent].address
+    if (addressInLog == VRF_COORDINATOR) {
+        const _topics = tx_receipt_3.events[indexOfEvent].topics
+        const _data = tx_receipt_3.events[indexOfEvent].data
+
+        //@dev - Create an interface (iface) for getting eventLog of "RandomnessRequest" below 
+        const iface = new ethers.utils.Interface(ABI_OF_VRF_COORDINATOR)
+
+        //@dev - Retrieve an event log of "RandomnessRequest" that is defined in the VRFCoodinator.sol
+        let eventLogs = iface.decodeEventLog("RandomnessRequest", _data, _topics)  // [NOTE]: Retrieve an event of "RandomnessRequest"
+        console.log(`=== eventLogs of "RandomnessRequest" ===`, eventLogs)
+
+        //@dev - Retrieve a requestId used via an event log of "RandomnessRequest"
+        const requestId = eventLogs.requestID
+        console.log(`=== requestId that is used when sending to VRF ===`, requestId)
+    }
+
+
+    ///-----------------------------------------------------------------------------------------
+    /// Retrieve a requestId and random number that are called back from Chainlink-VRF
+    ///-----------------------------------------------------------------------------------------
 
     ///@dev - Wait 90 seconds for calling a result of requesting a random number retrieved.
     await new Promise(resolve => setTimeout(resolve, 90000))  // Waiting for 90 seconds (90000 mili-seconds)
