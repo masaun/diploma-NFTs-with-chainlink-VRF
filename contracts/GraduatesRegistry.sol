@@ -38,11 +38,11 @@ contract GraduatesRegistry {
     struct Graduate {
         bytes32 graduateId;              // [NOTE]: This graduate ID is random number that is retrieved via Chainlink VRF
         uint256 randomNumberOfGraduate;  // [NOTE]: Random number that is retrieved via Chainlink VRF
-        uint256 diplomaNFTTokenId; // [NOTE]: Token ID of the DiplomaNFT 
+        uint256 diplomaNFTTokenId;       // [NOTE]: Token ID of the DiplomaNFT 
         string graduateName;
         address graduateAddress;
     }
-    mapping(bytes32 => Graduate) public graduates;  // [Key]: Gradudate ID -> The Graduate struct
+    mapping(bytes32 => Graduate) public graduates;  // [Key]: Gradudate ID (Request ID) -> The Graduate struct
 
     /**
      * Constructor inherits VRFConsumerBase
@@ -105,6 +105,11 @@ contract GraduatesRegistry {
     //----------------
     // Getter methods
     //----------------
+    
+    /**
+     * @dev - Get a graduate data
+     * @param graduateId - requestId that is called back when get response from Chainlink-VRF
+     */
     function getGraduate(bytes32 graduateId) public view returns (Graduate memory _graduate) {
         return graduates[graduateId];
     }
