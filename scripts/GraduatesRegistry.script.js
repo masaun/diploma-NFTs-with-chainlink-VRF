@@ -130,7 +130,7 @@ async function main() {
     ///------------------------------------------------------------------------------------------------------------
 
     const graduateId = newGraduateId
-    let graduate = graduatesRegistry.getGraduate(newGraduateId)
+    let graduate = await graduatesRegistry.getGraduate(graduateId)
     console.log(`\n graduate: ${ JSON.stringify(graduate, null, 2) }`)  /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
 }

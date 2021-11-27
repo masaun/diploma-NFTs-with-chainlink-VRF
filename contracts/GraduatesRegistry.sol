@@ -42,7 +42,7 @@ contract GraduatesRegistry {
         string graduateName;
         address graduateAddress;
     }
-    mapping(bytes32 => Graduate) public graduates;  // [Key]: Gradudate ID -> The Graduate struct
+    mapping(bytes32 => Graduate) public graduates;  // [Key]: Gradudate ID (Request ID) -> The Graduate struct
 
     /**
      * Constructor inherits VRFConsumerBase
