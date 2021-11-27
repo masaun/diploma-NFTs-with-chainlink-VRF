@@ -60,63 +60,34 @@ async function main() {
     let _requestIdCalledBack = await diplomaNFT.requestIdCalledBack()
     console.log('=== requestIdCalledBack ===', String(_requestIdCalledBack))
 
+    //@dev - Retrieve a random number by assigning a requestId called back
+    let _randomNumberStored = await diplomaNFT.randomNumberStored(_requestIdCalledBack)
+    console.log('=== randomNumberStored ===', String(_randomNumberStored))
 
 
-    ///-------------------------------------------------------
-    /// Register a new graduate
-    ///-------------------------------------------------------
+    ///------------------------------------------------------------------------------------------------------------
+    /// Register a new graduate with requestId and random number that are retrieved and stored via Chainlink-VRF
+    ///------------------------------------------------------------------------------------------------------------
 
     //@dev - Gas Fee the best to call getRandomNumber method: gasLimit (12500000 wei) * gasPrice (10000000000 wei = 10 Gwei) = 0.001 ETH 
     const txReceipt2 = await linkToken.approve(GRADUATES_REGISTRY, linkAmount)
     const tx_receipt_2 = await txReceipt2.wait()  /// [NOTE]: Next step must wait until linkToken.approve() is finished
     console.log(`\n txReceipt that linkToken.approve() for the GraduatesRegistry.sol: ${ JSON.stringify(txReceipt2, null, 2) }`)
 
-    const graduate = "0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1" /// [NOTE]: This is an example of wallet address of a new graduate.  
-    const transaction = await graduatesRegistry.registerNewGraduate(DIPLOMA_NFT, graduate, { gasLimit: 12500000, gasPrice: 10000000000 })  // Kovan
+    const newGraduateId = _requestIdCalledBack
+    const randomNumberOfNewGraduate = _randomNumberStored
+    const newGraduateName = "Bob Jones"
+    const newGraduateAddress = "0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1" /// [NOTE]: This is an example of wallet address of a new graduate. 
+    const transaction = await graduatesRegistry.registerNewGraduate(DIPLOMA_NFT, 
+                                                                    newGraduateId,
+                                                                    randomNumberOfNewGraduate,
+                                                                    newGraduateName, 
+                                                                    newGraduateAddress, 
+                                                                    { gasLimit: 12500000, gasPrice: 10000000000 })  // Kovan
     console.log(`\n transaction: ${ JSON.stringify(transaction, null, 2) }`)  /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
     const tx_receipt = await transaction.wait()
     console.log(`\n tx_receipt: ${ JSON.stringify(tx_receipt, null, 2) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
-
-
-
-    ///------------------------------------------------------------------
-    /// Check requestId and random number that is retrieved and stored
-    ///------------------------------------------------------------------
-
-    //@dev - ABI of the VRFCoodinator.sol
-    const ABI_OF_VRF_COORDINATOR = require("@chainlink/contracts/abi/v0.6/VRFCoordinator.json") 
-
-    //@dev - Deployed-address of the VRFCoordinator.sol on Kovan 
-    const VRF_COORDINATOR = "0xdD3782915140c8f3b190B5D67eAc6dc5760C46E9"  // Chainlink-VRF coordinator on Kovan
-
-    console.log("=== tx_receipt.events.length ===", tx_receipt.events.length)
-    const indexOfEvent = 6 // Index number of event of "RandomnessRequest" (that can identify the result on Etherscan)
-    let addressInLog = tx_receipt.events[indexOfEvent].address
-    if (addressInLog == VRF_COORDINATOR) {
-        const _topics = tx_receipt.events[indexOfEvent].topics
-        const _data = tx_receipt.events[indexOfEvent].data
-
-        //@dev - Create an interface (iface) for getting eventLog of "RandomnessRequest" below 
-        const iface = new ethers.utils.Interface(ABI_OF_VRF_COORDINATOR)
-
-        //@dev - Retrieve an event log of "RandomnessRequest" that is defined in the VRFCoodinator.sol
-        let eventLogs = iface.decodeEventLog("RandomnessRequest", _data, _topics)  // [NOTE]: Retrieve an event of "RandomnessRequest"
-        console.log(`=== eventLogs of "RandomnessRequest" ===`, eventLogs)
-
-        //@dev - Retrieve a requestId used via an event log of "RandomnessRequest"
-        const requestIdWhenSendToVRF = eventLogs.requestID
-        console.log(`=== requestId when sending to VRF (that retrieved via event log of "RandomnessRequest") ===`, requestIdWhenSendToVRF)
-
-        //@dev - GET a requestId that is called back in fulfillRandomness() in the DiplomaNFT
-        let _requestIdCalledBack = await diplomaNFT.requestIdCalledBack()
-        console.log('=== requestIdCalledBack ===', String(_requestIdCalledBack))
-
-        //@dev - Retrieve a random number by assigning a requestId called back
-        let _randomNumberStored = await diplomaNFT.randomNumberStored(_requestIdCalledBack)
-        console.log('=== randomNumberStored ===', String(_randomNumberStored))
-    }
-
 }
 
 
