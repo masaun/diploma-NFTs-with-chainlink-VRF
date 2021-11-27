@@ -134,10 +134,6 @@ async function main() {
         //@dev - Retrieve a random number stored by assigning a requestId called back
         let _randomNumberStored = await diplomaNFT.getRandomNumberStored(String(_requestIdCalledBack))
         console.log('=== randomNumberStored 2 ===', String(_randomNumberStored))
-
-        //@dev - Test an alternative way to retrieve the result of request of random nuber
-        let _randomResultByAlternativeWay = await diplomaNFT.getRandomNumberStoredTheLatest()
-        console.log('=== randomResultByAlternativeWay ===', String(_randomResultByAlternativeWay))
     }
 
 }

@@ -29,9 +29,6 @@ contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
 
     //@dev - Mappling for storing a random number retrieved
     mapping (bytes32 => uint256) public randomNumberStored;   // [Param]: requestId -> randomness (random number) that is retrieved
-    bytes32[] requestIdsList;          // [NOTE]: Alternative way of mapping of "randomNumberStored" above
-    uint256[] randomNumbersStoredList; // [NOTE]: Alternative way of mapping of "randomNumberStored" above
-
 
     event RandomResultRetrieved(bytes32 indexed requestId, uint256 indexed randomness);
 
@@ -144,13 +141,6 @@ contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
      */
     function getRandomNumberStored(bytes32 requestId) public view returns (uint256 _randomNumberStored) {
         return randomNumberStored[requestId];
-    }
-
-    /**
-     * Get a existing random number stored (by using alternative way)
-     */
-    function getRandomNumberStoredTheLatest() public view returns (uint256 _randomNumberStoredTheLatest) {
-        return randomNumbersStoredList[randomNumbersStoredList.length - 1];
     }
 
 }
