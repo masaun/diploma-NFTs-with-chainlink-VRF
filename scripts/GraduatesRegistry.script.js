@@ -65,11 +65,6 @@ async function main() {
     let _requestIdCalledBack = await diplomaNFT.requestIdCalledBack()
     console.log('=== requestIdCalledBack ===', String(_requestIdCalledBack))
 
-    let _randomResult = await diplomaNFT.randomResult()
-    console.log('=== randomResult ===', String(_randomResult))
-
-
-
 
 
 
@@ -116,24 +111,16 @@ async function main() {
         console.log(`=== eventLogs of "RandomnessRequest" ===`, eventLogs)
 
         //@dev - Retrieve a requestId used via an event log of "RandomnessRequest"
-        const requestId = eventLogs.requestID
-        console.log(`=== requestId ===`, requestId)
+        const requestIdWhenSendToVRF = eventLogs.requestID
+        console.log(`=== requestId when sending to VRF (that retrieved via event log of "RandomnessRequest") ===`, requestIdWhenSendToVRF)
 
         //@dev - GET a requestId that is called back in fulfillRandomness() in the DiplomaNFT
         let _requestIdCalledBack = await diplomaNFT.requestIdCalledBack()
         console.log('=== requestIdCalledBack ===', String(_requestIdCalledBack))
 
-        //@dev - GET a random number that is stored in "randomResult"
-        let _randomResult2 = await diplomaNFT.randomResult()
-        console.log('=== randomResult ===', String(_randomResult2))
-
         //@dev - Retrieve a random number by assigning a requestId called back
-        let _randomResult = await diplomaNFT.randomNumberStored(_requestIdCalledBack)
-        console.log('=== randomNumberStored 1 ===', String(_randomResult))
-
-        //@dev - Retrieve a random number stored by assigning a requestId called back
-        let _randomNumberStored = await diplomaNFT.getRandomNumberStored(String(_requestIdCalledBack))
-        console.log('=== randomNumberStored 2 ===', String(_randomNumberStored))
+        let _randomNumberStored = await diplomaNFT.randomNumberStored(_requestIdCalledBack)
+        console.log('=== randomNumberStored ===', String(_randomNumberStored))
     }
 
 }
