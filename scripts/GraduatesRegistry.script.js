@@ -119,6 +119,10 @@ async function main() {
         const requestId = eventLogs.requestID
         console.log(`=== requestId ===`, requestId)
 
+        //@dev - GET a requestId that is called back in fulfillRandomness() in the DiplomaNFT
+        let _requestIdCalledBack = await diplomaNFT.requestIdCalledBack()
+        console.log('=== requestIdCalledBack ===', String(_requestIdCalledBack))
+
         //@dev - GET a random number that is stored in "randomResult"
         let _randomResult2 = await diplomaNFT.randomResult()
         console.log('=== randomResult ===', String(_randomResult2))

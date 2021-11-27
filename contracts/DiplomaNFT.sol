@@ -25,14 +25,13 @@ contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
 
     //@dev - Test variable to assign a random number retrieved
     uint256 public randomResult;
+    bytes32 public requestIdCalledBack;
 
     //@dev - Mappling for storing a random number retrieved
     mapping (bytes32 => uint256) public randomNumberStored;   // [Param]: requestId -> randomness (random number) that is retrieved
     bytes32[] requestIdsList;          // [NOTE]: Alternative way of mapping of "randomNumberStored" above
     uint256[] randomNumbersStoredList; // [NOTE]: Alternative way of mapping of "randomNumberStored" above
 
-    //uint256 public randomResult;   // [Note]: Assign "randomness (randomNumber)" retrieved
-    bytes32 public requestIdUsed;    // [Note]: Assign "requestId"
 
     event RandomResultRetrieved(bytes32 indexed requestId, uint256 indexed randomness);
 
@@ -91,13 +90,14 @@ contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
      * Callback function used by VRF Coordinator
      */
     function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
-        requestIdUsed = requestId;
+        //@dev - Test
+        requestIdCalledBack = requestId;
+        randomResult = randomness;
 
         //randomResult = randomness;
         randomNumberStored[requestId] = randomness;
 
-        //@dev - Test
-        randomResult = randomness;
+
 
         //@dev - Using alternative ways
         requestIdsList.push(requestId);
