@@ -24,11 +24,10 @@ contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
     uint256 internal fee;
 
     //@dev - Test variable to assign a random number retrieved
-    uint256 public randomResult;
     bytes32 public requestIdCalledBack;
 
     //@dev - Mappling for storing a random number retrieved
-    mapping (bytes32 => uint256) public randomNumberStored;   // [Param]: requestId -> randomness (random number) that is retrieved
+    mapping (bytes32 => uint256) public randomNumberStored;   // [Param]: requestId -> randomness (random number) that is retrieved from VRF
 
     event RandomResultRetrieved(bytes32 indexed requestId, uint256 indexed randomness);
 
@@ -36,7 +35,7 @@ contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
     //--------------------------------
     // NFT (ERC721) related method
     //--------------------------------
-    uint256 public tokenCounter;  
+    uint256 public tokenCounter;  // [NOTE]: TokenID counting is started from "0"
 
     mapping(string => string) public diplomaToDiplomaURI;
 
@@ -87,18 +86,11 @@ contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
      * Callback function used by VRF Coordinator
      */
     function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
-        //@dev - Test
+        //@dev - Request ID called back from VRF
         requestIdCalledBack = requestId;
-        randomResult = randomness;
 
-        //randomResult = randomness;
+        //@dev - Store a random number retrieved from VRF with requestId called back
         randomNumberStored[requestId] = randomness;
-
-
-
-        //@dev - Using alternative ways
-        requestIdsList.push(requestId);
-        randomNumbersStoredList.push(randomness);
 
         //@dev - Emit event of "RandomResultRetrieved"
         emit RandomResultRetrieved(requestId, randomness);
@@ -113,18 +105,15 @@ contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
      * @dev - Mint a new Diploma NFT.
      * @param graduate - "to" address that NFT minted will be transferred. Eligible address assigned is a new graduate's address 
      */
-    //function mintDiplomaNFT(address graduate) public returns (bool) {
-    function mintDiplomaNFT(address graduate) public returns (bytes32 _requestId) {
+    function mintDiplomaNFT(address graduate) public returns (bool) {
         _safeMint(graduate, tokenCounter);      // [NOTE]: In case of this, a receiver of a new Diploma NFT minted is "graduate" address specified.
         //_safeMint(msg.sender, tokenCounter);  // [NOTE]: In case of this, mintDiplomaNFT() is called from the GraduatesRegistry.sol and therefore "msg.sender" is the GraduatesRegistry.sol and the GraduatesRegistry.sol will receive a new Diploma NFT minted. 
         
         tokenCounter = tokenCounter + 1;
 
-        bytes32 requestId = getRandomNumber(); // [Error]: This row is cause of error
+        //bytes32 requestId = getRandomNumber();  // [NOTE]: getRandomNumber() method is execute outside of mintDiplomaNFT() method separately
 
         emit DiplomaNFTMinted(msg.sender, tokenCounter);
-
-        return requestId;
     }
 
     function setDiplomaURI(string memory diploma, string memory tokenUri, uint256 tokenId) public {
@@ -135,6 +124,11 @@ contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
     function tokenURI(uint256 tokenId) public view override (ERC721) returns (string memory) {
         require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token");
     }
+
+    function getCurrentTokenId() public view returns (uint256 _currentTokenId) {
+        return tokenCounter;
+    }
+
 
     /**
      * Get a existing random number stored
