@@ -105,6 +105,11 @@ contract GraduatesRegistry {
     //----------------
     // Getter methods
     //----------------
+    
+    /**
+     * @dev - Get a graduate data
+     * @param graduateId - requestId that is called back when get response from Chainlink-VRF
+     */
     function getGraduate(bytes32 graduateId) public view returns (Graduate memory _graduate) {
         return graduates[graduateId];
     }

@@ -49,7 +49,7 @@ async function main() {
     let txReceipt4 = await linkToken.approve(DIPLOMA_NFT, linkAmount) // 1 LINK as a fee to request a randomNumber via VRF
     const tx_receipt_4 = await txReceipt4.wait()  /// [NOTE]: Next step must wait until linkToken.approve() is finished
 
-    let txReceipt3 = await diplomaNFT.getRandomNumber({ gasLimit: 2500000, gasPrice: 100000000000 })
+    let txReceipt3 = await diplomaNFT.getRandomNumber({ gasLimit: 2500000, gasPrice: 200000000000 })
     const tx_receipt_3 = await txReceipt3.wait()
     console.log(`\n tx_receipt_3: ${ JSON.stringify(tx_receipt_3, null, 2) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
@@ -77,17 +77,27 @@ async function main() {
     const newGraduateId = _requestIdCalledBack
     const randomNumberOfNewGraduate = _randomNumberStored
     const newGraduateName = "Bob Jones"
-    const newGraduateAddress = "0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1" /// [NOTE]: This is an example of wallet address of a new graduate. 
+    const newGraduateAddress = "0xbc946a0d48BF799b103D7e0217701b40bfF34dc7" /// [NOTE]: This is an example of wallet address of a new graduate. 
     const transaction = await graduatesRegistry.registerNewGraduate(DIPLOMA_NFT, 
                                                                     newGraduateId,
                                                                     randomNumberOfNewGraduate,
                                                                     newGraduateName, 
                                                                     newGraduateAddress, 
-                                                                    { gasLimit: 12500000, gasPrice: 10000000000 })  // Kovan
+                                                                    { gasLimit: 12500000, gasPrice: 20000000000 })  // Kovan
     console.log(`\n transaction: ${ JSON.stringify(transaction, null, 2) }`)  /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
     const tx_receipt = await transaction.wait()
     console.log(`\n tx_receipt: ${ JSON.stringify(tx_receipt, null, 2) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
+
+
+    ///------------------------------------------------------------------------------------------------------------
+    /// Check whether a new graduate is registered properly or not
+    ///------------------------------------------------------------------------------------------------------------
+
+    const graduateId = newGraduateId
+    let graduate = graduatesRegistry.getGraduate(newGraduateId)
+    console.log(`\n graduate: ${ JSON.stringify(graduate, null, 2) }`)  /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
+
 }
 
 
