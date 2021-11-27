@@ -38,7 +38,7 @@ contract GraduatesRegistry {
     struct Graduate {
         bytes32 graduateId;              // [NOTE]: This graduate ID is random number that is retrieved via Chainlink VRF
         uint256 randomNumberOfGraduate;  // [NOTE]: Random number that is retrieved via Chainlink VRF
-        uint256 diplomaNFTTokenId; // [NOTE]: Token ID of the DiplomaNFT 
+        uint256 diplomaNFTTokenId;       // [NOTE]: Token ID of the DiplomaNFT 
         string graduateName;
         address graduateAddress;
     }

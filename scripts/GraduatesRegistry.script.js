@@ -133,6 +133,17 @@ async function main() {
     let graduate = await graduatesRegistry.getGraduate(graduateId)
     console.log(`\n graduate: ${ JSON.stringify(graduate, null, 2) }`)  /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
+    //let graduateId = graduate[0]
+    let randomNumberOfGraduate = String(graduate[1])
+    let diplomaNFTTokenId = String(graduate[2])
+    let graduateName = graduate[3]
+    let graduateAddress = graduate[4]
+    console.log(`graduateId: ${ graduateId }`)
+    console.log(`randomNumberOfGraduate: ${ randomNumberOfGraduate }`)
+    console.log(`diplomaNFTTokenId: ${ diplomaNFTTokenId }`)
+    console.log(`graduateName: ${ graduateName }`)
+    console.log(`graduateAddress: ${ graduateAddress }`)
+
 }
 
 
