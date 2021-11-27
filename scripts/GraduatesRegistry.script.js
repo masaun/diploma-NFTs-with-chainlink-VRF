@@ -10,8 +10,8 @@ async function main() {
     console.log('---- This is a script file for the GraduatesRegistry.sol ---')
 
     //@dev - Deployed-addresses
-    const DIPLOMA_NFT_FACTORY = "0xE056E527dC45ea1E8dCDBCf76882cEDc335dCF5a"  // Kovan
-    const GRADUATES_REGISTRY = "0xE1A1dCf5Ec3316763FdC95e7152e55cec76fE83A"   // Kovan
+    const DIPLOMA_NFT_FACTORY = "0xCEB2F4b3f5f20a8c81E0ebe62Ecc36011bFf6335"  // Kovan
+    const GRADUATES_REGISTRY = "0xd509213986a4cfC0Cea7b2AC234f545E9e92fA2F"   // Kovan
     //const GRADUATES_REGISTRY = "0xc4d5A87471185eB469bd86c8758061393E22a31d" // Polygon-Mumbai
     
     const diplomaNFTFactory = await ethers.getContractAt("DiplomaNFTFactory", DIPLOMA_NFT_FACTORY)
@@ -54,7 +54,7 @@ async function main() {
     let txReceipt4 = await linkToken.approve(DIPLOMA_NFT, linkAmount) // 1 LINK
     const tx_receipt_4 = await txReceipt4.wait()  /// [NOTE]: Next step must wait until linkToken.approve() is finished
 
-    let txReceipt3 = await diplomaNFT.getRandomNumber({ gasLimit: 2500000, gasPrice: 200000000000 })
+    let txReceipt3 = await diplomaNFT.getRandomNumber({ gasLimit: 2500000, gasPrice: 100000000000 })
     const tx_receipt_3 = await txReceipt3.wait()
     console.log(`\n tx_receipt_3: ${ JSON.stringify(tx_receipt_3, null, 2) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
@@ -62,8 +62,8 @@ async function main() {
     await new Promise(resolve => setTimeout(resolve, 90000))  // Waiting for 90 seconds (90000 mili-seconds)
 
     ///@dev - Check log of callback ("requestId" that is used and "randomNumber" that is retrieved via VRF)
-    let _requestIdUsed = await diplomaNFT.requestIdUsed()
-    console.log('=== requestIdUsed ===', String(_requestIdUsed))
+    let _requestIdCalledBack = await diplomaNFT.requestIdCalledBack()
+    console.log('=== requestIdCalledBack ===', String(_requestIdCalledBack))
 
     let _randomResult = await diplomaNFT.randomResult()
     console.log('=== randomResult ===', String(_randomResult))
@@ -127,12 +127,12 @@ async function main() {
         let _randomResult2 = await diplomaNFT.randomResult()
         console.log('=== randomResult ===', String(_randomResult2))
 
-        //@dev - Retrieve a random number by using requestId used via an event log of "RandomnessRequest"
-        let _randomResult = await diplomaNFT.randomNumberStored(requestId)
+        //@dev - Retrieve a random number by assigning a requestId called back
+        let _randomResult = await diplomaNFT.randomNumberStored(_requestIdCalledBack)
         console.log('=== randomNumberStored 1 ===', String(_randomResult))
 
-        //@dev - Execute getRandomNumberStored()
-        let _randomNumberStored = await diplomaNFT.getRandomNumberStored(String(requestId))
+        //@dev - Retrieve a random number stored by assigning a requestId called back
+        let _randomNumberStored = await diplomaNFT.getRandomNumberStored(String(_requestIdCalledBack))
         console.log('=== randomNumberStored 2 ===', String(_randomNumberStored))
 
         //@dev - Test an alternative way to retrieve the result of request of random nuber
