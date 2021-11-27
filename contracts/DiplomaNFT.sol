@@ -27,7 +27,7 @@ contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
     bytes32 public requestIdCalledBack;
 
     //@dev - Mappling for storing a random number retrieved
-    mapping (bytes32 => uint256) public randomNumberStored;   // [Param]: requestId -> randomness (random number) that is retrieved
+    mapping (bytes32 => uint256) public randomNumberStored;   // [Param]: requestId -> randomness (random number) that is retrieved from VRF
 
     event RandomResultRetrieved(bytes32 indexed requestId, uint256 indexed randomness);
 
@@ -105,18 +105,15 @@ contract DiplomaNFT is VRFConsumerBase, ERC721, Ownable {
      * @dev - Mint a new Diploma NFT.
      * @param graduate - "to" address that NFT minted will be transferred. Eligible address assigned is a new graduate's address 
      */
-    //function mintDiplomaNFT(address graduate) public returns (bool) {
-    function mintDiplomaNFT(address graduate) public returns (bytes32 _requestId) {
+    function mintDiplomaNFT(address graduate) public returns (bool) {
         _safeMint(graduate, tokenCounter);      // [NOTE]: In case of this, a receiver of a new Diploma NFT minted is "graduate" address specified.
         //_safeMint(msg.sender, tokenCounter);  // [NOTE]: In case of this, mintDiplomaNFT() is called from the GraduatesRegistry.sol and therefore "msg.sender" is the GraduatesRegistry.sol and the GraduatesRegistry.sol will receive a new Diploma NFT minted. 
         
         tokenCounter = tokenCounter + 1;
 
-        bytes32 requestId = getRandomNumber(); // [Error]: This row is cause of error
+        //bytes32 requestId = getRandomNumber();  // [NOTE]: getRandomNumber() method is execute outside of mintDiplomaNFT() method separately
 
         emit DiplomaNFTMinted(msg.sender, tokenCounter);
-
-        return requestId;
     }
 
     function setDiplomaURI(string memory diploma, string memory tokenUri, uint256 tokenId) public {
