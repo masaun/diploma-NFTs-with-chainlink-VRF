@@ -80,7 +80,7 @@ async function main() {
 
         //@dev - Retrieve a requestId used via an event log of "RandomnessRequest"
         const requestId = eventLogs.requestID
-        console.log(`=== requestId that is used when sending to VRF ===`, requestId)
+        console.log(`=== requestId that was used when sending to VRF ===`, requestId)
     }
 
 
@@ -93,11 +93,11 @@ async function main() {
 
     ///@dev - Check log of callback ("requestId" that is used and "randomNumber" that is retrieved via VRF)
     let _requestIdCalledBack = await diplomaNFT.requestIdCalledBack()
-    console.log('=== requestIdCalledBack ===', String(_requestIdCalledBack))
+    console.log('=== requestIdCalledBack ===', _requestIdCalledBack)
 
     //@dev - Retrieve a random number by assigning a requestId called back
     let _randomNumberStored = await diplomaNFT.randomNumberStored(_requestIdCalledBack)
-    console.log('=== randomNumberStored ===', String(_randomNumberStored))
+    console.log('=== randomNumberStored ===', String(_randomNumberStored))  // [NOTE]: Need to convert from hex to string
 
 
     ///------------------------------------------------------------------------------------------------------------
@@ -110,7 +110,7 @@ async function main() {
     console.log(`\n txReceipt that linkToken.approve() for the GraduatesRegistry.sol: ${ JSON.stringify(txReceipt2, null, 2) }`)
 
     const newGraduateId = _requestIdCalledBack
-    const randomNumberOfNewGraduate = _randomNumberStored
+    const randomNumberOfNewGraduate = String(_randomNumberStored)
     const newGraduateName = "Bob Jones"
     const newGraduateAddress = "0xbc946a0d48BF799b103D7e0217701b40bfF34dc7" /// [NOTE]: This is an example of wallet address of a new graduate. 
     const transaction = await graduatesRegistry.registerNewGraduate(DIPLOMA_NFT, 
