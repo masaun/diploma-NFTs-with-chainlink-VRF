@@ -50,7 +50,7 @@ async function main() {
     /// Get a random number directly by using getRandomNumber()
     ///----------------------------------------------------------
 
-    //@dev - Get a random number
+    ///@dev - Get a random number
     let txReceipt4 = await linkToken.approve(DIPLOMA_NFT, linkAmount) // 1 LINK
     const tx_receipt_4 = await txReceipt4.wait()  /// [NOTE]: Next step must wait until linkToken.approve() is finished
 
@@ -58,8 +58,8 @@ async function main() {
     const tx_receipt_3 = await txReceipt3.wait()
     console.log(`\n tx_receipt_3: ${ JSON.stringify(tx_receipt_3, null, 2) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
-    ///@dev - Wait 30 seconds for calling a result of requesting a random number retrieved.
-    await new Promise(resolve => setTimeout(resolve, 30000))  // 30 seconds
+    ///@dev - Wait 90 seconds for calling a result of requesting a random number retrieved.
+    await new Promise(resolve => setTimeout(resolve, 90000))  // Waiting for 90 seconds (90000 mili-seconds)
 
     ///@dev - Check log of callback ("requestId" that is used and "randomNumber" that is retrieved via VRF)
     let _requestIdUsed = await diplomaNFT.requestIdUsed()
@@ -118,9 +118,6 @@ async function main() {
         //@dev - Retrieve a requestId used via an event log of "RandomnessRequest"
         const requestId = eventLogs.requestID
         console.log(`=== requestId ===`, requestId)
-
-        //@dev - Wait 10 seconds
-        await new Promise(resolve => setTimeout(resolve, 10000))    // 10 seconds
 
         //@dev - GET a random number that is stored in "randomResult"
         let _randomResult2 = await diplomaNFT.randomResult()
