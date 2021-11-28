@@ -16,6 +16,15 @@
 
 <br>
 
+## 【Tech Stack】
+- Solidity (Solc): v0.7.6
+- Hardhat: v2.6.4
+- ethers.js: v5.0.24
+- @chainlink/contracts: v0.2.2  
+etc...
+
+<br>
+
 ## 【Setup (Installation)】
 - ① Add `.env` file to the root directory. 
   (Please `.env.example` for creating `.env` file)
