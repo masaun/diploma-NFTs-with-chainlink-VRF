@@ -13,7 +13,7 @@ async function main() {
     ///-------------------------------------------------------
     /// Setup
     ///-------------------------------------------------------
-    console.log('\m ----- Setup -----')
+    console.log('\n ----- Setup -----')
 
     ///@dev - Setup test accounts of graduates
     const graduate1 = process.env.TEST_ACCOUNT_1
@@ -40,7 +40,7 @@ async function main() {
     ///-------------------------------------------------------
     /// Create a new DiplomaNFT
     ///-------------------------------------------------------
-    console.log('\m ----- Create a new DiplomaNFT -----')
+    console.log('\n ----- Create a new DiplomaNFT -----')
 
     const _diplomaNFTName = "Diploma of the East University"
     const _diplomaNFTSymbol = "DIPLOMA_OF_EAST_UNIVERSITY" 
@@ -52,7 +52,10 @@ async function main() {
 
     //@dev - Create a DiplomaNFT instance
     const diplomaNFT = await ethers.getContractAt("DiplomaNFT", DIPLOMA_NFT)
-
+    const DIPLOMA_NFT_NAME = await diplomaNFT.name()
+    const DIPLOMA_NFT_SYMBOL = await diplomaNFT.symbol()
+    console.log(`\n The name of this DiplomaNFT: ${ DIPLOMA_NFT_NAME }`)
+    console.log(`The symbol of this DiplomaNFT: ${ DIPLOMA_NFT_SYMBOL } \n`)
 
 
     ///-----------------------------------------------------------------------------------------
@@ -97,7 +100,7 @@ async function main() {
     ///-----------------------------------------------------------------------------------------
     /// Retrieve a requestId and random number that are called back from Chainlink-VRF
     ///-----------------------------------------------------------------------------------------
-    console.log('\m ----- Retrieve a requestId and random number that are called back from Chainlink-VRF -----')
+    console.log('\n ----- Retrieve a requestId and random number that are called back from Chainlink-VRF -----')
 
     ///@dev - Wait 90 seconds for calling a result of requesting a random number retrieved.
     await new Promise(resolve => setTimeout(resolve, 90000))  // Waiting for 90 seconds (90000 mili-seconds)
@@ -114,12 +117,12 @@ async function main() {
     ///------------------------------------------------------------------------------------------------------------
     /// Register a new graduate with requestId and random number that are retrieved and stored via Chainlink-VRF
     ///------------------------------------------------------------------------------------------------------------
-    console.log('\m ----- Register a new graduate with requestId and random number that are retrieved and stored via Chainlink-VRF -----')
+    console.log('\n----- Register a new graduate with requestId and random number that are retrieved and stored via Chainlink-VRF -----')
 
     //@dev - Gas Fee the best to call getRandomNumber method: gasLimit (12500000 wei) * gasPrice (10000000000 wei = 10 Gwei) = 0.001 ETH 
     const txReceipt2 = await linkToken.approve(GRADUATES_REGISTRY, linkAmount)
     const tx_receipt_2 = await txReceipt2.wait()  /// [NOTE]: Next step must wait until linkToken.approve() is finished
-    console.log(`\n txReceipt that linkToken.approve() for the GraduatesRegistry.sol: ${ JSON.stringify(txReceipt2, null, 2) }`)
+    console.log(`\ntxReceipt that linkToken.approve() for the GraduatesRegistry.sol: ${ JSON.stringify(txReceipt2, null, 2) }`)
 
     const newGraduateId = _requestIdCalledBack
     const randomNumberOfNewGraduate = String(_randomNumberStored)
@@ -140,7 +143,7 @@ async function main() {
     ///------------------------------------------------------------------------------------------------------------
     /// Check whether a new graduate is registered properly or not
     ///------------------------------------------------------------------------------------------------------------
-    console.log('\m ----- Check whether a new graduate is registered properly or not -----')
+    console.log('\n----- Check whether a new graduate is registered properly or not -----')
 
     const graduateId = newGraduateId
     let graduate = await graduatesRegistry.getGraduate(graduateId)
@@ -162,7 +165,7 @@ async function main() {
     ///------------------------------------------------------------------------------------------------------------
     /// Grant a DiplomaNFT for 2nd graduates
     ///------------------------------------------------------------------------------------------------------------
-    console.log('\m ------- Grant a DiplomaNFT for 2nd graduates -------')
+    console.log('\n------- Grant a DiplomaNFT for 2nd graduates -------')
 
 
 
