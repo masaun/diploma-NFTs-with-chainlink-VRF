@@ -24,7 +24,9 @@ yarn
 <br>
 
 ## 【Deployment】
-- Deploy 3 smart contracts on Kovan testnet
+- Deploy 2 smart contracts on Kovan testnet
+  - DiplomaNFTFactory.sol
+  - GraduatesRegistry.sol
 ```
 yarn script-kovan:Deploy
 ```
@@ -32,7 +34,7 @@ yarn script-kovan:Deploy
 <br>
 
 ## 【Script】
-- Execute the script that includes the whole scenario of this smart contracts.
+- Execute the script ( `./scripts/GraduatesRegistry.script.js` ) that includes the whole scenario of this smart contracts.
 ```
 yarn script-kovan:GraduatesRegistry
 ```
