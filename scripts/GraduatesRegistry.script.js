@@ -50,7 +50,7 @@ async function main() {
 
     //@dev - Using getDiplomaNFTAddressCreatedTheLatest() instead of using eventLog of "DiplomaNFTCreated" in order to retrieve a DiplomaNFT's address
     let DIPLOMA_NFT = await diplomaNFTFactory.getDiplomaNFTAddressCreatedTheLatest()
-    console.log(`\n=== A new DiplomaNFT address created ===`, DIPLOMA_NFT)
+    console.log(`\nA new DiplomaNFT address created: ${ DIPLOMA_NFT }`)
 
     //@dev - Create a DiplomaNFT instance
     const diplomaNFT = await ethers.getContractAt("DiplomaNFT", DIPLOMA_NFT)
@@ -79,7 +79,7 @@ async function main() {
     console.log(`\n txReceipt of getRandomNumber() execution: ${ JSON.stringify(txReceipt_2, null, 2) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
     ///@dev - Get a request ID used when sending to VRF
-    console.log("\n=== txReceipt_2.events.length ===", txReceipt_2.events.length)
+    console.log(`\n txReceipt_2.events.length: ${ txReceipt_2.events.length }`)
 
     const indexOfEvent = 3 // Index number of event of "RandomnessRequest" (that can identify the result on Etherscan)
     let addressInLog = txReceipt_2.events[indexOfEvent].address
@@ -92,11 +92,11 @@ async function main() {
 
         //@dev - Retrieve an event log of "RandomnessRequest" that is defined in the VRFCoodinator.sol
         let eventLogs = iface.decodeEventLog("RandomnessRequest", _data, _topics)  // [NOTE]: Retrieve an event of "RandomnessRequest"
-        console.log(`=== eventLogs of "RandomnessRequest" ===`, eventLogs)
+        console.log(`\n eventLogs of "RandomnessRequest": ${ eventLogs }`)
 
         //@dev - Retrieve a requestId used via an event log of "RandomnessRequest"
         const requestId = eventLogs.requestID
-        console.log(`\n=== requestId that was used when sending to VRF ===`, requestId)
+        console.log(`\n requestId that was used when sending to VRF: ${ requestId }`)
     }
 
 
@@ -110,11 +110,11 @@ async function main() {
 
     ///@dev - Check log of callback ("requestId" that is used and "randomNumber" that is retrieved via VRF)
     let _requestIdCalledBack = await diplomaNFT.requestIdCalledBack()
-    console.log('=== requestIdCalledBack ===', _requestIdCalledBack)
+    console.log(`\n requestIdCalledBack: ${ _requestIdCalledBack }`)
 
     //@dev - Retrieve a random number by assigning a requestId called back
     let _randomNumberStored = await diplomaNFT.randomNumberStored(_requestIdCalledBack)
-    console.log('=== randomNumberStored ===', String(_randomNumberStored))  // [NOTE]: Need to convert from hex to string
+    console.log(`\n randomNumberStored: ${ String(_randomNumberStored) }`)  // [NOTE]: Need to convert from hex to string
 
 
     ///------------------------------------------------------------------------------------------------------------
@@ -125,7 +125,7 @@ async function main() {
     //@dev - Gas Fee the best to call getRandomNumber method: gasLimit (12500000 wei) * gasPrice (10000000000 wei = 10 Gwei) = 0.001 ETH 
     const tx_3 = await linkToken.approve(GRADUATES_REGISTRY, linkAmount)
     const txReceipt_3 = await tx_3.wait()  /// [NOTE]: Next step must wait until linkToken.approve() is finished
-    console.log(`\ntxReceipt that linkToken.approve() for the GraduatesRegistry.sol: ${ JSON.stringify(txReceipt_3, null, 2) }`)
+    console.log(`\n txReceipt that linkToken.approve() for the GraduatesRegistry.sol: ${ JSON.stringify(txReceipt_3, null, 2) }`)
 
     const newGraduateId = _requestIdCalledBack
     const randomNumberOfNewGraduate = String(_randomNumberStored)
@@ -137,10 +137,10 @@ async function main() {
                                                                     newGraduateName, 
                                                                     newGraduateAddress, 
                                                                     { gasLimit: 12500000, gasPrice: 30000000000 })  // Kovan
-    console.log(`\n transaction of registerNewGraduate() execution: ${ JSON.stringify(tx_4, null, 2) }`)  /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
+    console.log(`\n transaction of registerNewGraduate() execution: ${ JSON.stringify(tx_4, null, 2) }`)
 
     const txReceipt_4 = await tx_4.wait()
-    console.log(`\n txReceipt of registerNewGraduate() execution: ${ JSON.stringify(txReceipt_4, null, 2) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
+    console.log(`\n txReceipt of registerNewGraduate() execution: ${ JSON.stringify(txReceipt_4, null, 2) }`)
 
 
     ///------------------------------------------------------------------------------------------------------------
@@ -150,7 +150,7 @@ async function main() {
 
     const graduateId = newGraduateId
     let graduate = await graduatesRegistry.getGraduate(graduateId)
-    console.log(`\n graduate: ${ JSON.stringify(graduate, null, 2) } \n`)  /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
+    console.log(`\n graduate: ${ JSON.stringify(graduate, null, 2) } \n`)
 
     //let graduateId = graduate[0]
     let randomNumberOfGraduate = String(graduate[1])
@@ -173,7 +173,7 @@ async function main() {
     ///------------------------------------------------------------------------------------------------------------
     /// Mint a DiplomaNFT for 2nd graduates
     ///------------------------------------------------------------------------------------------------------------
-    console.log('\n\n\n------------------------------------------------------------------------------\n--- Mint a DiplomaNFT (with a random number generated) for 2nd graduates ---\n------------------------------------------------------------------------------')
+    console.log('\n\n\n***************************************************************************\n* Mint a DiplomaNFT (with a random number generated) for 2nd graduates *\n***************************************************************************')
 
     ///@dev - Get a random number
     let tx_11 = await linkToken.approve(DIPLOMA_NFT, linkAmount) // 1 LINK as a fee to request a randomNumber via VRF
@@ -181,8 +181,7 @@ async function main() {
 
     let tx_22 = await diplomaNFT.getRandomNumber({ gasLimit: 2500000, gasPrice: 300000000000 })
     const txReceipt_22 = await tx_22.wait()
-    //console.log(`\n txReceipt of getRandomNumber() execution: ${ JSON.stringify(txReceipt_22, null, 2) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
-
+    //console.log(`\n txReceipt of getRandomNumber() execution: ${ JSON.stringify(txReceipt_22, null, 2) }`)
     console.log('\n----- Retrieve a requestId and random number (for 2nd graduate) that are called back from Chainlink-VRF -----')
 
     ///@dev - Wait 90 seconds for calling a result of requesting a random number retrieved.
@@ -190,11 +189,11 @@ async function main() {
 
     ///@dev - Check log of callback ("requestId" that is used and "randomNumber" that is retrieved via VRF)
     let _requestIdCalledBack_2nd = await diplomaNFT.requestIdCalledBack()
-    console.log('=== requestIdCalledBack (for 2nd graduate) ===', _requestIdCalledBack_2nd)
+    console.log(`\n requestIdCalledBack (for 2nd graduate): ${ _requestIdCalledBack_2nd }`)
 
     //@dev - Retrieve a random number by assigning a requestId called back
     let _randomNumberStored_2nd = await diplomaNFT.randomNumberStored(_requestIdCalledBack_2nd)
-    console.log('=== randomNumberStored (for 2nd graduate) ===', String(_randomNumberStored_2nd))  // [NOTE]: Need to convert from hex to string
+    console.log(` randomNumberStored (for 2nd graduate): ${ String(_randomNumberStored_2nd) }`)  // [NOTE]: Need to convert from hex to string
 
     console.log('\n----- Register 2nd graduate with requestId and random number that are retrieved and stored via Chainlink-VRF -----')
 
@@ -216,11 +215,11 @@ async function main() {
     //console.log(`\n transaction of registerNewGraduate() execution: ${ JSON.stringify(tx_44, null, 2) }`)
     
     const txReceipt_44 = await tx_44.wait()
-    //console.log(`\n txReceipt of registerNewGraduate() execution: ${ JSON.stringify(txReceipt_44, null, 2) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
+    //console.log(`\n txReceipt of registerNewGraduate() execution: ${ JSON.stringify(txReceipt_44, null, 2) }`)
 
     const graduateId_2nd = newGraduateId_2nd
     let graduate_2nd = await graduatesRegistry.getGraduate(graduateId_2nd)
-    //console.log(`\n graduate: ${ JSON.stringify(graduate, null, 2) } \n`)  /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
+    //console.log(`\n graduate: ${ JSON.stringify(graduate, null, 2) } \n`)
 
     //let graduateId = graduate[0]
     let randomNumberOfGraduate_2nd = String(graduate_2nd[1])
