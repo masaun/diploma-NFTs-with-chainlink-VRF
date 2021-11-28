@@ -1,4 +1,5 @@
 const { ethers } = require("hardhat")
+require('dotenv').config()
 
 
 /**
@@ -13,7 +14,12 @@ async function main() {
     /// Setup
     ///-------------------------------------------------------
 
-    //@dev - Deployed-addresses
+    ///@dev - Setup test accounts of graduates
+    const graduate1 = process.env.TEST_ACCOUNT_1
+    const graduate2 = process.env.TEST_ACCOUNT_2
+    const graduate3 = process.env.TEST_ACCOUNT_3
+
+    ///@dev - Deployed-addresses
     const DIPLOMA_NFT_FACTORY = "0xE1538ee65808dC992c22fd656C4CFf08350BBb9F"  // Kovan
     const GRADUATES_REGISTRY = "0xAcEa79FC1cF702C6A7F39823905d988E69784AD3"   // Kovan
     //const GRADUATES_REGISTRY = "0xc4d5A87471185eB469bd86c8758061393E22a31d" // Polygon-Mumbai
@@ -59,7 +65,7 @@ async function main() {
     let txReceipt4 = await linkToken.approve(DIPLOMA_NFT, linkAmount) // 1 LINK as a fee to request a randomNumber via VRF
     const tx_receipt_4 = await txReceipt4.wait()  /// [NOTE]: Next step must wait until linkToken.approve() is finished
 
-    let txReceipt3 = await diplomaNFT.getRandomNumber({ gasLimit: 2500000, gasPrice: 200000000000 })
+    let txReceipt3 = await diplomaNFT.getRandomNumber({ gasLimit: 2500000, gasPrice: 250000000000 })
     const tx_receipt_3 = await txReceipt3.wait()
     console.log(`\n tx_receipt_3: ${ JSON.stringify(tx_receipt_3, null, 2) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
@@ -112,13 +118,13 @@ async function main() {
     const newGraduateId = _requestIdCalledBack
     const randomNumberOfNewGraduate = String(_randomNumberStored)
     const newGraduateName = "Bob Jones"
-    const newGraduateAddress = "0xbc946a0d48BF799b103D7e0217701b40bfF34dc7" /// [NOTE]: This is an example of wallet address of a new graduate. 
+    const newGraduateAddress = graduate1 /// [NOTE]: This is an example wallet address of a new graduate. 
     const transaction = await graduatesRegistry.registerNewGraduate(DIPLOMA_NFT, 
                                                                     newGraduateId,
                                                                     randomNumberOfNewGraduate,
                                                                     newGraduateName, 
                                                                     newGraduateAddress, 
-                                                                    { gasLimit: 12500000, gasPrice: 20000000000 })  // Kovan
+                                                                    { gasLimit: 12500000, gasPrice: 25000000000 })  // Kovan
     console.log(`\n transaction: ${ JSON.stringify(transaction, null, 2) }`)  /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
     const tx_receipt = await transaction.wait()
