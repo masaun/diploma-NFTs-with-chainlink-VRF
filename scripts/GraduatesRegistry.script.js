@@ -8,11 +8,12 @@ require('dotenv').config()
  */ 
 async function main() {
 
-    console.log('---- This is a script file for the GraduatesRegistry.sol ---')
+    console.log('----- The scenario of granting a DiplomaNFT start -----')
 
     ///-------------------------------------------------------
     /// Setup
     ///-------------------------------------------------------
+    console.log('\m ----- Setup -----')
 
     ///@dev - Setup test accounts of graduates
     const graduate1 = process.env.TEST_ACCOUNT_1
@@ -39,13 +40,15 @@ async function main() {
     ///-------------------------------------------------------
     /// Create a new DiplomaNFT
     ///-------------------------------------------------------
+    console.log('\m ----- Create a new DiplomaNFT -----')
+
     const _diplomaNFTName = "Diploma of the East University"
     const _diplomaNFTSymbol = "DIPLOMA_OF_EAST_UNIVERSITY" 
     let txReceipt = await diplomaNFTFactory.createNewDiplomaNFT(_diplomaNFTName, _diplomaNFTSymbol)
 
     //@dev - Using getDiplomaNFTAddressCreatedTheLatest() instead of using eventLog of "DiplomaNFTCreated" in order to retrieve a DiplomaNFT's address
     let DIPLOMA_NFT = await diplomaNFTFactory.getDiplomaNFTAddressCreatedTheLatest()
-    console.log(`=== DIPLOMA_NFT ===`, DIPLOMA_NFT)
+    console.log(`=== The DiplomaNFT address created ===`, DIPLOMA_NFT)
 
     //@dev - Create a DiplomaNFT instance
     const diplomaNFT = await ethers.getContractAt("DiplomaNFT", DIPLOMA_NFT)
@@ -55,6 +58,7 @@ async function main() {
     ///-----------------------------------------------------------------------------------------
     /// Send a request for getting a random number to Chainlink-VRF by using getRandomNumber()
     ///-----------------------------------------------------------------------------------------
+    console.log('\m ----- Send a request for getting a random number to Chainlink-VRF -----')
 
     const LINK_TOKEN = "0xa36085F69e2889c224210F603D836748e7dC0088"  // Kovan
     const linkToken = await ethers.getContractAt('@chainlink/contracts/src/v0.7/interfaces/LinkTokenInterface.sol:LinkTokenInterface', LINK_TOKEN)
@@ -93,6 +97,7 @@ async function main() {
     ///-----------------------------------------------------------------------------------------
     /// Retrieve a requestId and random number that are called back from Chainlink-VRF
     ///-----------------------------------------------------------------------------------------
+    console.log('\m ----- Retrieve a requestId and random number that are called back from Chainlink-VRF -----')
 
     ///@dev - Wait 90 seconds for calling a result of requesting a random number retrieved.
     await new Promise(resolve => setTimeout(resolve, 90000))  // Waiting for 90 seconds (90000 mili-seconds)
@@ -109,6 +114,7 @@ async function main() {
     ///------------------------------------------------------------------------------------------------------------
     /// Register a new graduate with requestId and random number that are retrieved and stored via Chainlink-VRF
     ///------------------------------------------------------------------------------------------------------------
+    console.log('\m ----- Register a new graduate with requestId and random number that are retrieved and stored via Chainlink-VRF -----')
 
     //@dev - Gas Fee the best to call getRandomNumber method: gasLimit (12500000 wei) * gasPrice (10000000000 wei = 10 Gwei) = 0.001 ETH 
     const txReceipt2 = await linkToken.approve(GRADUATES_REGISTRY, linkAmount)
@@ -134,6 +140,7 @@ async function main() {
     ///------------------------------------------------------------------------------------------------------------
     /// Check whether a new graduate is registered properly or not
     ///------------------------------------------------------------------------------------------------------------
+    console.log('\m ----- Check whether a new graduate is registered properly or not -----')
 
     const graduateId = newGraduateId
     let graduate = await graduatesRegistry.getGraduate(graduateId)
@@ -149,6 +156,15 @@ async function main() {
     console.log(`diplomaNFTTokenId: ${ diplomaNFTTokenId }`)
     console.log(`graduateName: ${ graduateName }`)
     console.log(`graduateAddress: ${ graduateAddress }`)
+
+
+
+    ///------------------------------------------------------------------------------------------------------------
+    /// Grant a DiplomaNFT for 2nd graduates
+    ///------------------------------------------------------------------------------------------------------------
+    console.log('\m ------- Grant a DiplomaNFT for 2nd graduates -------')
+
+
 
 }
 
