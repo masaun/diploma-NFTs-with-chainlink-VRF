@@ -132,11 +132,11 @@ async function main() {
     const newGraduateName = "Bob Jones"
     const newGraduateAddress = graduate1 /// [NOTE]: This is an example wallet address of a new graduate. 
     const tx_4 = await graduatesRegistry.registerNewGraduate(DIPLOMA_NFT, 
-                                                                    newGraduateId,
-                                                                    randomNumberOfNewGraduate,
-                                                                    newGraduateName, 
-                                                                    newGraduateAddress, 
-                                                                    { gasLimit: 12500000, gasPrice: 30000000000 })  // Kovan
+                                                             newGraduateId,
+                                                             randomNumberOfNewGraduate,
+                                                             newGraduateName, 
+                                                             newGraduateAddress, 
+                                                             { gasLimit: 12500000, gasPrice: 30000000000 })  // Kovan
     console.log(`\n transaction of registerNewGraduate() execution: ${ JSON.stringify(tx_4, null, 2) }`)
 
     const txReceipt_4 = await tx_4.wait()
@@ -230,7 +230,7 @@ async function main() {
     console.log(`randomNumberOfGraduate (of 2nd graduate): ${ randomNumberOfGraduate_2nd }`)
     console.log(`diplomaNFTTokenId (of 2nd graduate): ${ diplomaNFTTokenId_2nd }`)
     console.log(`graduateName (of 2nd graduate): ${ graduateName_2nd }`)
-    console.log(`graduateAddress (of 2nd graduate): ${ graduateAddress_2nd }`)
+    console.log(`graduateAddress (of 2nd graduate): ${ graduateAddress_2nd } \n`)
 
 }
 

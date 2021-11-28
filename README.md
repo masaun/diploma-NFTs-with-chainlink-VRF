@@ -12,7 +12,7 @@
 
 ## 【Workflow】
 - Diagram of workflow  
-  ![DiplomaNFT-by-using-Chainlink-VRF](https://user-images.githubusercontent.com/19357502/143730002-d40ef8c2-4873-48d8-960f-f91058e7a2c1.jpg)
+  ![DiplomaNFT-by-using-Chainlink-VRF](https://user-images.githubusercontent.com/19357502/143765171-84e61627-7b75-4d24-86e7-00014c39c854.jpg)
 
 <br>
 
