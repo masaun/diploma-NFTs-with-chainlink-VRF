@@ -37,10 +37,11 @@ async function main() {
     const VRF_COORDINATOR = "0xdD3782915140c8f3b190B5D67eAc6dc5760C46E9"  // Chainlink-VRF coordinator on Kovan
 
 
+    console.log('\n--------------------------------------------------------\n--- Mint a DiplomaNFT (with a random number generated) for 1st graduate ---\n--------------------------------------------------------')
+
     ///-------------------------------------------------------
     /// Create a new DiplomaNFT
     ///-------------------------------------------------------
-    console.log('\n------- Grant a DiplomaNFT (with a random number generated) for 1st graduate -------')
     console.log('\n----- Create a new DiplomaNFT -----')
 
     const _diplomaNFTName = "Diploma of the East University"
@@ -73,12 +74,13 @@ async function main() {
     let tx_1 = await linkToken.approve(DIPLOMA_NFT, linkAmount) // 1 LINK as a fee to request a randomNumber via VRF
     const txReceipt1 = await tx_1.wait()  /// [NOTE]: Next step must wait until linkToken.approve() is finished
 
-    let tx_2 = await diplomaNFT.getRandomNumber({ gasLimit: 2500000, gasPrice: 250000000000 })
+    let tx_2 = await diplomaNFT.getRandomNumber({ gasLimit: 2500000, gasPrice: 300000000000 })
     const txReceipt_2 = await tx_2.wait()
     console.log(`\n txReceipt of getRandomNumber() execution: ${ JSON.stringify(txReceipt_2, null, 2) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
     ///@dev - Get a request ID used when sending to VRF
     console.log("\n=== txReceipt_2.events.length ===", txReceipt_2.events.length)
+
     const indexOfEvent = 3 // Index number of event of "RandomnessRequest" (that can identify the result on Etherscan)
     let addressInLog = txReceipt_2.events[indexOfEvent].address
     if (addressInLog == VRF_COORDINATOR) {
@@ -134,7 +136,7 @@ async function main() {
                                                                     randomNumberOfNewGraduate,
                                                                     newGraduateName, 
                                                                     newGraduateAddress, 
-                                                                    { gasLimit: 12500000, gasPrice: 25000000000 })  // Kovan
+                                                                    { gasLimit: 12500000, gasPrice: 30000000000 })  // Kovan
     console.log(`\n transaction of registerNewGraduate() execution: ${ JSON.stringify(tx_4, null, 2) }`)  /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
     const txReceipt_4 = await tx_4.wait()
@@ -163,12 +165,73 @@ async function main() {
 
 
 
-    ///------------------------------------------------------------------------------------------------------------
-    /// Grant a DiplomaNFT for 2nd graduates
-    ///------------------------------------------------------------------------------------------------------------
-    console.log('\n------- Grant a DiplomaNFT (with a random number generated) for 2nd graduates -------')
 
 
+
+
+
+    ///------------------------------------------------------------------------------------------------------------
+    /// Mint a DiplomaNFT for 2nd graduates
+    ///------------------------------------------------------------------------------------------------------------
+    console.log('\n\n\n--------------------------------------------------------\n--- Mint a DiplomaNFT (with a random number generated) for 2nd graduates ---\n--------------------------------------------------------')
+
+    ///@dev - Get a random number
+    let tx_11 = await linkToken.approve(DIPLOMA_NFT, linkAmount) // 1 LINK as a fee to request a randomNumber via VRF
+    const txReceipt11 = await tx_11.wait()  /// [NOTE]: Next step must wait until linkToken.approve() is finished
+
+    let tx_22 = await diplomaNFT.getRandomNumber({ gasLimit: 2500000, gasPrice: 300000000000 })
+    const txReceipt_22 = await tx_22.wait()
+    //console.log(`\n txReceipt of getRandomNumber() execution: ${ JSON.stringify(txReceipt_22, null, 2) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
+
+    console.log('\n----- Retrieve a requestId and random number (for 2nd graduate) that are called back from Chainlink-VRF -----')
+
+    ///@dev - Wait 90 seconds for calling a result of requesting a random number retrieved.
+    await new Promise(resolve => setTimeout(resolve, 90000))  // Waiting for 90 seconds (90000 mili-seconds)
+
+    ///@dev - Check log of callback ("requestId" that is used and "randomNumber" that is retrieved via VRF)
+    let _requestIdCalledBack_2nd = await diplomaNFT.requestIdCalledBack()
+    console.log('=== requestIdCalledBack (for 2nd graduate) ===', _requestIdCalledBack_2nd)
+
+    //@dev - Retrieve a random number by assigning a requestId called back
+    let _randomNumberStored_2nd = await diplomaNFT.randomNumberStored(_requestIdCalledBack)
+    console.log('=== randomNumberStored (for 2nd graduate) ===', String(_randomNumberStored_2nd))  // [NOTE]: Need to convert from hex to string
+
+    console.log('\n----- Register 2nd graduate with requestId and random number that are retrieved and stored via Chainlink-VRF -----')
+
+    //@dev - Gas Fee the best to call getRandomNumber method: gasLimit (12500000 wei) * gasPrice (10000000000 wei = 10 Gwei) = 0.001 ETH 
+    const tx_33 = await linkToken.approve(GRADUATES_REGISTRY, linkAmount)
+    const txReceipt_33 = await tx_33.wait()  /// [NOTE]: Next step must wait until linkToken.approve() is finished
+    //console.log(`\ntxReceipt that linkToken.approve() for the GraduatesRegistry.sol: ${ JSON.stringify(txReceipt_33, null, 2) }`)
+
+    const newGraduateId_2nd = _requestIdCalledBack_2nd
+    const randomNumberOfNewGraduate_2nd = String(_randomNumberStored_2nd)
+    const newGraduateName_2nd = "Anna Smith"
+    const newGraduateAddress_2nd = graduate2 /// [NOTE]: This is an example wallet address of a new graduate. 
+    const tx_44 = await graduatesRegistry.registerNewGraduate(DIPLOMA_NFT, 
+                                                              newGraduateId_2nd,
+                                                              randomNumberOfNewGraduate_2nd,
+                                                              newGraduateName_2nd, 
+                                                              newGraduateAddress_2nd, 
+                                                              { gasLimit: 12500000, gasPrice: 30000000000 })  // Kovan
+    //console.log(`\n transaction of registerNewGraduate() execution: ${ JSON.stringify(tx_44, null, 2) }`)
+    
+    const txReceipt_44 = await tx_44.wait()
+    //console.log(`\n txReceipt of registerNewGraduate() execution: ${ JSON.stringify(txReceipt_44, null, 2) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
+
+    const graduateId_2nd = newGraduateId_2nd
+    let graduate_2nd = await graduatesRegistry.getGraduate(graduateId)
+    //console.log(`\n graduate: ${ JSON.stringify(graduate, null, 2) } \n`)  /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
+
+    //let graduateId = graduate[0]
+    let randomNumberOfGraduate_2nd = String(graduate_2nd[1])
+    let diplomaNFTTokenId_2nd = String(graduate_2nd[2])
+    let graduateName_2nd = graduate_2nd[3]
+    let graduateAddress_2nd = graduate_2nd[4]
+    console.log(`graduateId (of 2nd graduate): ${ graduateId_2nd }`)
+    console.log(`randomNumberOfGraduate (of 2nd graduate): ${ randomNumberOfGraduate_2nd }`)
+    console.log(`diplomaNFTTokenId (of 2nd graduate): ${ diplomaNFTTokenId_2nd }`)
+    console.log(`graduateName (of 2nd graduate): ${ graduateName_2nd }`)
+    console.log(`graduateAddress (of 2nd graduate): ${ graduateAddress_2nd }`)
 
 }
 
