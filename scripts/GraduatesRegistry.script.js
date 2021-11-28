@@ -37,7 +37,7 @@ async function main() {
     const VRF_COORDINATOR = "0xdD3782915140c8f3b190B5D67eAc6dc5760C46E9"  // Chainlink-VRF coordinator on Kovan
 
 
-    console.log('\n--------------------------------------------------------\n--- Mint a DiplomaNFT (with a random number generated) for 1st graduate ---\n--------------------------------------------------------')
+    console.log('\n------------------------------------------------------------------------------\n--- Mint a DiplomaNFT (with a random number generated) for 1st graduate ---\n------------------------------------------------------------------------------')
 
     ///-------------------------------------------------------
     /// Create a new DiplomaNFT
@@ -173,7 +173,7 @@ async function main() {
     ///------------------------------------------------------------------------------------------------------------
     /// Mint a DiplomaNFT for 2nd graduates
     ///------------------------------------------------------------------------------------------------------------
-    console.log('\n\n\n--------------------------------------------------------\n--- Mint a DiplomaNFT (with a random number generated) for 2nd graduates ---\n--------------------------------------------------------')
+    console.log('\n\n\n------------------------------------------------------------------------------\n--- Mint a DiplomaNFT (with a random number generated) for 2nd graduates ---\n------------------------------------------------------------------------------')
 
     ///@dev - Get a random number
     let tx_11 = await linkToken.approve(DIPLOMA_NFT, linkAmount) // 1 LINK as a fee to request a randomNumber via VRF
@@ -193,7 +193,7 @@ async function main() {
     console.log('=== requestIdCalledBack (for 2nd graduate) ===', _requestIdCalledBack_2nd)
 
     //@dev - Retrieve a random number by assigning a requestId called back
-    let _randomNumberStored_2nd = await diplomaNFT.randomNumberStored(_requestIdCalledBack)
+    let _randomNumberStored_2nd = await diplomaNFT.randomNumberStored(_requestIdCalledBack_2nd)
     console.log('=== randomNumberStored (for 2nd graduate) ===', String(_randomNumberStored_2nd))  // [NOTE]: Need to convert from hex to string
 
     console.log('\n----- Register 2nd graduate with requestId and random number that are retrieved and stored via Chainlink-VRF -----')
@@ -212,7 +212,7 @@ async function main() {
                                                               randomNumberOfNewGraduate_2nd,
                                                               newGraduateName_2nd, 
                                                               newGraduateAddress_2nd, 
-                                                              { gasLimit: 12500000, gasPrice: 30000000000 })  // Kovan
+                                                              { gasLimit: 12500000, gasPrice: 40000000000 })  // Kovan
     //console.log(`\n transaction of registerNewGraduate() execution: ${ JSON.stringify(tx_44, null, 2) }`)
     
     const txReceipt_44 = await tx_44.wait()
