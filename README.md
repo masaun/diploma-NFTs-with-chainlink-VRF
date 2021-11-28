@@ -1,4 +1,4 @@
-# Dynamic NFTS with Chainlink-VRF and Chainlink-Keepers
+# Diploma NFTS with Chainlink-VRF and Chainlink-Keepers
 - [Ref]: 
   - How to Build Dynamic NFTs on Polygon: https://blog.chain.link/how-to-build-dynamic-nfts-on-polygon/
 
