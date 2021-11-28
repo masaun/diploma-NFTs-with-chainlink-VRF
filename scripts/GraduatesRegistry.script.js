@@ -13,7 +13,7 @@ async function main() {
     ///-------------------------------------------------------
     /// Setup
     ///-------------------------------------------------------
-    console.log('\n ----- Setup -----')
+    console.log('\n----- Setup -----')
 
     ///@dev - Setup test accounts of graduates
     const graduate1 = process.env.TEST_ACCOUNT_1
@@ -40,7 +40,8 @@ async function main() {
     ///-------------------------------------------------------
     /// Create a new DiplomaNFT
     ///-------------------------------------------------------
-    console.log('\n ----- Create a new DiplomaNFT -----')
+    console.log('\n------- Grant a DiplomaNFT (with a random number generated) for 1st graduate -------')
+    console.log('\n----- Create a new DiplomaNFT -----')
 
     const _diplomaNFTName = "Diploma of the East University"
     const _diplomaNFTSymbol = "DIPLOMA_OF_EAST_UNIVERSITY" 
@@ -48,25 +49,25 @@ async function main() {
 
     //@dev - Using getDiplomaNFTAddressCreatedTheLatest() instead of using eventLog of "DiplomaNFTCreated" in order to retrieve a DiplomaNFT's address
     let DIPLOMA_NFT = await diplomaNFTFactory.getDiplomaNFTAddressCreatedTheLatest()
-    console.log(`=== The DiplomaNFT address created ===`, DIPLOMA_NFT)
+    console.log(`\n=== A new DiplomaNFT address created ===`, DIPLOMA_NFT)
 
     //@dev - Create a DiplomaNFT instance
     const diplomaNFT = await ethers.getContractAt("DiplomaNFT", DIPLOMA_NFT)
     const DIPLOMA_NFT_NAME = await diplomaNFT.name()
     const DIPLOMA_NFT_SYMBOL = await diplomaNFT.symbol()
-    console.log(`\n The name of this DiplomaNFT: ${ DIPLOMA_NFT_NAME }`)
+    console.log(`\nThe name of this DiplomaNFT: ${ DIPLOMA_NFT_NAME }`)
     console.log(`The symbol of this DiplomaNFT: ${ DIPLOMA_NFT_SYMBOL } \n`)
 
 
     ///-----------------------------------------------------------------------------------------
     /// Send a request for getting a random number to Chainlink-VRF by using getRandomNumber()
     ///-----------------------------------------------------------------------------------------
-    console.log('\m ----- Send a request for getting a random number to Chainlink-VRF -----')
+    console.log('\n----- Send a request for getting a random number to Chainlink-VRF -----')
 
     const LINK_TOKEN = "0xa36085F69e2889c224210F603D836748e7dC0088"  // Kovan
     const linkToken = await ethers.getContractAt('@chainlink/contracts/src/v0.7/interfaces/LinkTokenInterface.sol:LinkTokenInterface', LINK_TOKEN)
-    const linkAmount = ethers.utils.parseEther('1')      // 1 LINK
-    //const linkAmount = ethers.utils.parseEther('0.1')  // 0.1 LINK
+    //const linkAmount = ethers.utils.parseEther('1')      // 1 LINK
+    const linkAmount = ethers.utils.parseEther('0.1')  // 0.1 LINK
 
     ///@dev - Get a random number
     let txReceipt4 = await linkToken.approve(DIPLOMA_NFT, linkAmount) // 1 LINK as a fee to request a randomNumber via VRF
@@ -77,7 +78,7 @@ async function main() {
     console.log(`\n tx_receipt_3: ${ JSON.stringify(tx_receipt_3, null, 2) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
     ///@dev - Get a request ID used when sending to VRF
-    console.log("=== tx_receipt.events.length ===", tx_receipt_3.events.length)
+    console.log("\n=== tx_receipt.events.length ===", tx_receipt_3.events.length)
     const indexOfEvent = 3 // Index number of event of "RandomnessRequest" (that can identify the result on Etherscan)
     let addressInLog = tx_receipt_3.events[indexOfEvent].address
     if (addressInLog == VRF_COORDINATOR) {
@@ -93,7 +94,7 @@ async function main() {
 
         //@dev - Retrieve a requestId used via an event log of "RandomnessRequest"
         const requestId = eventLogs.requestID
-        console.log(`=== requestId that was used when sending to VRF ===`, requestId)
+        console.log(`\n=== requestId that was used when sending to VRF ===`, requestId)
     }
 
 
@@ -147,7 +148,7 @@ async function main() {
 
     const graduateId = newGraduateId
     let graduate = await graduatesRegistry.getGraduate(graduateId)
-    console.log(`\n graduate: ${ JSON.stringify(graduate, null, 2) }`)  /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
+    console.log(`\n graduate: ${ JSON.stringify(graduate, null, 2) } \n`)  /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
     //let graduateId = graduate[0]
     let randomNumberOfGraduate = String(graduate[1])
@@ -165,7 +166,7 @@ async function main() {
     ///------------------------------------------------------------------------------------------------------------
     /// Grant a DiplomaNFT for 2nd graduates
     ///------------------------------------------------------------------------------------------------------------
-    console.log('\n------- Grant a DiplomaNFT for 2nd graduates -------')
+    console.log('\n------- Grant a DiplomaNFT (with a random number generated) for 2nd graduates -------')
 
 
 
