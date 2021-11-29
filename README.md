@@ -10,6 +10,22 @@
 
 <br>
 
+## 【Workflow】
+- Diagram of workflow  
+  ![DiplomaNFT-by-using-Chainlink-VRF](https://user-images.githubusercontent.com/19357502/143765171-84e61627-7b75-4d24-86e7-00014c39c854.jpg)
+
+<br>
+
+## 【Tech Stack】
+- Solidity (Solc): v0.7.6
+- Hardhat: v2.6.4
+- ethers.js: v5.0.24
+- @chainlink/contracts: v0.2.2
+- Node.js: v16.7.0
+etc...
+
+<br>
+
 ## 【Setup (Installation)】
 - ① Add `.env` file to the root directory. 
   (Please `.env.example` for creating `.env` file)
@@ -34,10 +50,17 @@ yarn script-kovan:Deploy
 <br>
 
 ## 【Script】
-- Execute the script ( `./scripts/GraduatesRegistry.script.js` ) that includes the whole scenario of this smart contracts.
+- Execute the script file ( `./scripts/GraduatesRegistry.script.js` ) that includes the whole scenario of this smart contracts.
+  - [NOTE]: In advance, your executor address of this script must have more that 0.1 LINK for sending a request to Chainlink-VRF and some ETH for executing transactions
 ```
 yarn script-kovan:GraduatesRegistry
 ```
+
+<br>
+
+## 【Demo Video】
+- This is the demo video that show executing the script file (which include whole scenario) above.  
+  https://youtu.be/pnKU3xVnjcw
 
 <br>
 
