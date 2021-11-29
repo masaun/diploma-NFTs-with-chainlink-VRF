@@ -71,10 +71,10 @@ async function main() {
     const linkAmount = ethers.utils.parseEther('0.1')  // 0.1 LINK
 
     ///@dev - Get a random number
-    let tx_1 = await linkToken.approve(DIPLOMA_NFT, linkAmount) // 1 LINK as a fee to request a randomNumber via VRF
+    let tx_1 = await linkToken.approve(DIPLOMA_NFT, linkAmount, { gasLimit: 2500000, gasPrice: 350000000000 }) // 1 LINK as a fee to request a randomNumber via VRF
     const txReceipt1 = await tx_1.wait()  /// [NOTE]: Next step must wait until linkToken.approve() is finished
 
-    let tx_2 = await diplomaNFT.getRandomNumber({ gasLimit: 2500000, gasPrice: 500000000000 })
+    let tx_2 = await diplomaNFT.getRandomNumber({ gasLimit: 2500000, gasPrice: 350000000000 })
     const txReceipt_2 = await tx_2.wait()
     console.log(`\n txReceipt of getRandomNumber() execution: ${ JSON.stringify(txReceipt_2, null, 2) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
@@ -123,7 +123,7 @@ async function main() {
     console.log('\n----- Register a new graduate with requestId and random number that are retrieved and stored via Chainlink-VRF -----')
 
     //@dev - Gas Fee the best to call getRandomNumber method: gasLimit (12500000 wei) * gasPrice (10000000000 wei = 10 Gwei) = 0.001 ETH 
-    const tx_3 = await linkToken.approve(GRADUATES_REGISTRY, linkAmount)
+    const tx_3 = await linkToken.approve(GRADUATES_REGISTRY, linkAmount, { gasLimit: 2500000, gasPrice: 350000000000 })
     const txReceipt_3 = await tx_3.wait()  /// [NOTE]: Next step must wait until linkToken.approve() is finished
     console.log(`\n txReceipt that linkToken.approve() for the GraduatesRegistry.sol: ${ JSON.stringify(txReceipt_3, null, 2) }`)
 
@@ -136,7 +136,7 @@ async function main() {
                                                              randomNumberOfNewGraduate,
                                                              newGraduateName, 
                                                              newGraduateAddress, 
-                                                             { gasLimit: 12500000, gasPrice: 50000000000 })  // Kovan
+                                                             { gasLimit: 12500000, gasPrice: 35000000000 })  // Kovan
     console.log(`\n transaction of registerNewGraduate() execution: ${ JSON.stringify(tx_4, null, 2) }`)
 
     const txReceipt_4 = await tx_4.wait()
@@ -176,7 +176,7 @@ async function main() {
     console.log('\n\n\n***************************************************************************\n* Mint a DiplomaNFT (with a random number generated) for 2nd graduates *\n***************************************************************************')
 
     ///@dev - Get a random number
-    let tx_11 = await linkToken.approve(DIPLOMA_NFT, linkAmount) // 1 LINK as a fee to request a randomNumber via VRF
+    let tx_11 = await linkToken.approve(DIPLOMA_NFT, linkAmount, { gasLimit: 2500000, gasPrice: 350000000000 }) // 1 LINK as a fee to request a randomNumber via VRF
     const txReceipt11 = await tx_11.wait()  /// [NOTE]: Next step must wait until linkToken.approve() is finished
 
     let tx_22 = await diplomaNFT.getRandomNumber({ gasLimit: 2500000, gasPrice: 300000000000 })
@@ -198,7 +198,7 @@ async function main() {
     console.log('\n----- Register 2nd graduate with requestId and random number that are retrieved and stored via Chainlink-VRF -----')
 
     //@dev - Gas Fee the best to call getRandomNumber method: gasLimit (12500000 wei) * gasPrice (10000000000 wei = 10 Gwei) = 0.001 ETH 
-    const tx_33 = await linkToken.approve(GRADUATES_REGISTRY, linkAmount)
+    const tx_33 = await linkToken.approve(GRADUATES_REGISTRY, linkAmount, { gasLimit: 2500000, gasPrice: 350000000000 })
     const txReceipt_33 = await tx_33.wait()  /// [NOTE]: Next step must wait until linkToken.approve() is finished
     //console.log(`\ntxReceipt that linkToken.approve() for the GraduatesRegistry.sol: ${ JSON.stringify(txReceipt_33, null, 2) }`)
 
