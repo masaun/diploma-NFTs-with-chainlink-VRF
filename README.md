@@ -39,21 +39,24 @@ yarn
 
 <br>
 
+## 【Script】
+- Execute the script file ( `./scripts/GraduatesRegistry.script.js` ) that includes the whole scenario of this smart contracts.
+  - [NOTE]: In advance, your executor address of this script must have more that 0.1 LINK for sending a request to Chainlink-VRF and some ETH for executing transactions
+  - [NOTE]: At the moment, deployed-addresses on Kovan of 2 smart contracts below are used in the script file ( `./scripts/GraduatesRegistry.script.js` ). If you want to attemp to new contract addresses on Kovan, please use the script for deployment ( https://github.com/masaun/diploma-NFTs-with-chainlink-VRF#deployment ). 
+    - DiplomaNFTFactory.sol: `"0xE1538ee65808dC992c22fd656C4CFf08350BBb9F"`
+    - GraduatesRegistry.sol: `"0xAcEa79FC1cF702C6A7F39823905d988E69784AD3"`
+```
+yarn script-kovan:GraduatesRegistry
+```
+
+<br>
+
 ## 【Deployment】
 - Deploy 2 smart contracts on Kovan testnet
   - DiplomaNFTFactory.sol
   - GraduatesRegistry.sol
 ```
 yarn script-kovan:Deploy
-```
-
-<br>
-
-## 【Script】
-- Execute the script file ( `./scripts/GraduatesRegistry.script.js` ) that includes the whole scenario of this smart contracts.
-  - [NOTE]: In advance, your executor address of this script must have more that 0.1 LINK for sending a request to Chainlink-VRF and some ETH for executing transactions
-```
-yarn script-kovan:GraduatesRegistry
 ```
 
 <br>
