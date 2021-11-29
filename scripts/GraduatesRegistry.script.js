@@ -74,7 +74,7 @@ async function main() {
     let tx_1 = await linkToken.approve(DIPLOMA_NFT, linkAmount) // 1 LINK as a fee to request a randomNumber via VRF
     const txReceipt1 = await tx_1.wait()  /// [NOTE]: Next step must wait until linkToken.approve() is finished
 
-    let tx_2 = await diplomaNFT.getRandomNumber({ gasLimit: 2500000, gasPrice: 300000000000 })
+    let tx_2 = await diplomaNFT.getRandomNumber({ gasLimit: 2500000, gasPrice: 500000000000 })
     const txReceipt_2 = await tx_2.wait()
     console.log(`\n txReceipt of getRandomNumber() execution: ${ JSON.stringify(txReceipt_2, null, 2) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
@@ -92,7 +92,7 @@ async function main() {
 
         //@dev - Retrieve an event log of "RandomnessRequest" that is defined in the VRFCoodinator.sol
         let eventLogs = iface.decodeEventLog("RandomnessRequest", _data, _topics)  // [NOTE]: Retrieve an event of "RandomnessRequest"
-        console.log(`\n eventLogs of "RandomnessRequest": ${ eventLogs }`)
+        console.log(`\n eventLogs of "RandomnessRequest": ${ JSON.stringify(eventLogs, null, 2) }`)
 
         //@dev - Retrieve a requestId used via an event log of "RandomnessRequest"
         const requestId = eventLogs.requestID
@@ -136,7 +136,7 @@ async function main() {
                                                              randomNumberOfNewGraduate,
                                                              newGraduateName, 
                                                              newGraduateAddress, 
-                                                             { gasLimit: 12500000, gasPrice: 30000000000 })  // Kovan
+                                                             { gasLimit: 12500000, gasPrice: 50000000000 })  // Kovan
     console.log(`\n transaction of registerNewGraduate() execution: ${ JSON.stringify(tx_4, null, 2) }`)
 
     const txReceipt_4 = await tx_4.wait()

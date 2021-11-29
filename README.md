@@ -20,7 +20,8 @@
 - Solidity (Solc): v0.7.6
 - Hardhat: v2.6.4
 - ethers.js: v5.0.24
-- @chainlink/contracts: v0.2.2  
+- @chainlink/contracts: v0.2.2
+- Node.js: v16.7.0
 etc...
 
 <br>
