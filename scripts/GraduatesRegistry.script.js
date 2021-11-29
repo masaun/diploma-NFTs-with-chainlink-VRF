@@ -37,8 +37,6 @@ async function main() {
     const VRF_COORDINATOR = "0xdD3782915140c8f3b190B5D67eAc6dc5760C46E9"  // Chainlink-VRF coordinator on Kovan
 
 
-    console.log('\n***************************************************************************\n* Mint a DiplomaNFT (with a random number generated) for 1st graduate *\n***************************************************************************')
-
     ///-------------------------------------------------------
     /// Create a new DiplomaNFT
     ///-------------------------------------------------------
@@ -59,6 +57,13 @@ async function main() {
     console.log(`\nThe name of this DiplomaNFT: ${ DIPLOMA_NFT_NAME }`)
     console.log(`The symbol of this DiplomaNFT: ${ DIPLOMA_NFT_SYMBOL } \n`)
 
+
+
+    ///------------------------------------------------------------------------------------------------------------
+    /// Mint a DiplomaNFT (with a random number generated) for 1st graduate 
+    ///   => Workflow is startd from below
+    ///------------------------------------------------------------------------------------------------------------
+    console.log('\n***************************************************************************\n* Mint a DiplomaNFT (with a random number generated) for 1st graduate *\n***************************************************************************')
 
     ///-----------------------------------------------------------------------------------------
     /// Send a request for getting a random number to Chainlink-VRF by using getRandomNumber()
@@ -169,10 +174,9 @@ async function main() {
 
 
 
-
-
     ///------------------------------------------------------------------------------------------------------------
     /// Mint a DiplomaNFT for 2nd graduates
+    ///   => Workflow is startd from below    
     ///------------------------------------------------------------------------------------------------------------
     console.log('\n\n\n***************************************************************************\n* Mint a DiplomaNFT (with a random number generated) for 2nd graduates *\n***************************************************************************')
 

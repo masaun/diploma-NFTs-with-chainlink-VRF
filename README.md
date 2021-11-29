@@ -50,7 +50,7 @@ yarn script-kovan:Deploy
 <br>
 
 ## 【Script】
-- Execute the script ( `./scripts/GraduatesRegistry.script.js` ) that includes the whole scenario of this smart contracts.
+- Execute the script file ( `./scripts/GraduatesRegistry.script.js` ) that includes the whole scenario of this smart contracts.
   - [NOTE]: In advance, your executor address of this script must have more that 0.1 LINK for sending a request to Chainlink-VRF and some ETH for executing transactions
 ```
 yarn script-kovan:GraduatesRegistry
@@ -58,9 +58,9 @@ yarn script-kovan:GraduatesRegistry
 
 <br>
 
-## 【Video】
-- This is the video that show executing the script file (which include whole scenario) above.
-
+## 【Demo Video】
+- This is the demo video that show executing the script file (which include whole scenario) above.  
+  https://youtu.be/pnKU3xVnjcw
 
 <br>
 
