@@ -71,10 +71,10 @@ async function main() {
     const linkAmount = ethers.utils.parseEther('0.1')  // 0.1 LINK
 
     ///@dev - Get a random number
-    let tx_1 = await linkToken.approve(DIPLOMA_NFT, linkAmount, { gasLimit: 2500000, gasPrice: 350000000000 }) // 1 LINK as a fee to request a randomNumber via VRF
+    let tx_1 = await linkToken.approve(DIPLOMA_NFT, linkAmount, { gasLimit: 2500000, gasPrice: 300000000000 }) // 1 LINK as a fee to request a randomNumber via VRF
     const txReceipt1 = await tx_1.wait()  /// [NOTE]: Next step must wait until linkToken.approve() is finished
 
-    let tx_2 = await diplomaNFT.getRandomNumber({ gasLimit: 2500000, gasPrice: 350000000000 })
+    let tx_2 = await diplomaNFT.getRandomNumber({ gasLimit: 2500000, gasPrice: 300000000000 })
     const txReceipt_2 = await tx_2.wait()
     console.log(`\n txReceipt of getRandomNumber() execution: ${ JSON.stringify(txReceipt_2, null, 2) }`)    /// [NOTE]: Using "JSON.stringify()" to avoid that value is "[object object]"
 
@@ -105,9 +105,9 @@ async function main() {
     ///-----------------------------------------------------------------------------------------
     console.log('\n----- Retrieve a requestId and random number that are called back from Chainlink-VRF -----')
 
-    ///@dev - Wait 120 seconds for calling a result of requesting a random number retrieved.
-    await new Promise(resolve => setTimeout(resolve, 120000))  // Waiting for 120 seconds (120000 mili-seconds)
-    //await new Promise(resolve => setTimeout(resolve, 90000))  // Waiting for 90 seconds (90000 mili-seconds)
+    ///@dev - Wait 90 seconds for calling a result of requesting a random number retrieved.
+    await new Promise(resolve => setTimeout(resolve, 90000))     // Waiting for 90 seconds (90000 mili-seconds)
+    //await new Promise(resolve => setTimeout(resolve, 120000))  // Waiting for 120 seconds (120000 mili-seconds)
 
     ///@dev - Check log of callback ("requestId" that is used and "randomNumber" that is retrieved via VRF)
     let _requestIdCalledBack = await diplomaNFT.requestIdCalledBack()
@@ -124,7 +124,7 @@ async function main() {
     console.log('\n----- Register a new graduate with a DiplomaNFT that is minted and associated with requestId and random number -----')
 
     //@dev - Gas Fee the best to call getRandomNumber method: gasLimit (12500000 wei) * gasPrice (10000000000 wei = 10 Gwei) = 0.001 ETH 
-    const tx_3 = await linkToken.approve(GRADUATES_REGISTRY, linkAmount, { gasLimit: 2500000, gasPrice: 350000000000 })
+    const tx_3 = await linkToken.approve(GRADUATES_REGISTRY, linkAmount, { gasLimit: 2500000, gasPrice: 300000000000 })
     const txReceipt_3 = await tx_3.wait()  /// [NOTE]: Next step must wait until linkToken.approve() is finished
     console.log(`\n txReceipt that linkToken.approve() for the GraduatesRegistry.sol: ${ JSON.stringify(txReceipt_3, null, 2) }`)
 
@@ -177,7 +177,7 @@ async function main() {
     console.log('\n\n\n***************************************************************************\n* Mint a DiplomaNFT (with a random number generated) for 2nd graduates *\n***************************************************************************')
 
     ///@dev - Get a random number
-    let tx_11 = await linkToken.approve(DIPLOMA_NFT, linkAmount, { gasLimit: 2500000, gasPrice: 350000000000 }) // 1 LINK as a fee to request a randomNumber via VRF
+    let tx_11 = await linkToken.approve(DIPLOMA_NFT, linkAmount, { gasLimit: 2500000, gasPrice: 300000000000 }) // 1 LINK as a fee to request a randomNumber via VRF
     const txReceipt11 = await tx_11.wait()  /// [NOTE]: Next step must wait until linkToken.approve() is finished
 
     let tx_22 = await diplomaNFT.getRandomNumber({ gasLimit: 2500000, gasPrice: 300000000000 })
