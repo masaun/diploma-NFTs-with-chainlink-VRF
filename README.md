@@ -76,4 +76,8 @@ yarn script-kovan:GraduatesRegistry
 <br>
 
 - Articles:
-  - How to Build Dynamic NFTs on Polygon: https://blog.chain.link/how-to-build-dynamic-nfts-on-polygon/
+  - How to Build Dynamic NFTs on Polygon:   
+    https://blog.chain.link/how-to-build-dynamic-nfts-on-polygon/
+
+  - 16 Ways to Create Dynamic Non-Fungible Tokens (NFT) Using Chainlink Oracles:  
+    https://blog.chain.link/create-dynamic-nfts-using-chainlink-oracles/
