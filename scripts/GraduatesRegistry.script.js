@@ -105,8 +105,9 @@ async function main() {
     ///-----------------------------------------------------------------------------------------
     console.log('\n----- Retrieve a requestId and random number that are called back from Chainlink-VRF -----')
 
-    ///@dev - Wait 90 seconds for calling a result of requesting a random number retrieved.
-    await new Promise(resolve => setTimeout(resolve, 90000))  // Waiting for 90 seconds (90000 mili-seconds)
+    ///@dev - Wait 120 seconds for calling a result of requesting a random number retrieved.
+    await new Promise(resolve => setTimeout(resolve, 120000))  // Waiting for 120 seconds (120000 mili-seconds)
+    //await new Promise(resolve => setTimeout(resolve, 90000))  // Waiting for 90 seconds (90000 mili-seconds)
 
     ///@dev - Check log of callback ("requestId" that is used and "randomNumber" that is retrieved via VRF)
     let _requestIdCalledBack = await diplomaNFT.requestIdCalledBack()
@@ -118,9 +119,9 @@ async function main() {
 
 
     ///------------------------------------------------------------------------------------------------------------
-    /// Register a new graduate with requestId and random number that are retrieved and stored via Chainlink-VRF
+    /// Register a new graduate with a DiplomaNFT that is minted and associated with requestId and random number that are retrieved and stored via Chainlink-VRF
     ///------------------------------------------------------------------------------------------------------------
-    console.log('\n----- Register a new graduate with requestId and random number that are retrieved and stored via Chainlink-VRF -----')
+    console.log('\n----- Register a new graduate with a DiplomaNFT that is minted and associated with requestId and random number -----')
 
     //@dev - Gas Fee the best to call getRandomNumber method: gasLimit (12500000 wei) * gasPrice (10000000000 wei = 10 Gwei) = 0.001 ETH 
     const tx_3 = await linkToken.approve(GRADUATES_REGISTRY, linkAmount, { gasLimit: 2500000, gasPrice: 350000000000 })
@@ -195,7 +196,7 @@ async function main() {
     let _randomNumberStored_2nd = await diplomaNFT.randomNumberStored(_requestIdCalledBack_2nd)
     console.log(` randomNumberStored (for 2nd graduate): ${ String(_randomNumberStored_2nd) }`)  // [NOTE]: Need to convert from hex to string
 
-    console.log('\n----- Register 2nd graduate with requestId and random number that are retrieved and stored via Chainlink-VRF -----')
+    console.log('\n----- Register 2nd graduate with a DiplomaNFT that is minted and associated with requestId and random number -----')
 
     //@dev - Gas Fee the best to call getRandomNumber method: gasLimit (12500000 wei) * gasPrice (10000000000 wei = 10 Gwei) = 0.001 ETH 
     const tx_33 = await linkToken.approve(GRADUATES_REGISTRY, linkAmount, { gasLimit: 2500000, gasPrice: 350000000000 })
