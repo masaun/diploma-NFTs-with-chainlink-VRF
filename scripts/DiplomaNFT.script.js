@@ -15,7 +15,7 @@ async function main() {
 
     //@dev - Get the contract to deploy
     //const DiplomaNFT = await ethers.getContractFactory("DiplomaNFT")
-    //const DiplomaNFT = await DiplomaNFT.deploy()
+    //const diplomaNFT = await DiplomaNFT.deploy()
 
     // [NOTE]: Deployed-address of the DiplomaNFT.sol on Kovan is "0x5d41a0292A7381321A65d430Dda70a7b433a49B5"
     //@dev - Deployed-address of the DiplomaNFT.sol
